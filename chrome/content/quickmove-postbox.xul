@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/.
+   - Portions Copyright (C) Philipp Kewisch, 2012 -->
+
+<overlay id="quickmove-postbox-overlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <script type="application/javascript"><![CDATA[
+    window.addEventListener("DOMContentLoaded", function() {
+      let moveMenu = document.getElementById("messagePaneContext-moveMenu");
+      if (moveMenu) {
+        let children = moveMenu.getElementsByTagName("menupopup");
+        for each (let c in Array.slice(children)) {
+          if (c.id != "quickmove-msgpane-context-menupopup") {
+            moveMenu.removeChild(c);
+          }
+        }
+      }
+
+      let copyMenu = document.getElementById("messagePaneContext-copyMenu");
+      if (copyMenu) {
+        let children = copyMenu.getElementsByTagName("menupopup");
+        for each (let c in Array.slice(children)) {
+          if (c.id != "quickmove-msgpane-context-copy-menupopup") {
+            copyMenu.removeChild(c);
+          }
+        }
+      }
+    }, false);
+
+
+  ]]></script>
+
+  <!-- Postbox doesn't have a popupset, need to duplicate the menu here -->
+  <window id="messengerWindow">
+    <menupopup id="quickmove-menupopup"
+           ignorekeys="true"
+           onpopupshowing="quickmove.popupshowing(event)"
+           onpopupshown="quickmove.popupshown(event)"
+           oncommand="quickmove.executeMove(event.target._folder)">
+      <textbox id="quickmove-textbox"
+               type="search"
+               timeout="500"
+               onkeypress="quickmove.keypress(event, quickmove.executeMove)"
+               oncommand="quickmove.search(event)"/>
+      <menuseparator id="quickmove-separator" class="quickmove-separator"/>
+    </menupopup>
+    <menupopup id="quickmove-goto-menupopup"
+               ignorekeys="true"
+               onpopupshowing="quickmove.popupshowing(event)"
+               onpopupshown="quickmove.popupshown(event)"
+               oncommand="quickmove.executeGoto(event.target._folder)">
+      <textbox id="quickmove-textbox"
+               type="search"
+               timeout="500"
+               onkeypress="quickmove.keypress(event, quickmove.executeGoto)"
+               oncommand="quickmove.search(event)"/>
+      <menuseparator id="quickmove-goto-separator" class="quickmove-separator"/>
+    </menupopup>
+  </window>
+
+  <!-- Postbox uses shift+m for "toggle pending". Remove this key for now for
+       consistency between Thunderbird and Postbox -->
+  <key id="key_togglePending" removeelement="true"/>
+
+  <menu id="messagePaneContext-moveMenu">
+    <menupopup id="quickmove-msgpane-context-menupopup"
+               ignorekeys="true"
+               onpopupshowing="quickmove.popupshowing(event)"
+               onpopupshown="quickmove.popupshown(event)"
+               oncommand="quickmove.executeMove(event.target._folder); event.stopPropagation()">
+      <textbox id="quickmove-textbox"
+               type="search"
+               timeout="500"
+               onkeypress="quickmove.keypress(event, quickmove.executeMove)"
+               oncommand="quickmove.search(event)"/>
+      <menuseparator id="quickmove-separator" class="quickmove-separator"/>
+    </menupopup>
+  </menu>
+  <menu id="messagePaneContext-copyMenu">
+    <menupopup id="quickmove-msgpane-context-copy-menupopup"
+               ignorekeys="true"
+               onpopupshowing="quickmove.popupshowing(event)"
+               onpopupshown="quickmove.popupshown(event)"
+               oncommand="quickmove.executeCopy(event.target._folder); event.stopPropagation()">
+      <textbox id="quickmove-copy-textbox"
+               type="search"
+               timeout="500"
+               onkeypress="quickmove.keypress(event, quickmove.executeCopy)"
+               oncommand="quickmove.search(event)"/>
+      <menuseparator id="quickmove-separator" class="quickmove-separator"/>
+    </menupopup>
+  </menu>
+</overlay>

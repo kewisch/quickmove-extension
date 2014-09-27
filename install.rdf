@@ -40,7 +40,7 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>quickmove@mozilla.kewis.ch</em:id>
     <em:type>2</em:type>
-    <em:version>0.9</em:version>
+    <em:version>0.10</em:version>
 
     <em:name>Quick Folder Move</em:name>
     <em:description>Quickly move messages using a search box in the context menu</em:description>
@@ -53,7 +53,14 @@
       <Description>
         <em:id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</em:id> <!-- thunderbird -->
         <em:minVersion>3.0a2pre</em:minVersion>
-        <em:maxVersion>8.0a1</em:maxVersion>
+        <em:maxVersion>22.0a1</em:maxVersion>
+      </Description>
+    </em:targetApplication>
+    <em:targetApplication>
+      <Description>
+        <em:id>postbox@postbox-inc.com</em:id> <!-- postbox -->
+        <em:minVersion>3.0</em:minVersion>
+        <em:maxVersion>3.0.*</em:maxVersion>
       </Description>
     </em:targetApplication>
   </Description>

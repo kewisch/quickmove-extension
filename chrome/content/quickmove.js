@@ -1,42 +1,18 @@
-/* ***** BEGIN LICENSE BLOCK *****
- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
- *
- * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS IS" basis,
- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
- * for the specific language governing rights and limitations under the
- * License.
- *
- * The Original Code is Quickmove Extension code.
- *
- * The Initial Developer of the Original Code is
- *   Philipp Kewisch <mozilla@kewis.ch>
- * Portions created by the Initial Developer are Copyright (C) 2009
- * the Initial Developer. All Rights Reserved.
- *
- * Contributor(s):
- *
- * Alternatively, the contents of this file may be used under the terms of
- * either the GNU General Public License Version 2 or later (the "GPL"), or
- * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
- * in which case the provisions of the GPL or the LGPL are applicable instead
- * of those above. If you wish to allow use of your version of this file only
- * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the MPL, indicate your
- * decision by deleting the provisions above and replace them with the notice
- * and other provisions required by the GPL or the LGPL. If you do not delete
- * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the MPL, the GPL or the LGPL.
- *
- * ***** END LICENSE BLOCK ***** */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Portions Copyright (C) Philipp Kewisch, 2009-2013 */
 
 "use strict";
 
-Components.utils.import("resource:///modules/gloda/suffixtree.js");
+try {
+    Components.utils.import("resource:///modules/gloda/suffixtree.js");
+} catch (e) {
+    // Postbox compat
+    Components.utils.import("resource://quickmove/modules/suffixtree.js");
+}
+
+Components.utils.import("resource:///modules/iteratorUtils.jsm");
 
 var quickmove = {
   /** An array of recent folders, to be shown when no search term is entered */
@@ -182,8 +158,22 @@ var quickmove = {
 
       if (aFolder.hasSubFolders) {
         let myenum = aFolder.subFolders;
-        while (myenum.hasMoreElements()) {
-          processFolder(myenum.getNext().QueryInterface(Ci.nsIMsgFolder));
+        if (myenum) {
+          // Newer Thunderbird & Seamonkey, nsISimpleEnumerator
+          while (myenum.hasMoreElements()) {
+            processFolder(myenum.getNext().QueryInterface(Ci.nsIMsgFolder));
+          }
+        } else {
+          // Postbox 3, nsIEnumerator
+          myenum = aFolder.GetSubFolders();
+          try {
+            for (myenum.first(); !myenum.isDone(); myenum.next()) {
+              processFolder(myenum.currentItem().QueryInterface(Ci.nsIMsgFolder));
+            }
+          } catch (e if e.result == Components.results.NS_ERROR_FAILURE) {
+            // swallow this exception, it usually means this broken enumerator
+            // is done
+          }
         }
       }
     }
@@ -211,15 +201,16 @@ var quickmove = {
     }
 
 
+    // Would use iteratorUtils but Postbox iteratorUtils doesn't support nsIArray
     let acctMgr = Cc["@mozilla.org/messenger/account-manager;1"].
                   getService(Ci.nsIMsgAccountManager);
-    let count = acctMgr.accounts.Count();
-    for (let i = 0; i < count; i++) {
-      let acct = acctMgr.accounts.GetElementAt(i)
-                        .QueryInterface(Components.interfaces.nsIMsgAccount);
-      processFolder(acct.incomingServer.rootFolder);
-    }
+    let accounts = acctMgr.accounts;
 
+    for each (let acct in fixIterator(acctMgr.accounts, Components.interfaces.nsIMsgAccount)) {
+      if (acct.incomingServer) {
+        processFolder(acct.incomingServer.rootFolder);
+      }
+    }
 
     quickmove.suffixTree = new MultiSuffixTree(allNames, allFolders);
 
@@ -270,6 +261,12 @@ var quickmove = {
   },
 
   executeMove: function executeMove(folder, copyNotMove) {
+
+    if (quickmove.platformVersionLowerThan("8.0")) {
+        // Postbox 3 compat
+        folder = folder.folderURL;
+    }
+
     if (copyNotMove) {
       MsgCopyMessage(folder);
     } else {
@@ -278,7 +275,13 @@ var quickmove = {
   },
 
   executeGoto: function executeGoto(folder) {
-    gFolderTreeView.selectFolder(folder, true);
+    if (typeof gFolderTreeView == "object") {
+      // Newer Thunderbird and Seamonkey
+      gFolderTreeView.selectFolder(folder, true);
+    } else {
+      let cmds = msgWindow.windowCommands;
+      cmds.selectFolder(folder.folderURL);
+    }
   },
 
   keypress: function keypress(event, executeFunc) {
@@ -392,6 +395,18 @@ var quickmove = {
         Components.utils.reportError(s + " Error: " + ex);
         return s;
     }
+  },
+
+  get platformVersion() {
+    return Cc["@mozilla.org/xre/app-info;1"]
+             .getService(Ci.nsIXULAppInfo).platformVersion;
+  },
+
+  platformVersionLowerThan: function(aVersion) {
+    let vc = Cc["@mozilla.org/xpcom/version-comparator;1"]
+                .getService(Ci.nsIVersionComparator);
+
+    return vc.compare(quickmove.platformVersion, aVersion) < 0;
   },
 
   getFullName: function getFullName(aFolder) {
