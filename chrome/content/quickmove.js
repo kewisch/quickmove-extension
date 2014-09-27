@@ -34,6 +34,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+"use strict";
+
 Components.utils.import("resource:///modules/gloda/suffixtree.js");
 
 var quickmove = {
@@ -263,40 +265,53 @@ var quickmove = {
     event.stopPropagation();
   },
 
-  keypress: function keypress(event, copyNotMove) {
+  executeCopy: function executeCopy(folder) {
+    quickmove.executeMove(folder, true);
+  },
+
+  executeMove: function executeMove(folder, copyNotMove) {
+    if (copyNotMove) {
+      MsgCopyMessage(folder);
+    } else {
+      MsgMoveMessage(folder);
+    }
+  },
+
+  executeGoto: function executeGoto(folder) {
+    gFolderTreeView.selectFolder(folder, true);
+  },
+
+  keypress: function keypress(event, executeFunc) {
     let popup = event.target.parentNode;
+
+    // Executor function used later to execute the actual action
+    function executor() {
+      let firstFolder = event.target.nextSibling &&
+                        event.target.nextSibling.nextSibling &&
+                        event.target.nextSibling.nextSibling._folder;
+      if (firstFolder) {
+          executeFunc(firstFolder);
+      }
+    }
+
+    // Now check which key was pressed
     if (event.keyCode == event.DOM_VK_ESCAPE) {
       // On escape, cancel and close the popup.
       quickmove.hide(popup);
     } else if (event.keyCode == event.DOM_VK_ENTER ||
                event.keyCode == event.DOM_VK_RETURN) {
-      // If the user presses enter, move to the first folder in the list and
-      // close the popup.
-      let target = event.target;
-
-      // Since this is called once directly and once indirectly, the actual
-      // moving needs to happen in a function.
-      function mover() { 
-        let firstFolder = target.nextSibling &&
-                          target.nextSibling.nextSibling &&
-                          target.nextSibling.nextSibling._folder;
-        if (firstFolder) { 
-          if (copyNotMove) {
-            MsgCopyMessage(firstFolder);
-          } else {
-            MsgMoveMessage(firstFolder);
-          }
-        }
-      }
-
+      // If the user presses enter, execute the passed action, either directly
+      // or indirectly
       if (quickmove.dirty) {
         // We haven't finished searching for folders, wait until the search
         // completes and then move.
-        quickmove.searchCompleteFunc = mover;
+        quickmove.searchCompleteFunc = executor;
       } else {
         // Otherwise go ahead and do so directly.
-        mover();
+        executor();
       }
+
+      // Now hide the popup
       quickmove.hide(popup);
     } else {
       // If something was typed, then remember that we haven't searched yet.
@@ -335,6 +350,20 @@ var quickmove = {
       Components.utils.reportError("Couldn't find a node to open the panel on");
     }
 
+  },
+
+  openGoto: function openGoto() {
+    let folderLocation = document.getElementById("folder-location-container");
+    let folderTree = document.getElementById("folderTree");
+    
+    if (folderLocation) {
+      // There is a folder location popup, open its popup
+      let menulist = folderLocation.firstChild;
+      menulist.menupopup.openPopup(menulist);
+    } else if (folderTree) {
+      let popup = document.getElementById("quickmove-goto-menupopup");
+      popup.openPopup(folderTree, "overlap");
+    }
   },
 
   hide: function hide(popup) {

@@ -39,6 +39,8 @@
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script type="application/javascript" src="chrome://quickmove/content/quickmove.js"/>
 
+  <menupopup id="folderLocationPopup" hidden="true"/>
+
   <menu id="mailContext-moveMenu">
     <menupopup id="quickmove-context-menupopup"
                ignorekeys="true"
@@ -49,7 +51,7 @@
       <textbox id="quickmove-textbox"
                type="search"
                timeout="500"
-               onkeypress="quickmove.keypress(event)"
+               onkeypress="quickmove.keypress(event, quickmove.executeMove)"
                oncommand="quickmove.search(event)"/>
       <menuseparator id="quickmove-separator" class="quickmove-separator"/>
     </menupopup>
@@ -65,7 +67,7 @@
       <textbox id="quickmove-copy-textbox"
                type="search"
                timeout="500"
-               onkeypress="quickmove.keypress(event, true)"
+               onkeypress="quickmove.keypress(event, quickmove.executeCopy)"
                oncommand="quickmove.search(event)"/>
       <menuseparator id="quickmove-separator" class="quickmove-separator"/>
     </menupopup>
@@ -80,7 +82,7 @@
       <textbox id="quickmove-filebutton-textbox"
                type="search"
                timeout="500"
-               onkeypress="quickmove.keypress(event)"
+               onkeypress="quickmove.keypress(event, quickmove.executeMove)"
                oncommand="quickmove.search(event)"/>
       <menuseparator id="quickmove-filebutton-separator" class="quickmove-separator"/>
     </menupopup>
@@ -96,9 +98,21 @@
       <textbox id="quickmove-textbox"
                type="search"
                timeout="500"
-               onkeypress="quickmove.keypress(event)"
+               onkeypress="quickmove.keypress(event, quickmove.executeMove)"
                oncommand="quickmove.search(event)"/>
       <menuseparator id="quickmove-separator" class="quickmove-separator"/>
+    </menupopup>
+    <menupopup id="quickmove-goto-menupopup"
+               ignorekeys="true"
+               onpopupshowing="quickmove.popupshowing(event)"
+               onpopupshown="quickmove.popupshown(event)"
+               oncommand="quickmove.executeGoto(event.target._folder)">
+      <textbox id="quickmove-textbox"
+               type="search"
+               timeout="500"
+               onkeypress="quickmove.keypress(event, quickmove.executeGoto)"
+               oncommand="quickmove.search(event)"/>
+      <menuseparator id="quickmove-goto-separator" class="quickmove-separator"/>
     </menupopup>
   </popupset>
 
@@ -111,11 +125,28 @@
       <textbox id="quickmove-textbox"
                type="search"
                timeout="500"
-               onkeypress="quickmove.keypress(event)"
+               onkeypress="quickmove.keypress(event, quickmove.executeMove)"
                oncommand="quickmove.search(event)"/>
       <menuseparator id="quickmove-separator" class="quickmove-separator"/>
     </menupopup>
   </window>
+
+
+  <menulist id="locationFolders">
+    <menupopup id="quickmove-folderlocation-menupopup"
+               insertbefore="folderLocationPopup"
+               ignorekeys="true"
+               onpopupshowing="quickmove.popupshowing(event)"
+               onpopupshown="quickmove.popupshown(event)"
+               oncommand="quickmove.executeGoto(event.target._folder)">
+      <textbox id="quickmove-textbox"
+               type="search"
+               timeout="500"
+               onkeypress="quickmove.keypress(event, quickmove.executeGoto)"
+               oncommand="quickmove.search(event)"/>
+      <menuseparator id="quickmove-location-separator" class="quickmove-separator"/>
+    </menupopup>
+  </menulist>
 
   <menupopup id="mailContext-fileHereMenu" hidden="true" removeelement="true"/>
   <menupopup id="mailContext-copyHereMenu" hidden="true" removeelement="true"/>
@@ -123,5 +154,6 @@
 
   <keyset id="mailKeys">
     <key id="quickmove-file" key="m" modifiers="shift" oncommand="quickmove.openFile()"/>
+    <key id="quickmove-goto" key="g" modifiers="shift" oncommand="quickmove.openGoto()"/>
   </keyset>
 </overlay>
