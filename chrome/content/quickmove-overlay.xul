@@ -2,7 +2,9 @@
 <!-- This Source Code Form is subject to the terms of the Mozilla Public
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at http://mozilla.org/MPL/2.0/.
-   - Portions Copyright (C) Philipp Kewisch, 2009-2012 -->
+   - Portions Copyright (C) Philipp Kewisch, 2009-2014 -->
+
+<!DOCTYPE overlay SYSTEM "chrome://quickmove/locale/quickmove.dtd">
 
 <overlay id="quickmove-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
@@ -122,7 +124,7 @@
   <menupopup id="button-filePopup" hidden="true" removeelement="true"/>
 
   <keyset id="mailKeys">
-    <key id="quickmove-file" key="m" modifiers="shift" oncommand="quickmove.openFile()"/>
-    <key id="quickmove-goto" key="g" modifiers="shift" oncommand="quickmove.openGoto()"/>
+    <key id="quickmove-file" key="&quickmove.keyboard.file.key;" modifiers="&quickmove.keyboard.file.modifiers;" oncommand="quickmove.openFile()"/>
+    <key id="quickmove-goto" key="&quickmove.keyboard.goto.key;" modifiers="&quickmove.keyboard.goto.modifiers;" oncommand="quickmove.openGoto()"/>
   </keyset>
 </overlay>

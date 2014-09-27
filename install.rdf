@@ -1,59 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ***** BEGIN LICENSE BLOCK *****
-   - Version: MPL 1.1/GPL 2.0/LGPL 2.1
-   -
-   - The contents of this file are subject to the Mozilla Public License Version
-   - 1.1 (the "License"); you may not use this file except in compliance with
-   - the License. You may obtain a copy of the License at
-   - http://www.mozilla.org/MPL/
-   -
-   - Software distributed under the License is distributed on an "AS IS" basis,
-   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
-   - for the specific language governing rights and limitations under the
-   - License.
-   -
-   - The Original Code is Quickmove Extension code.
-   -
-   - The Initial Developer of the Original Code is
-   -   Philipp Kewisch <mozilla@kewis.ch>
-   - Portions created by the Initial Developer are Copyright (C) 2009
-   - the Initial Developer. All Rights Reserved.
-   -
-   - Contributor(s):
-   -
-   - Alternatively, the contents of this file may be used under the terms of
-   - either the GNU General Public License Version 2 or later (the "GPL"), or
-   - the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
-   - in which case the provisions of the GPL or the LGPL are applicable instead
-   - of those above. If you wish to allow use of your version of this file only
-   - under the terms of either the GPL or the LGPL, and not to allow others to
-   - use your version of this file under the terms of the MPL, indicate your
-   - decision by deleting the provisions above and replace them with the notice
-   - and other provisions required by the LGPL or the GPL. If you do not delete
-   - the provisions above, a recipient may use your version of this file under
-   - the terms of any one of the MPL, the GPL or the LGPL.
-   -
-   - ***** END LICENSE BLOCK ***** -->
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/.
+   - Portions Copyright (C) Philipp Kewisch, 2009 -->
 
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
      xmlns:em="http://www.mozilla.org/2004/em-rdf#">
   <Description about="urn:mozilla:install-manifest">
     <em:id>quickmove@mozilla.kewis.ch</em:id>
     <em:type>2</em:type>
-    <em:version>0.10</em:version>
+    <em:version>0.11</em:version>
 
     <em:name>Quick Folder Move</em:name>
-    <em:description>Quickly move messages using a search box in the context menu</em:description>
+    <em:description>Quickly move messages into other folders using the keyboard</em:description>
 
     <em:creator>Philipp Kewisch</em:creator>
     <em:optionsURL>chrome://quickmove/content/quickmove-prefs.xul</em:optionsURL>
     <em:iconURL>chrome://messenger/skin/activity/moveMailIcon.png</em:iconURL>
 
+    <em:translator>Kostyantyn Zhytnetskyy (uk and ru)</em:translator>
+    <em:translator>Philipp Kewisch (de)</em:translator>
+
+    <em:localized>
+      <Description>
+        <em:locale>de</em:locale>
+        <em:name>Schnelles Nachrichtenverschieben</em:name>
+        <em:description>Schnelles verschieben von Nachrichten in andere Ordner mit Hilfe der Tastatur</em:description>
+      </Description>
+    </em:localized>
+
+    <em:localized>
+      <Description>
+        <em:locale>uk</em:locale>
+        <em:name>Quick Folder Move</em:name>
+        <em:description>Швидко переміщуйте повідомлення в інші папки використовуючи сполучення клавіш</em:description>
+      </Description>
+    </em:localized>
+
+    <em:localized>
+      <Description>
+        <em:locale>ru</em:locale>
+        <em:name>Quick Folder Move</em:name>
+        <em:description>Быстро перемещайте сообщения в другие папки используя сочетания клавиш</em:description>
+      </Description>
+    </em:localized>
+
     <em:targetApplication>
       <Description>
         <em:id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</em:id> <!-- thunderbird -->
         <em:minVersion>3.0a2pre</em:minVersion>
-        <em:maxVersion>22.0a1</em:maxVersion>
+        <em:maxVersion>27.0a1</em:maxVersion>
       </Description>
     </em:targetApplication>
     <em:targetApplication>
