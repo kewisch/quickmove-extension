@@ -9,13 +9,13 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>quickmove@mozilla.kewis.ch</em:id>
     <em:type>2</em:type>
-    <em:version>0.12</em:version>
+    <em:version>0.13</em:version>
 
     <em:name>Quick Folder Move</em:name>
     <em:description>Quickly move messages into other folders using the keyboard</em:description>
 
     <em:creator>Philipp Kewisch</em:creator>
-    <em:optionsURL>chrome://quickmove/content/quickmove-prefs.xul</em:optionsURL>
+    <em:optionsType>2</em:optionsType>
     <em:iconURL>chrome://messenger/skin/activity/moveMailIcon.png</em:iconURL>
 
     <em:translator>Kostyantyn Zhytnetskyy (uk and ru)</em:translator>
