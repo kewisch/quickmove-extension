@@ -35,9 +35,18 @@ var quickmove = {
     quickmove.clearItems(event.target);
     quickmove.prepareFolders();
 
-    event.target.firstChild.value = "";
+    let initialText = "";
+    if (typeof GetMessagePaneFrame != "undefined") {
+        initialText = GetMessagePaneFrame().getSelection().toString() || "";
+    }
+
+    event.target.firstChild.value = initialText;
     quickmove.dirty = false;
-    quickmove.addFolders(quickmove.recentFolders, event.target, event.target.firstChild.value);
+    if (initialText) {
+        quickmove.search(event.target.firstChild);
+    } else {
+        quickmove.addFolders(quickmove.recentFolders, event.target, event.target.firstChild.value);
+    }
     event.stopPropagation();
   },
 
@@ -224,17 +233,17 @@ var quickmove = {
    * Perform a search. If no search term is entered, the recent folders are
    * shown, otherwise folders which match the search term are shown.
    */
-  search: function Search(event) {
-    let popup = event.target.parentNode;
+  search: function Search(textboxNode) {
+    let popup = textboxNode.parentNode;
     quickmove.clearItems(popup);
-    if (event.target.value.length == 0) {
-      quickmove.addFolders(quickmove.recentFolders, popup, event.target.value);
+    if (textboxNode.value.length == 0) {
+      quickmove.addFolders(quickmove.recentFolders, popup, textboxNode.value);
     } else {
       let folders = quickmove.suffixTree
-                             .findMatches(event.target.value.toLowerCase())
+                             .findMatches(textboxNode.value.toLowerCase())
                              .filter(function(x) x.canFileMessages);
       if (folders.length) {
-        quickmove.addFolders(folders, popup, event.target.value);
+        quickmove.addFolders(folders, popup, textboxNode.value);
       } else {
         let node = document.createElement("menuitem");
         node.setAttribute("disabled", "true");
@@ -251,9 +260,6 @@ var quickmove = {
       quickmove.searchCompleteFunc();
       quickmove.searchCompleteFunc = null;
     }
-
-    // No further processing needed.
-    event.stopPropagation();
   },
 
   executeCopy: function executeCopy(folder) {
