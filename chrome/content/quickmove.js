@@ -34,7 +34,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-Components.utils.import("resource://app/modules/gloda/suffixtree.js");
+Components.utils.import("resource:///modules/gloda/suffixtree.js");
 
 var quickmove = {
   /** An array of recent folders, to be shown when no search term is entered */
@@ -59,7 +59,7 @@ var quickmove = {
 
     event.target.firstChild.value = "";
     quickmove.dirty = false;
-    quickmove.addFolders(quickmove.recentFolders, event.target);
+    quickmove.addFolders(quickmove.recentFolders, event.target, event.target.firstChild.value);
     event.stopPropagation();
   },
 
@@ -81,8 +81,10 @@ var quickmove = {
    * Add a set of folders to the context menu.
    *
    * @param folders     An array of folders to add
+   * @param popup       The popup to add to
+   * @param targetValue The searched text
    */
-  addFolders: function addFolders(folders, popup) {
+  addFolders: function addFolders(folders, popup, targetValue) {
       let dupeMap = {};
       let serverMap = {};
       let fullPathMap = {};
@@ -130,7 +132,14 @@ var quickmove = {
         node._folder = folder;
 
         node.setAttribute("class", "folderMenuItem menuitem-iconic");
-        popup.appendChild(node);
+        if (lowerLabel == targetValue.toLowerCase()) {
+          // An exact match, put this at the top after the separator
+          let separator = popup.getElementsByClassName("quickmove-separator")[0];
+          popup.insertBefore(node, separator.nextSibling);
+        } else {
+          // Otherwise append to the end
+          popup.appendChild(node);
+        }
       }
   },
 
@@ -152,7 +161,7 @@ var quickmove = {
     try {
         let prefs = Components.classes["@mozilla.org/preferences-service;1"]
                               .getService(Components.interfaces.nsIPrefBranch);
-        maxRecent = prefs.getIntPref("mailnews.maxRecentFolders");
+        maxRecent = prefs.getIntPref("extensions.quickmove.maxRecentFolders");
     } catch (e) {
         maxRecent = 15;
     }
@@ -209,6 +218,7 @@ var quickmove = {
       processFolder(acct.incomingServer.rootFolder);
     }
 
+
     quickmove.suffixTree = new MultiSuffixTree(allNames, allFolders);
 
     function sorter(a, b) {
@@ -225,13 +235,13 @@ var quickmove = {
     let popup = event.target.parentNode;
     quickmove.clearItems(popup);
     if (event.target.value.length == 0) {
-      quickmove.addFolders(quickmove.recentFolders, popup);
+      quickmove.addFolders(quickmove.recentFolders, popup, event.target.value);
     } else {
       let folders = quickmove.suffixTree
                              .findMatches(event.target.value.toLowerCase())
                              .filter(function(x) x.canFileMessages);
       if (folders.length) {
-        quickmove.addFolders(folders, popup);
+        quickmove.addFolders(folders, popup, event.target.value);
       } else {
         let node = document.createElement("menuitem");
         node.setAttribute("disabled", "true");

@@ -1,8 +1,6 @@
-content	quickmove	        content/
-locale quickmove en-US      locales/en-US/
-locale quickmove de         locales/de/
-locale quickmove fr         locales/fr/
-locale quickmove it         locales/it/
+content	quickmove	        chrome/content/
+locale  quickmove en-US     chrome/locales/en-US/
+locale  quickmove de        chrome/locales/de/
 
 overlay chrome://messenger/content/messenger.xul chrome://quickmove/content/quickmove-overlay.xul
 overlay chrome://messenger/content/messageWindow.xul chrome://quickmove/content/quickmove-overlay.xul

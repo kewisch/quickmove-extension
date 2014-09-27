@@ -16,7 +16,7 @@
    -
    - The Initial Developer of the Original Code is
    -   Philipp Kewisch <mozilla@kewis.ch>
-   - Portions created by the Initial Developer are Copyright (C) 2009
+   - Portions created by the Initial Developer are Copyright (C) 2010
    - the Initial Developer. All Rights Reserved.
    -
    - Contributor(s):
@@ -35,27 +35,24 @@
    -
    - ***** END LICENSE BLOCK ***** -->
 
-<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
-  <Description about="urn:mozilla:install-manifest">
-    <em:id>quickmove@mozilla.kewis.ch</em:id>
-    <em:type>2</em:type>
-    <em:version>0.8</em:version>
+<?xml-stylesheet href="chrome://global/skin/"?>
 
-    <em:name>Quick Folder Move</em:name>
-    <em:description>Quickly move messages using a search box in the context menu</em:description>
+<!DOCTYPE prefwindow SYSTEM "chrome://quickmove/locale/quickmove.dtd">
 
-    <em:creator>Philipp Kewisch</em:creator>
-    <em:optionsURL>chrome://quickmove/content/quickmove-prefs.xul</em:optionsURL>
-    <em:iconURL>chrome://messenger/skin/activity/moveMailIcon.png</em:iconURL>
-
-    <em:targetApplication>
-      <Description>
-        <em:id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</em:id> <!-- thunderbird -->
-        <em:minVersion>3.0a2pre</em:minVersion>
-        <em:maxVersion>7.0a1</em:maxVersion>
-      </Description>
-    </em:targetApplication>
-
-  </Description>
-</RDF>
+<prefwindow xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+            id="quickmove-prefs-window"
+            width="300"
+            height="100"
+            windowtype="extensions:quickmove:options"
+            title="&quickmove.options.title;">
+  <preferences>
+    <preference id="extensions.quickmove.maxRecentFolders" name="extensions.quickmove.maxRecentFolders" type="int"/>
+  </preferences>
+  <prefpane id="quickmove-prefpane">
+    <label for="quickmove-maxRecentFolders-textbox" value="&quickmove.options.maxRecentFolders.label;"/>
+    <textbox id="quickmove-maxRecentFolders-textbox"
+             type="number"
+             preference="extensions.quickmove.maxRecentFolders"
+             tooltiptext="&quickmove.options.maxRecentFolders.tooltip;"/>
+  </prefpane>
+</prefwindow>

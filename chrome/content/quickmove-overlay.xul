@@ -88,7 +88,7 @@
 
 
   <popupset id="mainPopupSet">
-    <popup id="quickmove-menupopup"
+    <menupopup id="quickmove-menupopup"
            ignorekeys="true"
            onpopupshowing="quickmove.popupshowing(event)"
            onpopupshown="quickmove.popupshown(event)"
@@ -99,11 +99,11 @@
                onkeypress="quickmove.keypress(event)"
                oncommand="quickmove.search(event)"/>
       <menuseparator id="quickmove-separator" class="quickmove-separator"/>
-    </popup>
+    </menupopup>
   </popupset>
 
   <window id="messengerWindow">
-    <popup id="quickmove-compose-menupopup"
+    <menupopup id="quickmove-compose-menupopup"
            ignorekeys="true"
            onpopupshowing="quickmove.popupshowing(event)"
            onpopupshown="quickmove.popupshown(event)"
@@ -114,7 +114,7 @@
                onkeypress="quickmove.keypress(event)"
                oncommand="quickmove.search(event)"/>
       <menuseparator id="quickmove-separator" class="quickmove-separator"/>
-    </popup>
+    </menupopup>
   </window>
 
   <menupopup id="mailContext-fileHereMenu" hidden="true" removeelement="true"/>
