@@ -32,6 +32,12 @@ var quickmove = {
    * context menu is shown.
    */
   popupshowing: function popupshowing(event) {
+    if (event.target.getAttribute("ignorekeys") != "true") {
+      // If we are showing the menuitems, then don't set up the folders but
+      // keep the old list.
+      return;
+    }
+
     quickmove.clearItems(event.target);
     quickmove.prepareFolders();
 
@@ -52,7 +58,12 @@ var quickmove = {
 
   popupshown: function popupshown(event) {
     // focus the textbox
-    event.target.firstChild.focus();
+    if (event.target.getAttribute("ignorekeys") == "true") {
+        event.target.firstChild.focus();
+    } else {
+        event.target.firstChild.blur();
+        event.target.setAttribute("ignorekeys", "true");
+    }
   },
 
   /**
@@ -290,6 +301,16 @@ var quickmove = {
     }
   },
 
+  focus: function(event) {
+    let popup = event.target.parentNode;
+    popup.setAttribute("ignorekeys", "true");
+
+    let x = popup.boxObject.screenX;
+    let y = popup.boxObject.screenY;
+    popup.hidePopup();
+    popup.openPopupAtScreen(x, y, true);
+  },
+
   keypress: function keypress(event, executeFunc) {
     let popup = event.target.parentNode;
 
@@ -307,8 +328,7 @@ var quickmove = {
     if (event.keyCode == event.DOM_VK_ESCAPE) {
       // On escape, cancel and close the popup.
       quickmove.hide(popup);
-    } else if (event.keyCode == event.DOM_VK_ENTER ||
-               event.keyCode == event.DOM_VK_RETURN) {
+    } else if (event.keyCode == event.DOM_VK_RETURN) {
       // If the user presses enter, execute the passed action, either directly
       // or indirectly
       if (quickmove.dirty) {
@@ -322,6 +342,13 @@ var quickmove = {
 
       // Now hide the popup
       quickmove.hide(popup);
+    } else if (event.keyCode == event.DOM_VK_DOWN) {
+      popup.removeAttribute("ignorekeys");
+
+      let x = popup.boxObject.screenX;
+      let y = popup.boxObject.screenY;
+      popup.hidePopup();
+      popup.openPopupAtScreen(x, y, true);
     } else {
       // If something was typed, then remember that we haven't searched yet.
      quickmove.dirty = true;
@@ -358,7 +385,6 @@ var quickmove = {
     } else {
       Components.utils.reportError("Couldn't find a node to open the panel on");
     }
-
   },
 
   openGoto: function openGoto() {

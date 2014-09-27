@@ -22,6 +22,7 @@
       <textbox id="quickmove-textbox"
                type="search"
                timeout="500"
+               onfocus="quickmove.focus(event)"
                onkeypress="quickmove.keypress(event, quickmove.executeMove)"
                oncommand="quickmove.search(event.target); event.stopPropagation();"/>
       <menuseparator id="quickmove-separator" class="quickmove-separator"/>
@@ -38,6 +39,7 @@
       <textbox id="quickmove-copy-textbox"
                type="search"
                timeout="500"
+               onfocus="quickmove.focus(event)"
                onkeypress="quickmove.keypress(event, quickmove.executeCopy)"
                oncommand="quickmove.search(event.target); event.stopPropagation();"/>
       <menuseparator id="quickmove-separator" class="quickmove-separator"/>
@@ -53,6 +55,7 @@
       <textbox id="quickmove-filebutton-textbox"
                type="search"
                timeout="500"
+               onfocus="quickmove.focus(event)"
                onkeypress="quickmove.keypress(event, quickmove.executeMove)"
                oncommand="quickmove.search(event.target); event.stopPropagation();"/>
       <menuseparator id="quickmove-filebutton-separator" class="quickmove-separator"/>
@@ -69,6 +72,7 @@
       <textbox id="quickmove-textbox"
                type="search"
                timeout="500"
+               onfocus="quickmove.focus(event)"
                onkeypress="quickmove.keypress(event, quickmove.executeMove)"
                oncommand="quickmove.search(event.target); event.stopPropagation();"/>
       <menuseparator id="quickmove-separator" class="quickmove-separator"/>
@@ -81,6 +85,7 @@
       <textbox id="quickmove-textbox"
                type="search"
                timeout="500"
+               onfocus="quickmove.focus(event)"
                onkeypress="quickmove.keypress(event, quickmove.executeGoto)"
                oncommand="quickmove.search(event.target); event.stopPropagation();"/>
       <menuseparator id="quickmove-goto-separator" class="quickmove-separator"/>
@@ -96,6 +101,7 @@
       <textbox id="quickmove-textbox"
                type="search"
                timeout="500"
+               onfocus="quickmove.focus(event)"
                onkeypress="quickmove.keypress(event, quickmove.executeMove)"
                oncommand="quickmove.search(event.target); event.stopPropagation();"/>
       <menuseparator id="quickmove-separator" class="quickmove-separator"/>
@@ -113,6 +119,7 @@
       <textbox id="quickmove-textbox"
                type="search"
                timeout="500"
+               onfocus="quickmove.focus(event)"
                onkeypress="quickmove.keypress(event, quickmove.executeGoto)"
                oncommand="quickmove.search(event.target); event.stopPropagation();"/>
       <menuseparator id="quickmove-location-separator" class="quickmove-separator"/>
