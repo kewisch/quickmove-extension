@@ -305,8 +305,9 @@ var quickmove = {
     let popup = event.target.parentNode;
     popup.setAttribute("ignorekeys", "true");
 
-    let x = popup.boxObject.screenX;
-    let y = popup.boxObject.screenY;
+    // Strange enough, the menu moves by exactly 2 pixel. It needs correction:
+    let x = popup.boxObject.screenX - 2;
+    let y = popup.boxObject.screenY - 2;;
     popup.hidePopup();
     popup.openPopupAtScreen(x, y, true);
   },
@@ -342,13 +343,24 @@ var quickmove = {
 
       // Now hide the popup
       quickmove.hide(popup);
-    } else if (event.keyCode == event.DOM_VK_DOWN) {
+    } else if (event.keyCode == event.DOM_VK_DOWN && !popup.lastChild.disabled) {
       popup.removeAttribute("ignorekeys");
 
-      let x = popup.boxObject.screenX;
-      let y = popup.boxObject.screenY;
+      // Strange enough, the menu moves by exactly 2 pixel. It needs correction:
+      let x = popup.boxObject.screenX - 2;
+      let y = popup.boxObject.screenY - 2;
       popup.hidePopup();
       popup.openPopupAtScreen(x, y, true);
+
+      // Synthesize another keydown/up cycle, this ensures the first menuitem
+      // is actually focused.
+      let keyEvent = document.createEvent("KeyboardEvent");
+      keyEvent.initKeyEvent("keydown", true, true, null, false, false,
+                            false, false, keyEvent.DOM_VK_DOWN, 0);
+      popup.dispatchEvent(keyEvent);
+      keyEvent.initKeyEvent("keyup", true, true, null, false, false,
+                            false, false, keyEvent.DOM_VK_DOWN, 0);
+      popup.dispatchEvent(keyEvent);
     } else {
       // If something was typed, then remember that we haven't searched yet.
      quickmove.dirty = true;
