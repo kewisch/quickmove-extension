@@ -416,6 +416,11 @@ var quickmove = {
   hide: function hide(popup) {
     popup.hidePopup();
 
+    // Hiding the menupopup should clear the search text and reset ignorekeys
+    // to be able to use the textbox.
+    popup.firstChild.value = "";
+    event.target.setAttribute("ignorekeys", "true");
+
     // Now refocus the thread pane, this way the user can continue filing
     // messages.
     document.getElementById("threadTree").focus();
