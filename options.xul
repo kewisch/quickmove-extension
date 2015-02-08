@@ -11,4 +11,7 @@
            pref="extensions.quickmove.maxRecentFolders"
            title="&quickmove.options.maxRecentFolders.label;"
            desc="&quickmove.options.maxRecentFolders.tooltip;"/>
+  <setting type="bool"
+           pref="extensions.quickmove.markAsRead"
+           title="&quickmove.options.markAsRead.label;"/>
 </vbox>

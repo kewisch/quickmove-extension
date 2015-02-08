@@ -5,3 +5,6 @@
 
 // The maximum number of recent folder entries.
 pref("extensions.quickmove.maxRecentFolders", 15);
+
+// Mark messages as read when moving them
+pref("extensions.quickmove.markAsRead", true);

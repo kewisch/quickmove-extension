@@ -5,6 +5,7 @@
 <!ENTITY quickmove.options.title                           "Quick Folder Move Налаштування">
 <!ENTITY quickmove.options.maxRecentFolders.label          "Кількість останніх папок:">
 <!ENTITY quickmove.options.maxRecentFolders.tooltip        "Змінює кількість останніх папок, що відображуються, коли не ввдено жодного тексту в поле пошуку">
+<!ENTITY quickmove.options.markAsRead.label                "Позначити лист як прочитаний">
 <!ENTITY quickmove.keyboard.file.key                       "п">
 <!ENTITY quickmove.keyboard.file.modifiers                 "shift">
 <!ENTITY quickmove.keyboard.goto.key                       "і">

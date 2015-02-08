@@ -278,7 +278,6 @@ var quickmove = {
   },
 
   executeMove: function executeMove(folder, copyNotMove) {
-
     if (quickmove.platformVersionLowerThan("8.0")) {
         // Postbox 3 compat
         folder = folder.folderURL;
@@ -287,6 +286,9 @@ var quickmove = {
     if (copyNotMove) {
       MsgCopyMessage(folder);
     } else {
+      if (quickmove.getPreference("markAsRead", "bool")) {
+        MsgMarkMsgAsRead(true);
+      }
       MsgMoveMessage(folder);
     }
   },
@@ -444,6 +446,21 @@ var quickmove = {
         Components.utils.reportError(s + " Error: " + ex);
         return s;
     }
+  },
+
+  getPreference: function(aName, aType) {
+    let prefName = "extensions.quickmove." + aName;
+    let prefs = Components.classes["@mozilla.org/preferences-service;1"]
+                          .getService(Components.interfaces.nsIPrefBranch);
+    switch (aType) {
+      case "bool":
+        return prefs.getBoolPref(prefName);
+      case "int":
+        return prefs.getIntPref(prefName);
+      case "string":
+        return prefs.getCharPref(prefName);
+    }
+    return null;
   },
 
   get platformVersion() {
