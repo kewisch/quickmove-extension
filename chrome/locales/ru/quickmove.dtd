@@ -10,3 +10,5 @@
 <!ENTITY quickmove.keyboard.file.modifiers                 "shift">
 <!ENTITY quickmove.keyboard.goto.key                       "и">
 <!ENTITY quickmove.keyboard.goto.modifiers                 "shift">
+<!ENTITY quickmove.keyboard.copy.key                       "y">
+<!ENTITY quickmove.keyboard.copy.modifiers                 "shift">

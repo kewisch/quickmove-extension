@@ -22,7 +22,7 @@ var quickmove = {
   suffixTree: null,
 
   /** True when something was typed but the search has not completed */
-  dirty: false, 
+  dirty: false,
 
   /** Function to call when the seach completes. Used by the dirty logic */
   searchCompleteFunc: null,
@@ -155,7 +155,7 @@ var quickmove = {
 
     const Cc = Components.classes;
     const Ci = Components.interfaces;
-    
+
     try {
         let prefs = Components.classes["@mozilla.org/preferences-service;1"]
                               .getService(Components.interfaces.nsIPrefBranch);
@@ -390,7 +390,7 @@ var quickmove = {
       let selection = threadTree.view.selection;
       let rowOffset = treeBO.rowHeight *
                     (selection.currentIndex - treeBO.getFirstVisibleRow() + 1) +
-                    threadTreeCols.boxObject.height; 
+                    threadTreeCols.boxObject.height;
       filepopup.openPopup(threadTree, "overlap",
                           0, rowOffset);
     } else if (messagepane) {
@@ -404,7 +404,7 @@ var quickmove = {
   openGoto: function openGoto() {
     let folderLocation = document.getElementById("folder-location-container");
     let folderTree = document.getElementById("folderTree");
-    
+
     if (folderLocation) {
       // There is a folder location popup, open its popup
       let menulist = folderLocation.firstChild;
@@ -415,13 +415,36 @@ var quickmove = {
     }
   },
 
+  openCopy: function openCopy() {
+    let filebutton = document.getElementById("button-file");
+    let threadTree = document.getElementById("threadTree");
+    let messagepane = document.getElementById("messagepane");
+    if (threadTree) {
+      // If there is a thread tree (i.e mail 3pane), then use it
+      let filepopup = document.getElementById("quickmove-copy-menupopup");
+      let threadTreeCols = document.getElementById("threadCols");
+      let treeBO = threadTree.treeBoxObject;
+      let selection = threadTree.view.selection;
+      let rowOffset = treeBO.rowHeight *
+                    (selection.currentIndex - treeBO.getFirstVisibleRow() + 1) +
+                    threadTreeCols.boxObject.height;
+      filepopup.openPopup(threadTree, "overlap",
+                          0, rowOffset);
+    } else if (messagepane) {
+      let filepopup = document.getElementById("quickmove-compose-copy-menupopup");
+      filepopup.openPopup(messagepane, "overlap");
+    } else {
+      Components.utils.reportError("Couldn't find a node to open the panel on");
+    }
+  },
+
   hide: function hide(popup) {
     popup.hidePopup();
 
     // Hiding the menupopup should clear the search text and reset ignorekeys
     // to be able to use the textbox.
     popup.firstChild.value = "";
-    event.target.setAttribute("ignorekeys", "true");
+    popup.setAttribute("ignorekeys", "true");
 
     // Now refocus the thread pane, this way the user can continue filing
     // messages.
@@ -431,7 +454,7 @@ var quickmove = {
   getString: function getString(aStringName, aParams) {
     let service = Components.classes["@mozilla.org/intl/stringbundle;1"]
                             .getService(Components.interfaces.nsIStringBundleService);
-    
+
     const propName = "chrome://quickmove/locale/quickmove.properties";
     try {
         let props = service.createBundle(propName);
