@@ -7,6 +7,3 @@ resource quickmove          .
 
 overlay chrome://messenger/content/messenger.xul chrome://quickmove/content/quickmove-overlay.xul
 overlay chrome://messenger/content/messageWindow.xul chrome://quickmove/content/quickmove-overlay.xul
-
-overlay chrome://messenger/content/messenger.xul chrome://quickmove/content/quickmove-postbox.xul application=postbox@postbox-inc.com
-overlay chrome://messenger/content/messageWindow.xul chrome://quickmove/content/quickmove-postbox.xul application=postbox@postbox-inc.com

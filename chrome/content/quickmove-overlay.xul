@@ -18,7 +18,7 @@
                insertbefore="mailContext-fileHereMenu"
                onpopupshowing="quickmove.popupshowing(event)"
                onpopupshown="quickmove.popupshown(event)"
-               oncommand="quickmove.executeMove(event.target._folder); event.stopPropagation()">
+               oncommand="quickmove.command(event, quickmove.executeMove)">
       <textbox class="quickmove-textbox"
                type="search"
                timeout="500"
@@ -35,7 +35,7 @@
                insertbefore="mailContext-copyHereMenu"
                onpopupshowing="quickmove.popupshowing(event)"
                onpopupshown="quickmove.popupshown(event)"
-               oncommand="quickmove.executeCopy(event.target._folder); event.stopPropagation()">
+               oncommand="quickmove.command(event, quickmove.executeCopy)">
       <textbox id="quickmove-copy-textbox"
                type="search"
                timeout="500"
@@ -68,7 +68,7 @@
            ignorekeys="true"
            onpopupshowing="quickmove.popupshowing(event)"
            onpopupshown="quickmove.popupshown(event)"
-           oncommand="quickmove.executeMove(event.target._folder)">
+           oncommand="quickmove.command(event, quickmove.executeMove)">
       <textbox class="quickmove-textbox"
                type="search"
                timeout="500"
@@ -81,7 +81,7 @@
                ignorekeys="true"
                onpopupshowing="quickmove.popupshowing(event)"
                onpopupshown="quickmove.popupshown(event)"
-               oncommand="quickmove.executeGoto(event.target._folder)">
+               oncommand="quickmove.command(event, quickmove.executeGoto)">
       <textbox class="quickmove-textbox"
                type="search"
                timeout="500"
@@ -94,12 +94,12 @@
                ignorekeys="true"
                onpopupshowing="quickmove.popupshowing(event)"
                onpopupshown="quickmove.popupshown(event)"
-               oncommand="quickmove.executeCopy(event.target._folder)">
+               oncommand="quickmove.command(event, quickmove.executeCopy)">
       <textbox class="quickmove-textbox"
                type="search"
                timeout="500"
                onfocus="quickmove.focus(event)"
-               onkeypress="quickmove.keypress(event, quickmove.executeGoto)"
+               onkeypress="quickmove.keypress(event, quickmove.executeCopy)"
                oncommand="quickmove.search(event.target); event.stopPropagation();"/>
       <menuseparator id="quickmove-copy-separator" class="quickmove-separator"/>
     </menupopup>
@@ -110,7 +110,7 @@
            ignorekeys="true"
            onpopupshowing="quickmove.popupshowing(event)"
            onpopupshown="quickmove.popupshown(event)"
-           oncommand="quickmove.executeMove(event.target._folder)">
+           oncommand="quickmove.command(event, quickmove.executeMove)">
       <textbox class="quickmove-textbox"
                type="search"
                timeout="500"
@@ -123,7 +123,7 @@
            ignorekeys="true"
            onpopupshowing="quickmove.popupshowing(event)"
            onpopupshown="quickmove.popupshown(event)"
-           oncommand="quickmove.executeCopy(event.target._folder)">
+           oncommand="quickmove.command(event, quickmove.executeCopy)">
       <textbox class="quickmove-textbox"
                type="search"
                timeout="500"
@@ -141,7 +141,7 @@
                ignorekeys="true"
                onpopupshowing="quickmove.popupshowing(event)"
                onpopupshown="quickmove.popupshown(event)"
-               oncommand="quickmove.executeGoto(event.target._folder)">
+               oncommand="quickmove.command(event, quickmove.executeGoto)">
       <textbox class="quickmove-textbox"
                type="search"
                timeout="500"
