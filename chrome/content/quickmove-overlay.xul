@@ -18,14 +18,14 @@
                insertbefore="mailContext-fileHereMenu"
                onpopupshowing="quickmove.popupshowing(event)"
                onpopupshown="quickmove.popupshown(event)"
-               oncommand="quickmove.command(event, quickmove.executeMove)">
-      <textbox class="quickmove-textbox"
+               oncommand="quickmove.executeMove(event.target._folder); event.stopPropagation()">
+      <textbox id="quickmove-textbox"
                type="search"
                timeout="500"
                onfocus="quickmove.focus(event)"
                onkeypress="quickmove.keypress(event, quickmove.executeMove)"
                oncommand="quickmove.search(event.target); event.stopPropagation();"/>
-      <menuseparator class="quickmove-separator"/>
+      <menuseparator id="quickmove-separator" class="quickmove-separator"/>
     </menupopup>
   </menu>
 
@@ -35,14 +35,14 @@
                insertbefore="mailContext-copyHereMenu"
                onpopupshowing="quickmove.popupshowing(event)"
                onpopupshown="quickmove.popupshown(event)"
-               oncommand="quickmove.command(event, quickmove.executeCopy)">
+               oncommand="quickmove.executeCopy(event.target._folder); event.stopPropagation()">
       <textbox id="quickmove-copy-textbox"
                type="search"
                timeout="500"
                onfocus="quickmove.focus(event)"
                onkeypress="quickmove.keypress(event, quickmove.executeCopy)"
                oncommand="quickmove.search(event.target); event.stopPropagation();"/>
-      <menuseparator class="quickmove-separator"/>
+      <menuseparator id="quickmove-separator" class="quickmove-separator"/>
     </menupopup>
   </menu>
 
@@ -68,40 +68,27 @@
            ignorekeys="true"
            onpopupshowing="quickmove.popupshowing(event)"
            onpopupshown="quickmove.popupshown(event)"
-           oncommand="quickmove.command(event, quickmove.executeMove)">
-      <textbox class="quickmove-textbox"
+           oncommand="quickmove.executeMove(event.target._folder)">
+      <textbox id="quickmove-textbox"
                type="search"
                timeout="500"
                onfocus="quickmove.focus(event)"
                onkeypress="quickmove.keypress(event, quickmove.executeMove)"
                oncommand="quickmove.search(event.target); event.stopPropagation();"/>
-      <menuseparator class="quickmove-separator"/>
+      <menuseparator id="quickmove-separator" class="quickmove-separator"/>
     </menupopup>
     <menupopup id="quickmove-goto-menupopup"
                ignorekeys="true"
                onpopupshowing="quickmove.popupshowing(event)"
                onpopupshown="quickmove.popupshown(event)"
-               oncommand="quickmove.command(event, quickmove.executeGoto)">
-      <textbox class="quickmove-textbox"
+               oncommand="quickmove.executeGoto(event.target._folder)">
+      <textbox id="quickmove-textbox"
                type="search"
                timeout="500"
                onfocus="quickmove.focus(event)"
                onkeypress="quickmove.keypress(event, quickmove.executeGoto)"
                oncommand="quickmove.search(event.target); event.stopPropagation();"/>
       <menuseparator id="quickmove-goto-separator" class="quickmove-separator"/>
-    </menupopup>
-    <menupopup id="quickmove-copy-menupopup"
-               ignorekeys="true"
-               onpopupshowing="quickmove.popupshowing(event)"
-               onpopupshown="quickmove.popupshown(event)"
-               oncommand="quickmove.command(event, quickmove.executeCopy)">
-      <textbox class="quickmove-textbox"
-               type="search"
-               timeout="500"
-               onfocus="quickmove.focus(event)"
-               onkeypress="quickmove.keypress(event, quickmove.executeCopy)"
-               oncommand="quickmove.search(event.target); event.stopPropagation();"/>
-      <menuseparator id="quickmove-copy-separator" class="quickmove-separator"/>
     </menupopup>
   </popupset>
 
@@ -110,27 +97,14 @@
            ignorekeys="true"
            onpopupshowing="quickmove.popupshowing(event)"
            onpopupshown="quickmove.popupshown(event)"
-           oncommand="quickmove.command(event, quickmove.executeMove)">
-      <textbox class="quickmove-textbox"
+           oncommand="quickmove.executeMove(event.target._folder)">
+      <textbox id="quickmove-textbox"
                type="search"
                timeout="500"
                onfocus="quickmove.focus(event)"
                onkeypress="quickmove.keypress(event, quickmove.executeMove)"
                oncommand="quickmove.search(event.target); event.stopPropagation();"/>
-      <menuseparator class="quickmove-separator"/>
-    </menupopup>
-    <menupopup id="quickmove-compose-copy-menupopup"
-           ignorekeys="true"
-           onpopupshowing="quickmove.popupshowing(event)"
-           onpopupshown="quickmove.popupshown(event)"
-           oncommand="quickmove.command(event, quickmove.executeCopy)">
-      <textbox class="quickmove-textbox"
-               type="search"
-               timeout="500"
-               onfocus="quickmove.focus(event)"
-               onkeypress="quickmove.keypress(event, quickmove.executeCopy)"
-               oncommand="quickmove.search(event.target); event.stopPropagation();"/>
-      <menuseparator class="quickmove-separator"/>
+      <menuseparator id="quickmove-separator" class="quickmove-separator"/>
     </menupopup>
   </window>
 
@@ -141,8 +115,8 @@
                ignorekeys="true"
                onpopupshowing="quickmove.popupshowing(event)"
                onpopupshown="quickmove.popupshown(event)"
-               oncommand="quickmove.command(event, quickmove.executeGoto)">
-      <textbox class="quickmove-textbox"
+               oncommand="quickmove.executeGoto(event.target._folder)">
+      <textbox id="quickmove-textbox"
                type="search"
                timeout="500"
                onfocus="quickmove.focus(event)"
@@ -159,6 +133,5 @@
   <keyset id="mailKeys">
     <key id="quickmove-file" key="&quickmove.keyboard.file.key;" modifiers="&quickmove.keyboard.file.modifiers;" oncommand="quickmove.openFile()"/>
     <key id="quickmove-goto" key="&quickmove.keyboard.goto.key;" modifiers="&quickmove.keyboard.goto.modifiers;" oncommand="quickmove.openGoto()"/>
-    <key id="quickmove-copy" key="&quickmove.keyboard.copy.key;" modifiers="&quickmove.keyboard.copy.modifiers;" oncommand="quickmove.openCopy()"/>
   </keyset>
 </overlay>
