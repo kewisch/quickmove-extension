@@ -5,14 +5,12 @@
 
 "use strict";
 
-try {
-    Components.utils.import("resource:///modules/gloda/suffixtree.js");
-} catch (e) {
-    // Postbox compat
-    Components.utils.import("resource://quickmove/modules/suffixtree.js");
-}
+Components.utils.import("resource://gre/modules/Services.jsm");
 
+Components.utils.import("resource:///modules/gloda/suffixtree.js");
 Components.utils.import("resource:///modules/iteratorUtils.jsm");
+Components.utils.import("resource:///modules/mailServices.js");
+Components.utils.import("resource://calendar/modules/calUtils.jsm");
 
 var quickmove = {
   /** An array of recent folders, to be shown when no search term is entered */
@@ -22,22 +20,29 @@ var quickmove = {
   suffixTree: null,
 
   /** True when something was typed but the search has not completed */
-  dirty: false, 
+  dirty: false,
 
   /** Function to call when the seach completes. Used by the dirty logic */
   searchCompleteFunc: null,
+
+  /** Element last focused when the popup was initiated */
+  initiator: null,
 
   /**
    * Event listener method to be called when the 'move to' or 'copy to'
    * context menu is shown.
    */
-  popupshowing: function popupshowing(event) {
+  popupshowing: function(event) {
     if (event.target.getAttribute("ignorekeys") != "true") {
       // If we are showing the menuitems, then don't set up the folders but
       // keep the old list.
       return;
     }
 
+    let focusedElement = document.commandDispatcher.focusedElement;
+    if (focusedElement && focusedElement.id) {
+      quickmove.initiator = document.commandDispatcher.focusedElement;
+    }
     quickmove.clearItems(event.target);
     quickmove.prepareFolders();
 
@@ -56,7 +61,7 @@ var quickmove = {
     event.stopPropagation();
   },
 
-  popupshown: function popupshown(event) {
+  popupshown: function(event) {
     // focus the textbox
     if (event.target.getAttribute("ignorekeys") == "true") {
         event.target.firstChild.focus();
@@ -69,7 +74,7 @@ var quickmove = {
   /**
    * Clear all items except the menuseparator and the search box
    */
-  clearItems: function clearItems(popup) {
+  clearItems: function(popup) {
     while (popup.lastChild.className != "quickmove-separator") {
       popup.removeChild(popup.lastChild);
     }
@@ -82,13 +87,13 @@ var quickmove = {
    * @param popup       The popup to add to
    * @param targetValue The searched text
    */
-  addFolders: function addFolders(folders, popup, targetValue) {
+  addFolders: function(folders, popup, targetValue) {
       let dupeMap = {};
       let serverMap = {};
       let fullPathMap = {};
 
       // First create a map of pretty names to find possible duplicates.
-      for each (let folder in folders) {
+      for (let folder of folders) {
         let lowerName = folder.prettyName.toLowerCase();
         let serverLowerName = folder.server.prettyName.toLowerCase();
 
@@ -114,7 +119,7 @@ var quickmove = {
 
       // Now add each folder, appending the server name if the folder name
       // itself would appear more than once.
-      for each (let folder in folders) {
+      for (let folder of folders) {
         let node = document.createElement("menuitem");
         let label = folder.prettyName;
         let lowerLabel = label.toLowerCase();
@@ -144,24 +149,11 @@ var quickmove = {
   /**
    * Prepare the recent folders and the suffix tree with all available folders.
    */
-  prepareFolders: function buildRecent() {
-    quickmove.recentFolders =  [];
-
-    let allFolders = [];
-    let allNames = [];
-    let recentFolders = quickmove.recentFolders;
-    let oldestTime = 0;
-    let maxRecent = 15;
-
-    const Cc = Components.classes;
-    const Ci = Components.interfaces;
-    
-    try {
-        let prefs = Components.classes["@mozilla.org/preferences-service;1"]
-                              .getService(Components.interfaces.nsIPrefBranch);
-        maxRecent = prefs.getIntPref("extensions.quickmove.maxRecentFolders");
-    } catch (e) {
-        maxRecent = 15;
+  prepareFolders: function() {
+    function sorter(a, b) {
+      let atime = Number(a.getStringProperty("MRUTime")) || 0;
+      let btime = Number(b.getStringProperty("MRUTime")) || 0;
+      return atime < btime;
     }
 
     /**
@@ -178,26 +170,11 @@ var quickmove = {
 
       if (aFolder.hasSubFolders) {
         let myenum = aFolder.subFolders;
-        if (myenum) {
-          // Newer Thunderbird & Seamonkey, nsISimpleEnumerator
-          while (myenum.hasMoreElements()) {
-            processFolder(myenum.getNext().QueryInterface(Ci.nsIMsgFolder));
-          }
-        } else {
-          // Postbox 3, nsIEnumerator
-          myenum = aFolder.GetSubFolders();
-          try {
-            for (myenum.first(); !myenum.isDone(); myenum.next()) {
-              processFolder(myenum.currentItem().QueryInterface(Ci.nsIMsgFolder));
-            }
-          } catch (e if e.result == Components.results.NS_ERROR_FAILURE) {
-            // swallow this exception, it usually means this broken enumerator
-            // is done
-          }
+        while (myenum.hasMoreElements()) {
+          processFolder(myenum.getNext().QueryInterface(Components.interfaces.nsIMsgFolder));
         }
       }
     }
-
 
     function addIfRecent(aFolder) {
       if (!aFolder.canFileMessages) {
@@ -206,7 +183,7 @@ var quickmove = {
 
       let time = 0;
       try {
-        time = aFolder.getStringProperty("MRUTime");
+        time = Number(aFolder.getStringProperty("MRUTime")) || 0;
       } catch(ex) {}
       if (time <= oldestTime) {
         return;
@@ -215,18 +192,19 @@ var quickmove = {
       if (recentFolders.length == maxRecent) {
         recentFolders.sort(sorter);
         recentFolders.pop();
-        oldestTime = recentFolders[recentFolders.length-1].getStringProperty("MRUTime");
+        oldestTime = Number(recentFolders[recentFolders.length-1].getStringProperty("MRUTime")) || 0;
       }
       recentFolders.push(aFolder);
     }
 
+    let allFolders = [];
+    let allNames = [];
+    let recentFolders = quickmove.recentFolders = [];
+    let oldestTime = 0;
 
-    // Would use iteratorUtils but Postbox iteratorUtils doesn't support nsIArray
-    let acctMgr = Cc["@mozilla.org/messenger/account-manager;1"].
-                  getService(Ci.nsIMsgAccountManager);
-    let accounts = acctMgr.accounts;
+    let maxRecent = Services.prefs.getIntPref("extensions.quickmove.maxRecentFolders", 15);
 
-    for each (let acct in fixIterator(acctMgr.accounts, Components.interfaces.nsIMsgAccount)) {
+    for (let acct of fixIterator(MailServices.accounts.accounts, Components.interfaces.nsIMsgAccount)) {
       if (acct.incomingServer) {
         processFolder(acct.incomingServer.rootFolder);
       }
@@ -234,9 +212,6 @@ var quickmove = {
 
     quickmove.suffixTree = new MultiSuffixTree(allNames, allFolders);
 
-    function sorter(a, b) {
-      return a.getStringProperty("MRUTime") < b.getStringProperty("MRUTime");
-    }
     recentFolders.sort(sorter);
   },
 
@@ -244,7 +219,7 @@ var quickmove = {
    * Perform a search. If no search term is entered, the recent folders are
    * shown, otherwise folders which match the search term are shown.
    */
-  search: function Search(textboxNode) {
+  search: function(textboxNode) {
     let popup = textboxNode.parentNode;
     quickmove.clearItems(popup);
     if (textboxNode.value.length == 0) {
@@ -273,34 +248,23 @@ var quickmove = {
     }
   },
 
-  executeCopy: function executeCopy(folder) {
+  executeCopy: function(folder) {
     quickmove.executeMove(folder, true);
   },
 
-  executeMove: function executeMove(folder, copyNotMove) {
-    if (quickmove.platformVersionLowerThan("8.0")) {
-        // Postbox 3 compat
-        folder = folder.folderURL;
-    }
-
+  executeMove: function(folder, copyNotMove) {
     if (copyNotMove) {
       MsgCopyMessage(folder);
     } else {
-      if (quickmove.getPreference("markAsRead", "bool")) {
+      if (Services.prefs.getBoolPref("extensions.quickmove.markAsRead", true)) {
         MsgMarkMsgAsRead(true);
       }
       MsgMoveMessage(folder);
     }
   },
 
-  executeGoto: function executeGoto(folder) {
-    if (typeof gFolderTreeView == "object") {
-      // Newer Thunderbird and Seamonkey
-      gFolderTreeView.selectFolder(folder, true);
-    } else {
-      let cmds = msgWindow.windowCommands;
-      cmds.selectFolder(folder.folderURL);
-    }
+  executeGoto: function(folder) {
+    gFolderTreeView.selectFolder(folder, true);
   },
 
   focus: function(event) {
@@ -314,7 +278,7 @@ var quickmove = {
     popup.openPopupAtScreen(x, y, true);
   },
 
-  keypress: function keypress(event, executeFunc) {
+  keypress: function(event, executeFunc) {
     let popup = event.target.parentNode;
 
     // Executor function used later to execute the actual action
@@ -374,7 +338,14 @@ var quickmove = {
     event.preventDefault();
   },
 
-  openFile: function openFile() {
+  command: function(event, executeFunc) {
+    let popup = event.target.parentNode;
+    executeFunc(event.target._folder);
+    event.stopPropagation();
+    quickmove.hide(popup);
+  },
+
+  openFile: function() {
     let filebutton = document.getElementById("button-file");
     let threadTree = document.getElementById("threadTree");
     let messagepane = document.getElementById("messagepane");
@@ -390,7 +361,7 @@ var quickmove = {
       let selection = threadTree.view.selection;
       let rowOffset = treeBO.rowHeight *
                     (selection.currentIndex - treeBO.getFirstVisibleRow() + 1) +
-                    threadTreeCols.boxObject.height; 
+                    threadTreeCols.boxObject.height;
       filepopup.openPopup(threadTree, "overlap",
                           0, rowOffset);
     } else if (messagepane) {
@@ -401,10 +372,10 @@ var quickmove = {
     }
   },
 
-  openGoto: function openGoto() {
+  openGoto: function() {
     let folderLocation = document.getElementById("folder-location-container");
     let folderTree = document.getElementById("folderTree");
-    
+
     if (folderLocation) {
       // There is a folder location popup, open its popup
       let menulist = folderLocation.firstChild;
@@ -415,26 +386,49 @@ var quickmove = {
     }
   },
 
-  hide: function hide(popup) {
+  openCopy: function() {
+    let filebutton = document.getElementById("button-file");
+    let threadTree = document.getElementById("threadTree");
+    let messagepane = document.getElementById("messagepane");
+    if (threadTree) {
+      // If there is a thread tree (i.e mail 3pane), then use it
+      let filepopup = document.getElementById("quickmove-copy-menupopup");
+      let threadTreeCols = document.getElementById("threadCols");
+      let treeBO = threadTree.treeBoxObject;
+      let selection = threadTree.view.selection;
+      let rowOffset = treeBO.rowHeight *
+                    (selection.currentIndex - treeBO.getFirstVisibleRow() + 1) +
+                    threadTreeCols.boxObject.height;
+      filepopup.openPopup(threadTree, "overlap",
+                          0, rowOffset);
+    } else if (messagepane) {
+      let filepopup = document.getElementById("quickmove-compose-copy-menupopup");
+      filepopup.openPopup(messagepane, "overlap");
+    } else {
+      Components.utils.reportError("Couldn't find a node to open the panel on");
+    }
+  },
+
+  hide: function(popup) {
     popup.hidePopup();
 
     // Hiding the menupopup should clear the search text and reset ignorekeys
     // to be able to use the textbox.
     popup.firstChild.value = "";
-    event.target.setAttribute("ignorekeys", "true");
+    popup.setAttribute("ignorekeys", "true");
 
-    // Now refocus the thread pane, this way the user can continue filing
-    // messages.
-    document.getElementById("threadTree").focus();
+    // Now reference the previous node, so the user can continue filing or
+    // searching
+    if (quickmove.initiator) {
+        quickmove.initiator.focus();
+        quickmove.initiator = null;
+    }
   },
 
-  getString: function getString(aStringName, aParams) {
-    let service = Components.classes["@mozilla.org/intl/stringbundle;1"]
-                            .getService(Components.interfaces.nsIStringBundleService);
-    
-    const propName = "chrome://quickmove/locale/quickmove.properties";
+  getString: function(aStringName, aParams) {
+    let propName = "chrome://quickmove/locale/quickmove.properties";
     try {
-        let props = service.createBundle(propName);
+        let props = Services.strings.createBundle(propName);
 
         if (aParams && aParams.length) {
             return props.formatStringFromName(aStringName, aParams, aParams.length);
@@ -442,40 +436,13 @@ var quickmove = {
             return props.GetStringFromName(aStringName);
         }
     } catch (ex) {
-        var s = ("Failed to read '" + aStringName + "' from " + propName + ".");
+        let s = `Failed to read ${aStringName} from ${propName}.`;
         Components.utils.reportError(s + " Error: " + ex);
         return s;
     }
   },
 
-  getPreference: function(aName, aType) {
-    let prefName = "extensions.quickmove." + aName;
-    let prefs = Components.classes["@mozilla.org/preferences-service;1"]
-                          .getService(Components.interfaces.nsIPrefBranch);
-    switch (aType) {
-      case "bool":
-        return prefs.getBoolPref(prefName);
-      case "int":
-        return prefs.getIntPref(prefName);
-      case "string":
-        return prefs.getCharPref(prefName);
-    }
-    return null;
-  },
-
-  get platformVersion() {
-    return Cc["@mozilla.org/xre/app-info;1"]
-             .getService(Ci.nsIXULAppInfo).platformVersion;
-  },
-
-  platformVersionLowerThan: function(aVersion) {
-    let vc = Cc["@mozilla.org/xpcom/version-comparator;1"]
-                .getService(Ci.nsIVersionComparator);
-
-    return vc.compare(quickmove.platformVersion, aVersion) < 0;
-  },
-
-  getFullName: function getFullName(aFolder) {
+  getFullName: function(aFolder) {
     let folder = aFolder;
     let fullPath = [];
 
