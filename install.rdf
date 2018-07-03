@@ -10,12 +10,12 @@
     <em:id>quickmove@mozilla.kewis.ch</em:id>
     <em:type>2</em:type>
     <em:version>1.6pre</em:version>
+    <em:hasEmbeddedWebExtension>true</em:hasEmbeddedWebExtension>
 
     <em:name>Quick Folder Move</em:name>
     <em:description>Quickly move messages into other folders using the keyboard</em:description>
 
     <em:creator>Philipp Kewisch</em:creator>
-    <em:optionsType>2</em:optionsType>
     <em:iconURL>chrome://messenger/skin/activity/moveMailIcon.png</em:iconURL>
 
     <em:translator>Kostyantyn Zhytnetskyy (uk and ru)</em:translator>
@@ -48,8 +48,8 @@
     <em:targetApplication>
       <Description>
         <em:id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</em:id> <!-- thunderbird -->
-        <em:minVersion>52.0</em:minVersion>
-        <em:maxVersion>59.0</em:maxVersion>
+        <em:minVersion>60.0</em:minVersion>
+        <em:maxVersion>60.*</em:maxVersion>
       </Description>
     </em:targetApplication>
   </Description>

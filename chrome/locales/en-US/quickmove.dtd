@@ -3,10 +3,6 @@
    - file, You can obtain one at http://mozilla.org/MPL/2.0/.
    - Portions Copyright (C) Philipp Kewisch, 2010 -->
 
-<!ENTITY quickmove.options.title                           "Quick Folder Move Options">
-<!ENTITY quickmove.options.maxRecentFolders.label          "Number of Recent Folders:">
-<!ENTITY quickmove.options.maxRecentFolders.tooltip        "Changes the number of recent folders shown when no search text is entered">
-<!ENTITY quickmove.options.markAsRead.label                "Mark messages as read when moving">
 <!ENTITY quickmove.keyboard.file.key                       "m">
 <!ENTITY quickmove.keyboard.file.modifiers                 "shift">
 <!ENTITY quickmove.keyboard.goto.key                       "g">

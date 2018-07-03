@@ -1,0 +1,20 @@
+{
+  "extensionName": {
+    "message": "Quick Folder Move"
+  },
+  "extensionDescription": {
+    "message": "Швидко переміщуйте повідомлення в інші папки використовуючи сполучення клавіш"
+  },
+  "markAsRead": {
+    "message": "Позначити лист як прочитаний"
+  },
+  "markAsRead.title": {
+    "message": ""
+  },
+  "maxRecentFolders": {
+    "message": "Кількість останніх папок"
+  },
+  "maxRecentFolders.title": {
+    "message": "Змінює кількість останніх папок, що відображуються, коли не ввдено жодного тексту в поле пошуку."
+  }
+}

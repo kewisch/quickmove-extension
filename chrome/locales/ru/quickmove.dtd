@@ -2,10 +2,6 @@
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 
-<!ENTITY quickmove.options.title                           "Quick Folder Move Настройки">
-<!ENTITY quickmove.options.maxRecentFolders.label          "Количество последних папок:">
-<!ENTITY quickmove.options.maxRecentFolders.tooltip        "Изменяет количество последних папок, что отображаются, если не введен текст в поле поиска">
-<!ENTITY quickmove.options.markAsRead.label                "Пометить письмо как прочитанное">
 <!ENTITY quickmove.keyboard.file.key                       "п">
 <!ENTITY quickmove.keyboard.file.modifiers                 "shift">
 <!ENTITY quickmove.keyboard.goto.key                       "и">

@@ -3,10 +3,6 @@
    - file, You can obtain one at http://mozilla.org/MPL/2.0/.
    - Portions Copyright (C) Philipp Kewisch, 2010 -->
 
-<!ENTITY quickmove.options.title                           "Optionen für Schnelles Nachrichtenverschieben">
-<!ENTITY quickmove.options.maxRecentFolders.label          "Anzahl zuletzt verwendeter Ordner">
-<!ENTITY quickmove.options.maxRecentFolders.tooltip        "Ändert die Anzahl der zuletzt verwendeten Ordner, die angezeigt werden wenn kein Suchtext eingegeben wurde.">
-<!ENTITY quickmove.options.markAsRead.label                "Nachrichten beim Verschieben als gelesen markieren">
 <!ENTITY quickmove.keyboard.file.key                       "m">
 <!ENTITY quickmove.keyboard.file.modifiers                 "shift">
 <!ENTITY quickmove.keyboard.goto.key                       "g">

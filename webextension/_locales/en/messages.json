@@ -1,0 +1,20 @@
+{
+  "extensionName": {
+    "message": "Quick Folder Move"
+  },
+  "extensionDescription": {
+    "message": "Quickly move messages into other folders using the keyboard"
+  },
+  "markAsRead": {
+    "message": "Mark messages as read when moving"
+  },
+  "markAsRead.title": {
+    "message": ""
+  },
+  "maxRecentFolders": {
+    "message": "Number of Recent Folders"
+  },
+  "maxRecentFolders.title": {
+    "message": "Changes the number of recent folders shown when no search text is entered."
+  }
+}

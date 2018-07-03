@@ -11,6 +11,8 @@ Components.utils.import("resource:///modules/gloda/suffixtree.js");
 Components.utils.import("resource:///modules/iteratorUtils.jsm");
 Components.utils.import("resource:///modules/mailServices.js");
 
+Components.utils.import("resource://quickmove/modules/Quickmove.jsm");
+
 var quickmove = {
   /** An array of recent folders, to be shown when no search term is entered */
   recentFolders: [],
@@ -42,7 +44,7 @@ var quickmove = {
     if (focusedElement && focusedElement.id) {
       quickmove.initiator = document.commandDispatcher.focusedElement;
     }
-    quickmove.clearItems(event.target);
+    Quickmove.clearItems(event.target);
     quickmove.prepareFolders();
 
     let initialText = "";
@@ -67,15 +69,6 @@ var quickmove = {
     } else {
         event.target.firstChild.blur();
         event.target.setAttribute("ignorekeys", "true");
-    }
-  },
-
-  /**
-   * Clear all items except the menuseparator and the search box
-   */
-  clearItems: function(popup) {
-    while (popup.lastChild.className != "quickmove-separator") {
-      popup.removeChild(popup.lastChild);
     }
   },
 
@@ -124,7 +117,7 @@ var quickmove = {
         let lowerLabel = label.toLowerCase();
 
         if (lowerLabel in fullPathMap) {
-            label = quickmove.getFullName(folder);
+            label = Quickmove.getFullName(folder);
         }
 
         if ((lowerLabel in dupeMap) && dupeMap[lowerLabel] > 1) {
@@ -220,7 +213,7 @@ var quickmove = {
    */
   search: function(textboxNode) {
     let popup = textboxNode.parentNode;
-    quickmove.clearItems(popup);
+    Quickmove.clearItems(popup);
     if (textboxNode.value.length == 0) {
       quickmove.addFolders(quickmove.recentFolders, popup, textboxNode.value);
     } else {
@@ -233,7 +226,7 @@ var quickmove = {
         let node = document.createElement("menuitem");
         node.setAttribute("disabled", "true");
         node.style.textAlign = "center";
-        node.setAttribute("label", quickmove.getString("noResults"));
+        node.setAttribute("label", Quickmove.getString("noResults"));
         popup.appendChild(node);
       }
     }
@@ -422,34 +415,5 @@ var quickmove = {
         quickmove.initiator.focus();
         quickmove.initiator = null;
     }
-  },
-
-  getString: function(aStringName, aParams) {
-    let propName = "chrome://quickmove/locale/quickmove.properties";
-    try {
-        let props = Services.strings.createBundle(propName);
-
-        if (aParams && aParams.length) {
-            return props.formatStringFromName(aStringName, aParams, aParams.length);
-        } else {
-            return props.GetStringFromName(aStringName);
-        }
-    } catch (ex) {
-        let s = `Failed to read ${aStringName} from ${propName}.`;
-        Components.utils.reportError(s + " Error: " + ex);
-        return s;
-    }
-  },
-
-  getFullName: function(aFolder) {
-    let folder = aFolder;
-    let fullPath = [];
-
-    while (folder && folder.parent) {
-      fullPath.unshift(folder.prettyName);
-      folder = folder.parent;
-    }
-
-    return fullPath.join("/");
   }
 };

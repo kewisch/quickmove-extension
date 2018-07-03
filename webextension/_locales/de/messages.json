@@ -1,0 +1,20 @@
+{
+  "extensionName": {
+    "message": "Schnelles Nachrichtenverschieben"
+  },
+  "extensionDescription": {
+    "message": "Schnelles verschieben von Nachrichten in andere Ordner mit Hilfe der Tastatur"
+  },
+  "markAsRead": {
+    "message": "Nachrichten beim Verschieben als gelesen markieren"
+  },
+  "markAsRead.title": {
+    "message": ""
+  },
+  "maxRecentFolders": {
+    "message": "Anzahl zuletzt verwendeter Ordner"
+  },
+  "maxRecentFolders.title": {
+    "message": "Ändert die Anzahl der zuletzt verwendeten Ordner, die angezeigt werden wenn kein Suchtext eingegeben wurde."
+  }
+}
