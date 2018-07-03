@@ -18,6 +18,7 @@
                insertbefore="mailContext-fileHereMenu"
                onpopupshowing="quickmove.popupshowing(event)"
                onpopupshown="quickmove.popupshown(event)"
+               onpopuphidden="quickmove.hide(event.target)"
                oncommand="quickmove.command(event, quickmove.executeMove)">
       <textbox class="quickmove-textbox"
                type="search"
@@ -35,6 +36,7 @@
                insertbefore="mailContext-copyHereMenu"
                onpopupshowing="quickmove.popupshowing(event)"
                onpopupshown="quickmove.popupshown(event)"
+               onpopuphidden="quickmove.hide(event.target)"
                oncommand="quickmove.command(event, quickmove.executeCopy)">
       <textbox id="quickmove-copy-textbox"
                type="search"
@@ -51,7 +53,8 @@
                ignorekeys="true"
                insertbefore="button-filePopup"
                onpopupshowing="quickmove.popupshowing(event)"
-               onpopupshown="quickmove.popupshown(event)">
+               onpopupshown="quickmove.popupshown(event)"
+               onpopuphidden="quickmove.hide(event.target)">
       <textbox id="quickmove-filebutton-textbox"
                type="search"
                timeout="500"
@@ -68,6 +71,7 @@
            ignorekeys="true"
            onpopupshowing="quickmove.popupshowing(event)"
            onpopupshown="quickmove.popupshown(event)"
+           onpopuphidden="quickmove.hide(event.target)"
            oncommand="quickmove.command(event, quickmove.executeMove)">
       <textbox class="quickmove-textbox"
                type="search"
@@ -81,6 +85,7 @@
                ignorekeys="true"
                onpopupshowing="quickmove.popupshowing(event)"
                onpopupshown="quickmove.popupshown(event)"
+               onpopuphidden="quickmove.hide(event.target)"
                oncommand="quickmove.command(event, quickmove.executeGoto)">
       <textbox class="quickmove-textbox"
                type="search"
@@ -94,6 +99,7 @@
                ignorekeys="true"
                onpopupshowing="quickmove.popupshowing(event)"
                onpopupshown="quickmove.popupshown(event)"
+               onpopuphidden="quickmove.hide(event.target)"
                oncommand="quickmove.command(event, quickmove.executeCopy)">
       <textbox class="quickmove-textbox"
                type="search"
@@ -110,6 +116,7 @@
            ignorekeys="true"
            onpopupshowing="quickmove.popupshowing(event)"
            onpopupshown="quickmove.popupshown(event)"
+           onpopuphidden="quickmove.hide(event.target)"
            oncommand="quickmove.command(event, quickmove.executeMove)">
       <textbox class="quickmove-textbox"
                type="search"
@@ -123,6 +130,7 @@
            ignorekeys="true"
            onpopupshowing="quickmove.popupshowing(event)"
            onpopupshown="quickmove.popupshown(event)"
+           onpopuphidden="quickmove.hide(event.target)"
            oncommand="quickmove.command(event, quickmove.executeCopy)">
       <textbox class="quickmove-textbox"
                type="search"
@@ -141,6 +149,7 @@
                ignorekeys="true"
                onpopupshowing="quickmove.popupshowing(event)"
                onpopupshown="quickmove.popupshown(event)"
+               onpopuphidden="quickmove.hide(event.target)"
                oncommand="quickmove.command(event, quickmove.executeGoto)">
       <textbox class="quickmove-textbox"
                type="search"

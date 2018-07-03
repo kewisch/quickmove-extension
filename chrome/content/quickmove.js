@@ -64,12 +64,8 @@ var quickmove = {
 
   popupshown: function(event) {
     // focus the textbox
-    if (event.target.getAttribute("ignorekeys") == "true") {
-      event.target.firstChild.focus();
-    } else {
-      event.target.firstChild.blur();
-      event.target.setAttribute("ignorekeys", "true");
-    }
+    event.target.setAttribute("ignorekeys", "true");
+    event.target.firstChild.focus();
   },
 
   /**
@@ -265,12 +261,6 @@ var quickmove = {
   focus: function(event) {
     let popup = event.target.parentNode;
     popup.setAttribute("ignorekeys", "true");
-
-    // Strange enough, the menu moves by exactly 2 pixel. It needs correction:
-    let x = popup.boxObject.screenX - 2;
-    let y = popup.boxObject.screenY - 2;
-    popup.hidePopup();
-    popup.openPopupAtScreen(x, y, true);
   },
 
   keypress: function(event, executeFunc) {
@@ -306,12 +296,7 @@ var quickmove = {
       quickmove.hide(popup);
     } else if (event.keyCode == event.DOM_VK_DOWN && !popup.lastChild.disabled) {
       popup.removeAttribute("ignorekeys");
-
-      // Strange enough, the menu moves by exactly 2 pixel. It needs correction:
-      let x = popup.boxObject.screenX - 2;
-      let y = popup.boxObject.screenY - 2;
-      popup.hidePopup();
-      popup.openPopupAtScreen(x, y, true);
+      popup.firstChild.blur();
 
       // Synthesize another keydown/up cycle, this ensures the first menuitem
       // is actually focused.
@@ -357,8 +342,7 @@ var quickmove = {
       let rowOffset = treeBO.rowHeight *
                     (selection.currentIndex - treeBO.getFirstVisibleRow() + 1) +
                     threadTreeCols.boxObject.height;
-      filepopup.openPopup(threadTree, "overlap",
-        0, rowOffset);
+      filepopup.openPopup(threadTree, "overlap", 0, rowOffset);
     } else if (messagepane) {
       let filepopup = document.getElementById("quickmove-compose-menupopup");
       filepopup.openPopup(messagepane, "overlap");
@@ -393,8 +377,7 @@ var quickmove = {
       let rowOffset = treeBO.rowHeight *
                     (selection.currentIndex - treeBO.getFirstVisibleRow() + 1) +
                     threadTreeCols.boxObject.height;
-      filepopup.openPopup(threadTree, "overlap",
-        0, rowOffset);
+      filepopup.openPopup(threadTree, "overlap", 0, rowOffset);
     } else if (messagepane) {
       let filepopup = document.getElementById("quickmove-compose-copy-menupopup");
       filepopup.openPopup(messagepane, "overlap");
