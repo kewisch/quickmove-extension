@@ -49,15 +49,15 @@ var quickmove = {
 
     let initialText = "";
     if (typeof GetMessagePaneFrame != "undefined") {
-        initialText = GetMessagePaneFrame().getSelection().toString() || "";
+      initialText = GetMessagePaneFrame().getSelection().toString() || "";
     }
 
     event.target.firstChild.value = initialText;
     quickmove.dirty = false;
     if (initialText) {
-        quickmove.search(event.target.firstChild);
+      quickmove.search(event.target.firstChild);
     } else {
-        quickmove.addFolders(quickmove.recentFolders, event.target, event.target.firstChild.value);
+      quickmove.addFolders(quickmove.recentFolders, event.target, event.target.firstChild.value);
     }
     event.stopPropagation();
   },
@@ -65,10 +65,10 @@ var quickmove = {
   popupshown: function(event) {
     // focus the textbox
     if (event.target.getAttribute("ignorekeys") == "true") {
-        event.target.firstChild.focus();
+      event.target.firstChild.focus();
     } else {
-        event.target.firstChild.blur();
-        event.target.setAttribute("ignorekeys", "true");
+      event.target.firstChild.blur();
+      event.target.setAttribute("ignorekeys", "true");
     }
   },
 
@@ -80,62 +80,62 @@ var quickmove = {
    * @param targetValue The searched text
    */
   addFolders: function(folders, popup, targetValue) {
-      let dupeMap = {};
-      let serverMap = {};
-      let fullPathMap = {};
+    let dupeMap = {};
+    let serverMap = {};
+    let fullPathMap = {};
 
-      // First create a map of pretty names to find possible duplicates.
-      for (let folder of folders) {
-        let lowerName = folder.prettyName.toLowerCase();
-        let serverLowerName = folder.server.prettyName.toLowerCase();
+    // First create a map of pretty names to find possible duplicates.
+    for (let folder of folders) {
+      let lowerName = folder.prettyName.toLowerCase();
+      let serverLowerName = folder.server.prettyName.toLowerCase();
 
-        if (!(lowerName in serverMap)) {
-          serverMap[lowerName] = {};
-        }
+      if (!(lowerName in serverMap)) {
+        serverMap[lowerName] = {};
+      }
 
-        if (!(lowerName in dupeMap)) {
-          dupeMap[lowerName] = 0;
-          serverMap[lowerName][serverLowerName] = 0;
-        }
+      if (!(lowerName in dupeMap)) {
+        dupeMap[lowerName] = 0;
+        serverMap[lowerName][serverLowerName] = 0;
+      }
 
-        if (lowerName in serverMap &&
+      if (lowerName in serverMap &&
             serverLowerName in serverMap[lowerName] &&
             serverMap[lowerName][serverLowerName]) {
-          // Already in the server map, this folder needs the full path
-          fullPathMap[lowerName] = true;
-        }
-
-        serverMap[lowerName][serverLowerName] = true;
-        dupeMap[lowerName]++;
+        // Already in the server map, this folder needs the full path
+        fullPathMap[lowerName] = true;
       }
 
-      // Now add each folder, appending the server name if the folder name
-      // itself would appear more than once.
-      for (let folder of folders) {
-        let node = document.createElement("menuitem");
-        let label = folder.prettyName;
-        let lowerLabel = label.toLowerCase();
+      serverMap[lowerName][serverLowerName] = true;
+      dupeMap[lowerName]++;
+    }
 
-        if (lowerLabel in fullPathMap) {
-            label = Quickmove.getFullName(folder);
-        }
+    // Now add each folder, appending the server name if the folder name
+    // itself would appear more than once.
+    for (let folder of folders) {
+      let node = document.createElement("menuitem");
+      let label = folder.prettyName;
+      let lowerLabel = label.toLowerCase();
 
-        if ((lowerLabel in dupeMap) && dupeMap[lowerLabel] > 1) {
-          label += " - " + folder.server.prettyName;
-        }
-        node.setAttribute("label", label);
-        node._folder = folder;
-
-        node.setAttribute("class", "folderMenuItem menuitem-iconic");
-        if (lowerLabel == targetValue.toLowerCase()) {
-          // An exact match, put this at the top after the separator
-          let separator = popup.getElementsByClassName("quickmove-separator")[0];
-          popup.insertBefore(node, separator.nextSibling);
-        } else {
-          // Otherwise append to the end
-          popup.appendChild(node);
-        }
+      if (lowerLabel in fullPathMap) {
+        label = Quickmove.getFullName(folder);
       }
+
+      if ((lowerLabel in dupeMap) && dupeMap[lowerLabel] > 1) {
+        label += " - " + folder.server.prettyName;
+      }
+      node.setAttribute("label", label);
+      node._folder = folder;
+
+      node.setAttribute("class", "folderMenuItem menuitem-iconic");
+      if (lowerLabel == targetValue.toLowerCase()) {
+        // An exact match, put this at the top after the separator
+        let separator = popup.getElementsByClassName("quickmove-separator")[0];
+        popup.insertBefore(node, separator.nextSibling);
+      } else {
+        // Otherwise append to the end
+        popup.appendChild(node);
+      }
+    }
   },
 
   /**
@@ -176,7 +176,10 @@ var quickmove = {
       let time = 0;
       try {
         time = Number(aFolder.getStringProperty("MRUTime")) || 0;
-      } catch(ex) {}
+      } catch (ex) {
+        // If MRUTime is NaN, assume 0
+      }
+
       if (time <= oldestTime) {
         return;
       }
@@ -218,8 +221,8 @@ var quickmove = {
       quickmove.addFolders(quickmove.recentFolders, popup, textboxNode.value);
     } else {
       let folders = quickmove.suffixTree
-                             .findMatches(textboxNode.value.toLowerCase())
-                             .filter(x => x.canFileMessages);
+        .findMatches(textboxNode.value.toLowerCase())
+        .filter(x => x.canFileMessages);
       if (folders.length) {
         quickmove.addFolders(folders, popup, textboxNode.value);
       } else {
@@ -265,7 +268,7 @@ var quickmove = {
 
     // Strange enough, the menu moves by exactly 2 pixel. It needs correction:
     let x = popup.boxObject.screenX - 2;
-    let y = popup.boxObject.screenY - 2;;
+    let y = popup.boxObject.screenY - 2;
     popup.hidePopup();
     popup.openPopupAtScreen(x, y, true);
   },
@@ -279,7 +282,7 @@ var quickmove = {
                         event.target.nextSibling.nextSibling &&
                         event.target.nextSibling.nextSibling._folder;
       if (firstFolder) {
-          executeFunc(firstFolder);
+        executeFunc(firstFolder);
       }
     }
 
@@ -314,17 +317,17 @@ var quickmove = {
       // is actually focused.
       let keyEvent = document.createEvent("KeyboardEvent");
       keyEvent.initKeyEvent("keydown", true, true, null, false, false,
-                            false, false, keyEvent.DOM_VK_DOWN, 0);
+        false, false, keyEvent.DOM_VK_DOWN, 0);
       popup.dispatchEvent(keyEvent);
       keyEvent.initKeyEvent("keyup", true, true, null, false, false,
-                            false, false, keyEvent.DOM_VK_DOWN, 0);
+        false, false, keyEvent.DOM_VK_DOWN, 0);
       popup.dispatchEvent(keyEvent);
     } else {
       // If something was typed, then remember that we haven't searched yet.
-     quickmove.dirty = true;
+      quickmove.dirty = true;
 
-     // Don't stop propagation for normal keypresses.
-     return;
+      // Don't stop propagation for normal keypresses.
+      return;
     }
     event.stopPropagation();
     event.preventDefault();
@@ -355,7 +358,7 @@ var quickmove = {
                     (selection.currentIndex - treeBO.getFirstVisibleRow() + 1) +
                     threadTreeCols.boxObject.height;
       filepopup.openPopup(threadTree, "overlap",
-                          0, rowOffset);
+        0, rowOffset);
     } else if (messagepane) {
       let filepopup = document.getElementById("quickmove-compose-menupopup");
       filepopup.openPopup(messagepane, "overlap");
@@ -379,7 +382,6 @@ var quickmove = {
   },
 
   openCopy: function() {
-    let filebutton = document.getElementById("button-file");
     let threadTree = document.getElementById("threadTree");
     let messagepane = document.getElementById("messagepane");
     if (threadTree) {
@@ -392,7 +394,7 @@ var quickmove = {
                     (selection.currentIndex - treeBO.getFirstVisibleRow() + 1) +
                     threadTreeCols.boxObject.height;
       filepopup.openPopup(threadTree, "overlap",
-                          0, rowOffset);
+        0, rowOffset);
     } else if (messagepane) {
       let filepopup = document.getElementById("quickmove-compose-copy-menupopup");
       filepopup.openPopup(messagepane, "overlap");
@@ -412,8 +414,8 @@ var quickmove = {
     // Now reference the previous node, so the user can continue filing or
     // searching
     if (quickmove.initiator) {
-        quickmove.initiator.focus();
-        quickmove.initiator = null;
+      quickmove.initiator.focus();
+      quickmove.initiator = null;
     }
   }
 };

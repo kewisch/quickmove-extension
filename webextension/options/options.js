@@ -4,10 +4,10 @@
  * Portions Copyright (C) Philipp Kewisch, 2018 */
 
 (async function() {
-  let prefs = await browser.runtime.sendMessage({ action: "get-prefs" });
-  await browser.storage.local.set(prefs);
+  let storagePrefs = await browser.runtime.sendMessage({ action: "get-prefs" });
+  await browser.storage.local.set(storagePrefs);
 
-  for (let [name, value] of Object.entries(prefs)) {
+  for (let [name, value] of Object.entries(storagePrefs)) {
     let node = document.getElementById(name);
     if (typeof value == "boolean") {
       node.checked = value;
