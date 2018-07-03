@@ -10,7 +10,6 @@ Components.utils.import("resource://gre/modules/Services.jsm");
 Components.utils.import("resource:///modules/gloda/suffixtree.js");
 Components.utils.import("resource:///modules/iteratorUtils.jsm");
 Components.utils.import("resource:///modules/mailServices.js");
-Components.utils.import("resource://calendar/modules/calUtils.jsm");
 
 var quickmove = {
   /** An array of recent folders, to be shown when no search term is entered */
@@ -227,7 +226,7 @@ var quickmove = {
     } else {
       let folders = quickmove.suffixTree
                              .findMatches(textboxNode.value.toLowerCase())
-                             .filter(function(x) x.canFileMessages);
+                             .filter(x => x.canFileMessages);
       if (folders.length) {
         quickmove.addFolders(folders, popup, textboxNode.value);
       } else {
