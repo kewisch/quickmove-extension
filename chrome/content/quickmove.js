@@ -49,7 +49,8 @@ var quickmove = {
 
     let initialText = "";
     if (typeof GetMessagePaneFrame != "undefined") {
-      initialText = GetMessagePaneFrame().getSelection().toString() || "";
+      let selection = GetMessagePaneFrame().getSelection() || "";
+      initialText = selection.toString() || "";
     }
 
     event.target.firstChild.value = initialText;
