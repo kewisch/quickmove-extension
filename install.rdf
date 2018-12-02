@@ -9,7 +9,7 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>quickmove@mozilla.kewis.ch</em:id>
     <em:type>2</em:type>
-    <em:version>1.6</em:version>
+    <em:version>1.6.1</em:version>
     <em:hasEmbeddedWebExtension>true</em:hasEmbeddedWebExtension>
 
     <em:name>Quick Folder Move</em:name>

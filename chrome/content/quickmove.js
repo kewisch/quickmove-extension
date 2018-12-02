@@ -319,11 +319,11 @@ var quickmove = {
     event.preventDefault();
   },
 
-  command: function(event, executeFunc) {
+  command: function(event, executeFunc, isContext=false) {
     let popup = event.target.parentNode;
     executeFunc(event.target._folder);
     event.stopPropagation();
-    quickmove.hide(popup);
+    quickmove.hide(popup, isContext);
   },
 
   openFile: function() {
@@ -387,8 +387,10 @@ var quickmove = {
     }
   },
 
-  hide: function(popup) {
-    popup.hidePopup();
+  hide: function(popup, isContext=false) {
+    if (!isContext) {
+      popup.hidePopup();
+    }
 
     // Hiding the menupopup should clear the search text and reset ignorekeys
     // to be able to use the textbox.

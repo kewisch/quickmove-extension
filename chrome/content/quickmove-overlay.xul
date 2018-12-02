@@ -19,7 +19,7 @@
                onpopupshowing="quickmove.popupshowing(event)"
                onpopupshown="quickmove.popupshown(event)"
                onpopuphidden="quickmove.hide(event.target)"
-               oncommand="quickmove.command(event, quickmove.executeMove)">
+               oncommand="quickmove.command(event, quickmove.executeMove, true)">
       <textbox class="quickmove-textbox"
                type="search"
                timeout="500"
@@ -37,7 +37,7 @@
                onpopupshowing="quickmove.popupshowing(event)"
                onpopupshown="quickmove.popupshown(event)"
                onpopuphidden="quickmove.hide(event.target)"
-               oncommand="quickmove.command(event, quickmove.executeCopy)">
+               oncommand="quickmove.command(event, quickmove.executeCopy, true)">
       <textbox id="quickmove-copy-textbox"
                type="search"
                timeout="500"
