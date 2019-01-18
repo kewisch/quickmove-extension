@@ -1,0 +1,23 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Portions Copyright (C) Philipp Kewisch, 2019 */
+
+:root {
+  --menu-background-color: #EBE9E9; /* alt: Menu */
+  --menu-color: black; /* alt: MenuText */
+
+  --menu-background-color-select: #3991FC;
+  --menu-color-select: white;
+}
+
+body, html {
+  background-color: var(--menu-background-color);
+  color: var(--menu-color);
+  max-width: 42em;
+}
+
+#folderList {
+  --folder-list-item-bgcolor-hover: var(--menu-background-color-select);
+  --folder-list-item-color-hover: var(--menu-color-select)
+}

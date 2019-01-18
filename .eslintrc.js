@@ -5,6 +5,7 @@ module.exports = {
     "es6": true,
     "webextensions": true
   },
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 8
   },
