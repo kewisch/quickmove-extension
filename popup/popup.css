@@ -15,9 +15,46 @@ body, html {
   background-color: var(--menu-background-color);
   color: var(--menu-color);
   max-width: 42em;
+  min-width: 28em;
+  padding: 0;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 #folderList {
   --folder-list-item-bgcolor-hover: var(--menu-background-color-select);
-  --folder-list-item-color-hover: var(--menu-color-select)
+  --folder-list-item-color-hover: var(--menu-color-select);
+  max-height: 60em;
+}
+
+.action-buttons {
+  display: flex;
+}
+
+.action-buttons:last-child {
+  clear: both;
+}
+
+
+.action-buttons label {
+  flex-grow: 1;
+  padding: 4px 10px;
+  border-radius: 2px;
+  border: 1px solid #b1b1b1;
+  text-align: center;
+  margin: 5px;
+}
+.action-buttons input {
+  appearance: none;
+  -moz-appearance: none;
+  padding: 0;
+  margin: 0;
+}
+
+.action-buttons input:checked + label {
+  background-color: var(--menu-background-color-select);
+  color: var(--menu-color-select);
 }

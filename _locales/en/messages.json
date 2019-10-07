@@ -5,6 +5,15 @@
   "extensionDescription": {
     "message": "Quickly move messages into other folders using the keyboard"
   },
+  "actionMove": {
+    "message": "Move"
+  },
+  "actionCopy": {
+    "message": "Copy"
+  },
+  "actionGoto": {
+    "message": "Goto"
+  },
   "markAsRead": {
     "message": "Mark messages as read when moving"
   },
@@ -16,5 +25,14 @@
   },
   "maxRecentFolders.title": {
     "message": "Changes the number of recent folders shown when no search text is entered."
+  },
+  "useLegacyShortcuts": {
+    "message": "Use Legacy Shortcuts"
+  },
+  "useLegacyShortcuts.title": {
+    "message": "Use ⇧M as the shortcut for moving messages"
+  },
+  "useLegacyShortcutsDone": {
+    "message": "You can now use ⇧M ⇧Y and ⇧G. Change the keys in the extension shortcuts."
   }
 }

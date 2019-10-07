@@ -1,0 +1,52 @@
+[{
+  "namespace": "quickmove",
+  "types": [
+    {
+      "id": "MailAccount",
+      "type": "object",
+      "properties": {
+        "folders": { "type": "array", "items": { "$ref": "folders.MailFolder" }},
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string" }
+      }
+    }
+  ],
+  "functions": [
+    {
+      "name": "sortAccounts",
+      "type": "function",
+      "async": true,
+      "parameters": [
+        { "name": "accounts", "type": "array", "items": { "$ref": "MailAccount" } }
+      ]
+    },{
+      "name": "query",
+      "type": "function",
+      "async": true,
+      "parameters": [
+        {
+          "name": "options",
+          "type": "object",
+          "properties": {
+            "canFileMessages": { "type": "boolean", "optional": true },
+            "recent": { "type": "boolean", "optional": true },
+            "limit": { "type": "integer", "optional": true }
+          }
+        }
+      ]
+    },{
+      "name": "migrateShortcut",
+      "type": "function",
+      "async": true,
+      "parameters": []
+    },{
+      "name": "focusThreadTree",
+      "type": "function",
+      "async": false,
+      "parameters": [
+        { "name": "tabId", "type": "integer", "minimum": 1 }
+      ]
+    }
+  ]
+}]

@@ -12,6 +12,14 @@
     <script type="module" src="popup.js"></script>
   </head>
   <body>
+    <div class="action-buttons">
+      <input type="radio" name="action" value="move" id="action-move" checked>
+      <label for="action-move" data-l10n-id="actionMove"></label>
+      <input type="radio" name="action" value="copy" id="action-copy">
+      <label for="action-copy" data-l10n-id="actionCopy"></label>
+      <input type="radio" name="action" value="goto" id="action-goto">
+      <label for="action-goto" data-l10n-id="actionGoto"></label>
+    </div>
     <folder-list id="folderList" search="true"></folder-list>
   </body>
 </html>

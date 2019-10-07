@@ -30,6 +30,9 @@ class TBFolderList extends HTMLElement {
         all: initial;
         font: inherit;
         background-color: inherit;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
       }
 
       .search-header {
@@ -44,7 +47,7 @@ class TBFolderList extends HTMLElement {
       }
 
 
-      .search-input { 
+      .search-input {
         background-color: var(--folder-list-search-bgcolor, #fff);
         border: 1px solid var(--folder-list-search-border, #b1b1b1);
         box-shadow: 0 0 0 0 rgba(97, 181, 255, 0);
@@ -58,24 +61,35 @@ class TBFolderList extends HTMLElement {
         display: flex;
         flex-direction: column;
         padding: 5px 0;
+        overflow: auto;
       }
 
-      .folder-item {
+      .folder-item, .account-item {
+        cursor: default;
         align-items: center;
         display: flex;
         flex-direction: row;
-        height: 1.846em;
-        padding: 0 1.231em;
+        line-height: 1.5em;
+        border-bottom: 1px solid transparent;
+        border-top: 1px solid transparent;
+        padding: 0 10px;
       }
 
-      .folder-item:not(.disabled):hover {
+      .account-item {
+        background-color: rgba(0, 0, 0, 0.06);
+        color: black;
+        border-top: 1px solid #999;
+        border-bottom: 1px solid #999;
+      }
+
+      .folder-item:not(.disabled).selected {
         background-color: var(--folder-list-item-bgcolor-hover, rgba(0, 0, 0, 0.06));
         color: var(--folder-list-item-color-hover, rgba(0, 0, 0, 0.06));
         border-bottom: 1px solid var(--folder-list-item-border, rgba(0, 0, 0, 0.1));
         border-top: 1px solid var(--folder-list-item-border, rgba(0, 0, 0, 0.1));
       }
 
-      .folder-item:not(.disabled):hover:active {
+      .folder-item:not(.disabled).selected:active {
         background-color: var(--folder-list-item-bgcolor-active, rgba(0, 0, 0, 0.1));
         color: var(--folder-list-item-color-active, inherit);
       }
@@ -84,12 +98,12 @@ class TBFolderList extends HTMLElement {
         color: var(--folder-list-item-color-disabled, #999);
       }
 
-      .folder-item .icon {
+      .folder-item .icon, .account-item .icon {
         flex-grow: 0;
         flex-shrink: 0;
       }
 
-      .folder-item > .text {
+      .folder-item > .text, .accoint-item > .text {
         flex-grow: 10;
       }
 
@@ -135,9 +149,34 @@ class TBFolderList extends HTMLElement {
         background-position: -192px;
       }
 
+      .account-item > .icon {
+        background: url(../images/server.png) no-repeat 0 0;
+        width: 16px;
+        height: 16px;
+        margin-inline-end: 5px;
+      }
+      .account-item .icon.account-type-rss {
+        background-position: -80px;
+
+      }
+      .account-item .icon.account-type-imap,
+      .account-item .icon.account-type-pop3 {
+        background-position: -16px;
+      }
+      .account-item .icon.account-type-nntp {
+        background-position: -48px;
+      }
+      .account-item .icon.account-type-none {
+        background-position: -32px;
+      }
+
       @media (min-resolution: 2dppx) {
         .folder-item > .icon {
           background: url(../images/folder-pane@2x.png) no-repeat 0 0;
+          background-size: cover;
+        }
+        .account-item > .icon {
+          background: url(../images/server@2x.png) no-repeat 0 0;
           background-size: cover;
         }
       }
@@ -153,11 +192,17 @@ class TBFolderList extends HTMLElement {
           <div class="text-shortcut"></div>
         </div>
       </template>
-        
+      <template class="account-item-template">
+        <div class="account-item">
+          <div class="icon"></div>
+          <div class="text"></div>
+        </div>
+      </template>
+
       <div class="search-header">
         <input type="text" class="search-input" autocomplete="off"/>
       </div>
-      <div class="folder-list-body">
+      <div class="folder-list-body" tabindex="0">
       </div>
     `;
   }
@@ -168,24 +213,136 @@ class TBFolderList extends HTMLElement {
     let shadow = this.attachShadow({ mode: "open" });
     shadow.innerHTML = `<style>${TBFolderList.style}</style>${TBFolderList.content}`;
 
-    this.searchInputCallback = this.searchInputCallback.bind(this);
+    function debounce(callback, wait) {
+      let timeout;
+      return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(callback.bind(this, ...args), wait);
+      };
+    }
+
+    this.searchInputCallback = debounce(this.searchInputCallback.bind(this), 200);
     this.folderListClick = this.folderListClick.bind(this);
+    this.folderListSelect = this.folderListSelect.bind(this);
+    this.folderListKeyDown = this.folderListKeyDown.bind(this);
+    this.folderListSelectLeave = this.folderListSelectLeave.bind(this);
+    this.searchKeyCallback = this.searchKeyCallback.bind(this);
+
+    this._accounts = {};
+    this._defaultFolders = null;
   }
 
   connectedCallback() {
     this.shadowRoot.querySelector(".search-input").addEventListener("input", this.searchInputCallback);
+    this.shadowRoot.querySelector(".search-input").addEventListener("keyup", this.searchKeyCallback);
     this.shadowRoot.querySelector(".folder-list-body").addEventListener("click", this.folderListClick);
+    this.shadowRoot.querySelector(".folder-list-body").addEventListener("keydown", this.folderListKeyDown);
+    this.shadowRoot.querySelector(".folder-list-body").addEventListener("mouseover", this.folderListSelect);
+    this.shadowRoot.querySelector(".folder-list-body").addEventListener("mouseleave", this.folderListSelectLeave);
   }
 
   disconnectedCallback() {
     this.shadowRoot.querySelector(".search-input").removeEventListener("input", this.searchInputCallback);
+    this.shadowRoot.querySelector(".search-input").removeEventListener("keyup", this.searchKeyCallback);
     this.shadowRoot.querySelector(".folder-list-body").removeEventListener("click", this.folderListClick);
+    this.shadowRoot.querySelector(".folder-list-body").removeEventListener("keydown", this.folderListKeyDown);
+    this.shadowRoot.querySelector(".folder-list-body").removeEventListener("mouseover", this.folderListSelect);
+    this.shadowRoot.querySelector(".folder-list-body").removeEventListener("mouseleave", this.folderListSelectLeave);
+  }
+
+  get search() {
+    return this.shadowRoot.querySelector(".search-input");
+  }
+
+  get selected() {
+    return this.shadowRoot.querySelector(".folder-list-body .folder-item.selected");
+  }
+  set selected(item) {
+    let selected = this.selected;
+    if (selected) {
+      selected.classList.remove("selected");
+    }
+
+    if (item) {
+      item.classList.add("selected");
+      item.scrollIntoView({ block: "nearest", inline: "start" });
+    }
+  }
+
+  nthFolder(n) {
+    let folderList = this.shadowRoot.querySelector(".folder-list-body");
+    let topFolderItem = folderList.firstElementChild;
+    for (; n > 0; n--) {
+      while (topFolderItem && !topFolderItem.classList.contains("folder-item")) {
+        topFolderItem = topFolderItem.nextElementSibling;
+      }
+    }
+    return topFolderItem;
+  }
+
+  folderListSelectLeave(event) {
+    this.selected = null;
+  }
+
+  folderListSelect(event) {
+    let item = event.target.closest(".folder-item");
+    if (!item) {
+      return;
+    }
+
+    this.selected = item;
+    this.shadowRoot.querySelector(".folder-list-body").focus();
+  }
+
+  _ensureFolder(origin, direction) {
+    let target = origin;
+    while (target && !target.classList.contains("folder-item")) {
+      target = target[direction];
+    }
+    return target;
+  }
+
+  folderListKeyDown(event) {
+    if (event.key == "ArrowDown" || event.key == "ArrowUp") {
+      let direction = event.key == "ArrowDown" ? "nextElementSibling" : "previousElementSibling";
+      let folderItem = this.selected;
+      let target = this._ensureFolder(folderItem && folderItem[direction], direction);
+      if (target) {
+        this.selected = target;
+        this.shadowRoot.querySelector(".folder-list-body").focus();
+      } else {
+        this.focusSearch();
+      }
+      event.preventDefault();
+    } else if (event.key == "Enter") {
+      this.dispatchSelect(this.selected);
+    }
   }
 
   folderListClick(event) {
-    let folderItem = event.target.closest(".folder-item");
-    let customEvent = new CustomEvent("folder-selected", { detail: folderItem.folder });
-    this.dispatchEvent(customEvent);
+    this.dispatchSelect(event.target.closest(".folder-item"));
+  }
+
+  dispatchSelect(item) {
+    let folderItem = item || this.selected;
+    if (folderItem) {
+      let customEvent = new CustomEvent("folder-selected", { detail: folderItem.folder });
+      this.dispatchEvent(customEvent);
+    }
+  }
+
+  searchKeyCallback(event) {
+    if (event.key == "Enter") {
+      let selected = this.selected || this.nthFolder(1);
+
+      if (selected) {
+        let customEvent = new CustomEvent("folder-selected", { detail: selected.folder });
+        this.dispatchEvent(customEvent);
+      }
+    } else if (event.key == "ArrowDown") {
+      this.selected = this.nthFolder(1);
+      this.shadowRoot.querySelector(".folder-list-body").focus();
+    }
   }
 
   searchInputCallback() {
@@ -205,13 +362,36 @@ class TBFolderList extends HTMLElement {
     let body = this.shadowRoot.querySelector(".folder-list-body");
 
     let item = this.shadowRoot.ownerDocument.importNode(template.content, true);
-    item.querySelector(".icon").classList.add("folder-type-" + folder.type);
+    item.querySelector(".icon").classList.add("folder-type-" + (folder.type || "folder"));
     item.querySelector(".icon").style.marginInlineStart = (depth * 10) + "px";
     item.querySelector(".text").textContent = folder.name;
 
-    item.folder = folder;
+    item.querySelector(".folder-item").folder = folder;
+    item.querySelector(".folder-item").setAttribute("title", folder.path);
+
+    if (!body.lastElementChild || body.lastElementChild.folder.accountId != folder.accountId) {
+      let accountTemplate = this.shadowRoot.querySelector(".account-item-template");
+      let accountItem = this.shadowRoot.ownerDocument.importNode(accountTemplate.content, true);
+      let account = this._accounts[folder.accountId];
+
+      if (account) {
+        accountItem.querySelector(".text").textContent = account.name;
+        accountItem.querySelector(".icon").classList.add("account-type-" + account.type);
+
+        accountItem.querySelector(".account-item").account = account;
+        body.appendChild(accountItem);
+      }
+    }
 
     body.appendChild(item);
+  }
+
+  get accounts() {
+    return Object.values(this._accounts);
+  }
+
+  set accounts(val) {
+    this._accounts = Object.fromEntries(val.map(account => [account.id, account]));
   }
 
   get allFolders() {
@@ -224,7 +404,7 @@ class TBFolderList extends HTMLElement {
   }
 
   get defaultFolders() {
-    return this._defaultFolders || this._allFolders;
+    return this._defaultFolders;
   }
 
   set defaultFolders(val) {
@@ -241,6 +421,14 @@ class TBFolderList extends HTMLElement {
     this.repopulate();
   }
 
+  focusSearch() {
+    this.search.focus();
+    let selected = this.shadowRoot.querySelector(".folder-list-body .folder-item.selected");
+    if (selected) {
+      selected.classList.remove("selected");
+    }
+  }
+
   repopulate() {
     let lowerSearchTerm = this.searchValue.toLowerCase();
     this._clearFolders();
@@ -248,12 +436,15 @@ class TBFolderList extends HTMLElement {
     if (lowerSearchTerm) {
       for (let folder of this.allFolders) {
         if (folder.name.toLowerCase().includes(lowerSearchTerm)) {
-          let depth = (folder.path.match(/\//g) || []).length - 1;
-          this._addFolder(folder.name, folder.type, depth);
+          this._addFolder(folder, 0);
         }
       }
-    } else {
+    } else if (this.defaultFolders) {
       for (let folder of this.defaultFolders) {
+        this._addFolder(folder, 0);
+      }
+    } else {
+      for (let folder of this.allFolders) {
         let depth = (folder.path.match(/\//g) || []).length - 1;
         this._addFolder(folder, depth);
       }
