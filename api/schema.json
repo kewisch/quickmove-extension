@@ -41,6 +41,11 @@
       "async": true,
       "parameters": []
     },{
+      "name": "openPopup",
+      "type": "function",
+      "async": true,
+      "parameters": []
+    },{
       "name": "focusThreadTree",
       "type": "function",
       "async": false,

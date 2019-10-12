@@ -70,7 +70,7 @@ function folderURIToPath(uri) {
 
 this.quickmove = class extends ExtensionAPI {
   getAPI(context) {
-    let { tabManager } = context.extension;
+    let { apiManager, tabManager } = context.extension;
 
     return {
       quickmove: {
@@ -141,6 +141,13 @@ this.quickmove = class extends ExtensionAPI {
             throw new ExtensionError("Not a Tabmail Tab");
           }
           tabmail.ownerGlobal.document.getElementById("threadTree").focus();
+        },
+
+        // Bug 1579031 - Implement browserAction.openPopup
+        async openPopup() {
+          let window = Cu.getGlobalForObject(tabManager).windowTracker.topWindow;
+          let browserAction = await apiManager.getAPI("browserAction", context.extension);
+          await browserAction.triggerAction(window);
         }
       }
     };

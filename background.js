@@ -44,7 +44,7 @@ browser.runtime.onInstalled.addListener(({ reason, previousVersion }) => {
 
 browser.commands.onCommand.addListener((name) => {
   lastBrowserActionCommand = name;
-  browser.browserAction.openPopup();
+  browser.quickmove.openPopup();
 });
 
 browser.runtime.onMessage.addListener(async (message, sender) => {
