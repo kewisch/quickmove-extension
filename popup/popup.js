@@ -24,7 +24,7 @@ async function load() {
   let accountNodes = accounts.map(account => new AccountNode(account));
   let folders = accountNodes.reduce((acc, node) => acc.concat([...node]), []);
 
-  let { maxRecentFolders } = browser.storage.local.get({ maxRecentFolders: 15 });
+  let { maxRecentFolders } = await browser.storage.local.get({ maxRecentFolders: 15 });
   let recent = await browser.quickmove.query({ recent: true, limit: maxRecentFolders, canFileMessages: true });
 
   let folderList = document.getElementById("folderList");
