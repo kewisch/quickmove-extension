@@ -36,7 +36,6 @@ async function processSelectedMessages(folder, operation="move") {
 }
 
 browser.runtime.onInstalled.addListener(({ reason, previousVersion }) => {
-  console.log(previousVersion, reason);
   if (previousVersion && previousVersion.startsWith("1.")) {
     browser.quickmove.migrateShortcut();
   }
@@ -56,7 +55,6 @@ browser.runtime.onMessage.addListener(async (message, sender) => {
     lastBrowserActionCommand = null;
     return command;
   } else if (message.action == "processSelectedMessages") {
-    console.log(message);
     return processSelectedMessages(message.folder, message.operation);
   } else {
     console.error("Unexpected message", message);
