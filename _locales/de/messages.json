@@ -16,5 +16,8 @@
   },
   "maxRecentFolders.title": {
     "message": "Ändert die Anzahl der zuletzt verwendeten Ordner, die angezeigt werden wenn kein Suchtext eingegeben wurde."
+  },
+  "noResults": {
+    "message": "<Keine Ergebnisse>"
   }
 }

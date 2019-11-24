@@ -4,11 +4,17 @@
  * Portions Copyright (C) Philipp Kewisch, 2018 */
 
 (async function() {
-  let storagePrefs = await browser.runtime.sendMessage({ action: "get-prefs" });
-  await browser.storage.local.set(storagePrefs);
+  let prefs = await browser.storage.local.get({
+    markAsRead: true,
+    maxRecentFolders: 15
+  });
 
-  for (let [name, value] of Object.entries(storagePrefs)) {
+  for (let [name, value] of Object.entries(prefs)) {
     let node = document.getElementById(name);
+    if (!node) {
+      continue;
+    }
+
     if (typeof value == "boolean") {
       node.checked = value;
     } else {
@@ -28,11 +34,9 @@
   }
 
   document.body.addEventListener("change", () => {
-    let prefs = {
+    browser.storage.local.set({
       maxRecentFolders: parseInt(document.getElementById("maxRecentFolders").value, 10),
       markAsRead: document.getElementById("markAsRead").checked
-    };
-    browser.runtime.sendMessage({ action: "set-prefs", prefs: prefs });
-    browser.storage.local.set(prefs);
+    });
   });
 })();
