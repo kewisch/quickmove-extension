@@ -20,6 +20,12 @@
   "markAsRead.title": {
     "message": ""
   },
+  "showFolderPath": {
+    "message": "Show full path of each folder in search box"
+  },
+  "showFolderPath.title": {
+    "message": ""
+  },
   "maxRecentFolders": {
     "message": "Number of Recent Folders"
   },

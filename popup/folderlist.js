@@ -112,6 +112,7 @@ class TBFolderList extends HTMLElement {
         font-family: "Lucida Grande", caption;
         font-size: .847em;
         justify-content: flex-end;
+        margin-inline-start: 5px;
       }
 
       .folder-item > .icon {
@@ -230,6 +231,7 @@ class TBFolderList extends HTMLElement {
 
     this._accounts = {};
     this._defaultFolders = null;
+    this._showFolderPath = false;
   }
 
   connectedCallback() {
@@ -365,6 +367,9 @@ class TBFolderList extends HTMLElement {
     item.querySelector(".icon").classList.add("folder-type-" + (folder.type || "folder"));
     item.querySelector(".icon").style.marginInlineStart = (depth * 10) + "px";
     item.querySelector(".text").textContent = folder.name;
+    if (this._showFolderPath) {
+      item.querySelector(".text-shortcut").textContent = folder.path.split('/').slice(0, -1).join('/');
+    }
 
     item.querySelector(".folder-item").folder = folder;
     item.querySelector(".folder-item").setAttribute("title", folder.path);
@@ -429,7 +434,13 @@ class TBFolderList extends HTMLElement {
     }
   }
 
-  repopulate() {
+  async repopulate() {
+    let vars = await browser.storage.local.get({ showFolderPath: true });
+    this._showFolderPath = vars.showFolderPath;
+    this._repopulate();
+  }
+
+  _repopulate() {
     let lowerSearchTerm = this.searchValue.toLowerCase();
     this._clearFolders();
 
