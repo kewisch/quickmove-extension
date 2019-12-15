@@ -1,7 +1,7 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- * Portions Copyright (C) Philipp Kewisch, 2009-2013 */
+ * Portions Copyright (C) Philipp Kewisch, 2009-2019 */
 
 "use strict";
 
@@ -336,7 +336,7 @@ var quickmove = (function() {
     },
 
     searchDelayed: Quickmove.debounce((textboxNode) => {
-      this.search(textboxNode);
+      quickmove.search(textboxNode);
     }, 500),
 
     executeCopy: function(folder) {

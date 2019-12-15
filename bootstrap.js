@@ -14,18 +14,26 @@ var { Services } = ChromeUtils.import(
 /* exported startup, shutdown, install, uninstall */
 
 function initScript(window, document) {
-  return new Promise((resolve) => {
-    let script = document.createElement("script");
-    script.src = "resource://quickmove/content/quickmove.js";
-    script.id = "quickmove-script";
-    script.addEventListener("load", () => {
-      window.quickmove.cleanup.push(() => {
-        document.getElementById("quickmove-script").remove();
-        window.quickmove = null;
-      });
-      resolve();
-    });
-    document.documentElement.appendChild(script);
+  Services.scriptloader.loadSubScript("chrome://quickmove/content/quickmove.js", window);
+  window.quickmove.cleanup.push(() => {
+    delete window.quickmove;
+  });
+}
+
+function initCSS(window, document) {
+  let link = document.createElementNS(
+    "http://www.w3.org/1999/xhtml",
+    "link"
+  );
+
+  link.setAttribute("id", "quickmove-styles");
+  link.setAttribute("rel", "stylesheet");
+  link.setAttribute("type", "text/css");
+  link.setAttribute("href", "chrome://quickmove/content/quickmove.css");
+
+  document.documentElement.appendChild(link);
+  window.quickmove.cleanup.push(() => {
+    document.getElementById("quickmove-styles").remove();
   });
 }
 
@@ -107,7 +115,9 @@ function initButtonFile(window, document) {
     </menupopup>
   `);
 
-  buttonFilePopup.oldPopup = buttonFile.replaceChild(buttonFilePopup, buttonFile.menupopup);
+  let menupopup = buttonFile.querySelector("#button-filePopup");
+
+  buttonFilePopup.oldPopup = buttonFile.replaceChild(buttonFilePopup, menupopup);
 
   window.quickmove.cleanup.push(() => {
     buttonFile = document.getElementById("button-file") ||
@@ -202,9 +212,6 @@ function initFolderLocation(window, document) {
 }
 
 function startup(data, reason) {
-  let reshandler = Services.io.getProtocolHandler("resource").QueryInterface(Ci.nsIResProtocolHandler);
-  reshandler.setSubstitution("quickmove", data.resourceURI);
-
   ExtensionSupport.registerWindowListener("quickmove", {
     chromeURLs: [
       "chrome://messenger/content/messageWindow.xul",
@@ -213,7 +220,8 @@ function startup(data, reason) {
     onLoadWindow: async function(window) {
       let document = window.document;
 
-      await initScript(window, document);
+      initScript(window, document);
+      initCSS(window, document);
       initKeys(window, document);
 
       initButtonFile(window, document);
@@ -242,9 +250,6 @@ function shutdown() {
       }
     }
   }
-
-  let reshandler = Services.io.getProtocolHandler("resource").QueryInterface(Ci.nsIResProtocolHandler);
-  reshandler.setSubstitution("quickmove", null);
 }
 
 function install() {}
