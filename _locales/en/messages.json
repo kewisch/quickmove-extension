@@ -16,5 +16,8 @@
   },
   "maxRecentFolders.title": {
     "message": "Changes the number of recent folders shown when no search text is entered."
+  },
+  "noResults": {
+    "message": "<no results>"
   }
 }
