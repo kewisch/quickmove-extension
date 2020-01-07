@@ -291,7 +291,6 @@ class TBFolderList extends HTMLElement {
     }
 
     this.selected = item;
-    this.shadowRoot.querySelector(".folder-list-body").focus();
   }
 
   _ensureFolder(origin, direction) {
