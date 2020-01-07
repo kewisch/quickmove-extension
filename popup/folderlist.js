@@ -49,6 +49,7 @@ class TBFolderList extends HTMLElement {
 
       .search-input {
         background-color: var(--folder-list-search-bgcolor, #fff);
+        color: var(--folder-list-search-color, #000);
         border: 1px solid var(--folder-list-search-border, #b1b1b1);
         box-shadow: 0 0 0 0 rgba(97, 181, 255, 0);
         font: caption;
@@ -77,9 +78,13 @@ class TBFolderList extends HTMLElement {
 
       .account-item {
         background-color: rgba(0, 0, 0, 0.06);
-        color: black;
+        color: var(--folder-list-item-color);
         border-top: 1px solid #999;
         border-bottom: 1px solid #999;
+      }
+
+      .folder-item {
+        color: var(--folder-list-item-color);
       }
 
       .folder-item:not(.disabled).selected {
@@ -291,7 +296,7 @@ class TBFolderList extends HTMLElement {
     }
 
     this.selected = item;
-    this.shadowRoot.querySelector(".folder-list-body").focus();
+    //this.shadowRoot.querySelector(".folder-list-body").focus();
   }
 
   _ensureFolder(origin, direction) {
