@@ -215,7 +215,11 @@ function startup(data, reason) {
   ExtensionSupport.registerWindowListener("quickmove", {
     chromeURLs: [
       "chrome://messenger/content/messageWindow.xul",
-      "chrome://messenger/content/messenger.xul"
+      "chrome://messenger/content/messenger.xul",
+
+      // Thunderbird 72+
+      "chrome://messenger/content/messageWindow.xhtml",
+      "chrome://messenger/content/messenger.xhtml"
     ],
     onLoadWindow: async function(window) {
       let document = window.document;
@@ -227,9 +231,9 @@ function startup(data, reason) {
       initButtonFile(window, document);
       initContextMenus(window, document);
 
-      if (window.location.href == "chrome://messenger/content/messageWindow.xul") {
+      if (window.location.href.startsWith("chrome://messenger/content/messageWindow.")) {
         document.getElementById("quickmove-goto").remove();
-      } else if (window.location.href == "chrome://messenger/content/messenger.xul") {
+      } else if (window.location.href.startsWith("chrome://messenger/content/messenger.")) {
         initFolderLocation(window, document);
       }
     }
