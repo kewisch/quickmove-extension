@@ -19,5 +19,11 @@
   },
   "noResults": {
     "message": "<no results>"
+  },
+  "excludeArchives": {
+    "message": "Exclude Archives folder from search results"
+  },
+  "excludeArchives.title": {
+    "message": ""
   }
 }

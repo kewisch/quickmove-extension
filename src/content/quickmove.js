@@ -77,10 +77,12 @@ var quickmove = (function() {
       await storage.local.set({
         maxRecentFolders: Services.prefs.getIntPref("extensions.quickmove.maxRecentFolders", 15),
         markAsRead: Services.prefs.getBoolPref("extensions.quickmove.markAsRead", true),
+        excludeArchives: Services.prefs.getBoolPref("extensions.quickmove.excludeArchives", false)
       });
 
       Services.prefs.clearUserPref("extensions.quickmove.maxRecentFolders");
       Services.prefs.clearUserPref("extensions.quickmove.markAsRead");
+      Services.prefs.clearUserPref("extensions.quickmove.excludeArchives");
     },
 
     debounce: function(func, wait, immediate) {
@@ -253,8 +255,13 @@ var quickmove = (function() {
        * to iterate through any sub-sub-folders.
        *
        * @param aFolder  the folder to check
+       * @param excludeArchives  if Archives folder must be excluded
        */
-      function processFolder(aFolder) {
+      function processFolder(aFolder, excludeArchives) {
+         if (excludeArchives 
+          && aFolder.isSpecialFolder(Ci.nsMsgFolderFlags.Archive, false)) {
+           return;
+        }
         addIfRecent(aFolder);
         allFolders.push(aFolder);
         allNames.push(aFolder.prettyName.toLowerCase());
@@ -262,7 +269,7 @@ var quickmove = (function() {
         if (aFolder.hasSubFolders) {
           let myenum = aFolder.subFolders;
           while (myenum.hasMoreElements()) {
-            processFolder(myenum.getNext().QueryInterface(Ci.nsIMsgFolder));
+            processFolder(myenum.getNext().QueryInterface(Ci.nsIMsgFolder), excludeArchives);
           }
         }
       }
@@ -298,10 +305,11 @@ var quickmove = (function() {
       let oldestTime = 0;
 
       let maxRecent = await Quickmove.getPref("maxRecentFolders", 15);
+      let excludeArchives = await Quickmove.getPref("excludeArchives", false);
 
       for (let acct of fixIterator(MailServices.accounts.accounts, Ci.nsIMsgAccount)) {
         if (acct.incomingServer) {
-          processFolder(acct.incomingServer.rootFolder);
+          processFolder(acct.incomingServer.rootFolder, excludeArchives);
         }
       }
 
