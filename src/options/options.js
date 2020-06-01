@@ -7,6 +7,7 @@
   let prefs = await browser.storage.local.get({
     markAsRead: true,
     maxRecentFolders: 15,
+    excludeArchives: false
   });
 
   for (let [name, value] of Object.entries(prefs)) {
@@ -37,6 +38,7 @@
     browser.storage.local.set({
       maxRecentFolders: parseInt(document.getElementById("maxRecentFolders").value, 10),
       markAsRead: document.getElementById("markAsRead").checked,
+      excludeArchives: document.getElementById("excludeArchives").checked
     });
   });
 })();
