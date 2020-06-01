@@ -1,0 +1,29 @@
+{
+  "extensionName": {
+    "message": "Déplacement rapide"
+  },
+  "extensionDescription": {
+    "message": "Déplacez rapidement les messages dans d'autres dossiers au clavier"
+  },
+  "markAsRead": {
+    "message": "Marquer les messages comme lus lors du déplacement"
+  },
+  "markAsRead.title": {
+    "message": ""
+  },
+  "maxRecentFolders": {
+    "message": "Nombre de dossiers récents"
+  },
+  "maxRecentFolders.title": {
+    "message": "Modifie le nombre de dossiers récents affichés lorsque aucun texte de recherche n'est saisi."
+  },
+  "noResults": {
+    "message": "<pas de résultats>"
+  },
+  "excludeArchives": {
+    "message": "Exclure le dossier des Archives des résultats de recherche"
+  },
+  "excludeArchives.title": {
+    "message": ""
+  }
+}
