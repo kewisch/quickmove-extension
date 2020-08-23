@@ -11,6 +11,7 @@ module.exports = {
   "root": true,
   "env": {
     "es6": true,
+    "webextensions": true,
   },
   "parser": "babel-eslint",
 

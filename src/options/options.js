@@ -6,7 +6,7 @@
 (async function() {
   let prefs = await browser.storage.local.get({
     markAsRead: true,
-    maxRecentFolders: 15
+    maxRecentFolders: 15,
   });
 
   for (let [name, value] of Object.entries(prefs)) {
@@ -36,7 +36,7 @@
   document.body.addEventListener("change", () => {
     browser.storage.local.set({
       maxRecentFolders: parseInt(document.getElementById("maxRecentFolders").value, 10),
-      markAsRead: document.getElementById("markAsRead").checked
+      markAsRead: document.getElementById("markAsRead").checked,
     });
   });
 })();

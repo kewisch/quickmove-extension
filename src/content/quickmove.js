@@ -3,16 +3,19 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch, 2009-2019 */
 
+/* global Services, GetMessagePaneFrame, fixIterator, MailServices, MsgCopyMessage,
+ *        MsgMarkMsgAsRead, MsgMoveMessage, gFolderTreeView */
+
 "use strict";
 
 var quickmove = (function() {
   const ADDON_ID = "quickmove@mozilla.kewis.ch";
 
-  var { MultiSuffixTree } = ChromeUtils.import("resource:///modules/gloda/SuffixTree.jsm");
-  var { ExtensionParent } = ChromeUtils.import("resource://gre/modules/ExtensionParent.jsm");
+  let { MultiSuffixTree } = ChromeUtils.import("resource:///modules/gloda/SuffixTree.jsm");
+  let { ExtensionParent } = ChromeUtils.import("resource://gre/modules/ExtensionParent.jsm");
 
-  var Quickmove = {
-    getWXAPI(name, sync=false) {
+  let Quickmove = {
+    getWXAPI(name, sync = false) {
       function implementation(api) {
         let impl = api.getAPI({ extension })[name];
 
@@ -30,7 +33,7 @@ var quickmove = (function() {
         let api = extension.apiManager.getAPI(name, extension, "addon_parent");
         return implementation(api);
       } else {
-        return extension.apiManager.asyncGetAPI(name, extension, "addon_parent").then((api) => {
+        return extension.apiManager.asyncGetAPI(name, extension, "addon_parent").then(api => {
           return implementation(api);
         });
       }
@@ -61,7 +64,7 @@ var quickmove = (function() {
       }
     },
 
-    getPref: async function(name, defaultValue=null) {
+    getPref: async function(name, defaultValue = null) {
       let storage = await this.getWXAPI("storage");
       let prefs = await storage.local.get({ [name]: defaultValue });
 
@@ -73,7 +76,7 @@ var quickmove = (function() {
 
       await storage.local.set({
         maxRecentFolders: Services.prefs.getIntPref("extensions.quickmove.maxRecentFolders", 15),
-        markAsRead: Services.prefs.getBoolPref("extensions.quickmove.markAsRead", true)
+        markAsRead: Services.prefs.getBoolPref("extensions.quickmove.markAsRead", true),
       });
 
       Services.prefs.clearUserPref("extensions.quickmove.maxRecentFolders");
@@ -122,7 +125,6 @@ var quickmove = (function() {
     /** Element last focused when the popup was initiated */
     initiator: null,
 
-
     /**
      * Event listener method to be called when the 'move to' or 'copy to'
      * context menu is shown.
@@ -151,7 +153,11 @@ var quickmove = (function() {
         if (initialText) {
           quickmove.search(event.target.firstChild);
         } else {
-          quickmove.addFolders(quickmove.recentFolders, event.target, event.target.firstChild.value);
+          quickmove.addFolders(
+            quickmove.recentFolders,
+            event.target,
+            event.target.firstChild.value
+          );
         }
       });
       event.stopPropagation();
@@ -189,9 +195,11 @@ var quickmove = (function() {
           serverMap[lowerName][serverLowerName] = 0;
         }
 
-        if (lowerName in serverMap &&
-              serverLowerName in serverMap[lowerName] &&
-              serverMap[lowerName][serverLowerName]) {
+        if (
+          lowerName in serverMap &&
+          serverLowerName in serverMap[lowerName] &&
+          serverMap[lowerName][serverLowerName]
+        ) {
           // Already in the server map, this folder needs the full path
           fullPathMap[lowerName] = true;
         }
@@ -211,7 +219,7 @@ var quickmove = (function() {
           label = Quickmove.getFullName(folder);
         }
 
-        if ((lowerLabel in dupeMap) && dupeMap[lowerLabel] > 1) {
+        if (lowerLabel in dupeMap && dupeMap[lowerLabel] > 1) {
           label += " - " + folder.server.prettyName;
         }
         node.setAttribute("label", label);
@@ -254,7 +262,7 @@ var quickmove = (function() {
         if (aFolder.hasSubFolders) {
           let myenum = aFolder.subFolders;
           while (myenum.hasMoreElements()) {
-            processFolder(myenum.getNext().QueryInterface(Components.interfaces.nsIMsgFolder));
+            processFolder(myenum.getNext().QueryInterface(Ci.nsIMsgFolder));
           }
         }
       }
@@ -278,19 +286,20 @@ var quickmove = (function() {
         if (recentFolders.length == maxRecent) {
           recentFolders.sort(sorter);
           recentFolders.pop();
-          oldestTime = Number(recentFolders[recentFolders.length-1].getStringProperty("MRUTime")) || 0;
+          oldestTime =
+            Number(recentFolders[recentFolders.length - 1].getStringProperty("MRUTime")) || 0;
         }
         recentFolders.push(aFolder);
       }
 
       let allFolders = [];
       let allNames = [];
-      let recentFolders = quickmove.recentFolders = [];
+      let recentFolders = (quickmove.recentFolders = []);
       let oldestTime = 0;
 
       let maxRecent = await Quickmove.getPref("maxRecentFolders", 15);
 
-      for (let acct of fixIterator(MailServices.accounts.accounts, Components.interfaces.nsIMsgAccount)) {
+      for (let acct of fixIterator(MailServices.accounts.accounts, Ci.nsIMsgAccount)) {
         if (acct.incomingServer) {
           processFolder(acct.incomingServer.rootFolder);
         }
@@ -335,7 +344,7 @@ var quickmove = (function() {
       }
     },
 
-    searchDelayed: Quickmove.debounce((textboxNode) => {
+    searchDelayed: Quickmove.debounce(textboxNode => {
       quickmove.search(textboxNode);
     }, 500),
 
@@ -368,9 +377,10 @@ var quickmove = (function() {
 
       // Executor function used later to execute the actual action
       function executor() {
-        let firstFolder = event.target.nextSibling &&
-                          event.target.nextSibling.nextSibling &&
-                          event.target.nextSibling.nextSibling._folder;
+        let firstFolder =
+          event.target.nextSibling &&
+          event.target.nextSibling.nextSibling &&
+          event.target.nextSibling.nextSibling._folder;
         if (firstFolder) {
           executeFunc(firstFolder);
         }
@@ -401,11 +411,31 @@ var quickmove = (function() {
         // Synthesize another keydown/up cycle, this ensures the first menuitem
         // is actually focused.
         let keyEvent = document.createEvent("KeyboardEvent");
-        keyEvent.initKeyEvent("keydown", true, true, null, false, false,
-          false, false, keyEvent.DOM_VK_DOWN, 0);
+        keyEvent.initKeyEvent(
+          "keydown",
+          true,
+          true,
+          null,
+          false,
+          false,
+          false,
+          false,
+          keyEvent.DOM_VK_DOWN,
+          0
+        );
         popup.dispatchEvent(keyEvent);
-        keyEvent.initKeyEvent("keyup", true, true, null, false, false,
-          false, false, keyEvent.DOM_VK_DOWN, 0);
+        keyEvent.initKeyEvent(
+          "keyup",
+          true,
+          true,
+          null,
+          false,
+          false,
+          false,
+          false,
+          keyEvent.DOM_VK_DOWN,
+          0
+        );
         popup.dispatchEvent(keyEvent);
       } else {
         // If something was typed, then remember that we haven't searched yet.
@@ -418,7 +448,7 @@ var quickmove = (function() {
       event.preventDefault();
     },
 
-    command: function(event, executeFunc, isContext=false) {
+    command: function(event, executeFunc, isContext = false) {
       let popup = event.target.parentNode;
       executeFunc(event.target._folder);
       event.stopPropagation();
@@ -438,15 +468,15 @@ var quickmove = (function() {
         let filepopup = document.getElementById("quickmove-menupopup");
         let threadTreeCols = document.getElementById("threadCols");
         let selection = threadTree.view.selection;
-        let rowOffset = threadTree.rowHeight *
-                      (selection.currentIndex - threadTree.getFirstVisibleRow() + 1) +
-                      threadTreeCols.clientHeight;
+        let rowOffset =
+          threadTree.rowHeight * (selection.currentIndex - threadTree.getFirstVisibleRow() + 1) +
+          threadTreeCols.clientHeight;
         filepopup.openPopup(threadTree, "overlap", threadTreeCols.clientHeight, rowOffset);
       } else if (messagepane) {
         let filepopup = document.getElementById("quickmove-menupopup");
         filepopup.openPopup(messagepane, "overlap");
       } else {
-        Components.utils.reportError("Couldn't find a node to open the panel on");
+        Cu.reportError("Couldn't find a node to open the panel on");
       }
     },
 
@@ -472,19 +502,19 @@ var quickmove = (function() {
         let filepopup = document.getElementById("quickmove-copy-menupopup");
         let threadTreeCols = document.getElementById("threadCols");
         let selection = threadTree.view.selection;
-        let rowOffset = threadTree.rowHeight *
-                      (selection.currentIndex - threadTree.getFirstVisibleRow() + 1) +
-                      threadTreeCols.clientHeight;
+        let rowOffset =
+          threadTree.rowHeight * (selection.currentIndex - threadTree.getFirstVisibleRow() + 1) +
+          threadTreeCols.clientHeight;
         filepopup.openPopup(threadTree, "overlap", threadTreeCols.clientHeight, rowOffset);
       } else if (messagepane) {
         let filepopup = document.getElementById("quickmove-copy-menupopup");
         filepopup.openPopup(messagepane, "overlap");
       } else {
-        Components.utils.reportError("Couldn't find a node to open the panel on");
+        Cu.reportError("Couldn't find a node to open the panel on");
       }
     },
 
-    hide: function(popup, isContext=false) {
+    hide: function(popup, isContext = false) {
       if (!isContext) {
         popup.hidePopup();
       }
@@ -500,6 +530,6 @@ var quickmove = (function() {
         quickmove.initiator.focus();
         quickmove.initiator = null;
       }
-    }
+    },
   };
 })();

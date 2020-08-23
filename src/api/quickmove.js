@@ -18,10 +18,7 @@ function initScript(window, document) {
 }
 
 function initCSS(window, document) {
-  let link = document.createElementNS(
-    "http://www.w3.org/1999/xhtml",
-    "link"
-  );
+  let link = document.createElementNS("http://www.w3.org/1999/xhtml", "link");
 
   link.setAttribute("id", "quickmove-styles");
   link.setAttribute("rel", "stylesheet");
@@ -95,7 +92,8 @@ function initKeys(window, document) {
 }
 
 function initButtonFile(window, document) {
-  let buttonFile = document.getElementById("button-file") ||
+  let buttonFile =
+    document.getElementById("button-file") ||
     document.getElementById("mail-toolbox").palette.querySelector("#button-file");
 
   let buttonFilePopup = window.MozXULElement.parseXULToFragment(`
@@ -117,7 +115,8 @@ function initButtonFile(window, document) {
   buttonFilePopup.oldPopup = buttonFile.replaceChild(buttonFilePopup, menupopup);
 
   window.quickmove.cleanup.push(() => {
-    buttonFile = document.getElementById("button-file") ||
+    buttonFile =
+      document.getElementById("button-file") ||
       document.getElementById("mail-toolbox").palette.querySelector("#button-file");
 
     let popup = buttonFile.querySelector("#quickmove-filebutton-menupopup");
@@ -189,20 +188,22 @@ function initFolderLocation(window, document) {
 
   let palette = document.getElementById("mail-toolbox").palette;
 
-  let folderLocationPopup = document.getElementById("folderLocationPopup") ||
-    palette.querySelector("#folderLocationPopup");
+  let folderLocationPopup =
+    document.getElementById("folderLocationPopup") || palette.querySelector("#folderLocationPopup");
   folderLocationPopup.setAttribute("hidden", "true");
 
-  let locationFolders = document.getElementById("locationFolders") ||
-    palette.querySelector("#locationFolders");
+  let locationFolders =
+    document.getElementById("locationFolders") || palette.querySelector("#locationFolders");
   locationFolders.appendChild(quickmoveLocationPopup);
 
   window.quickmove.cleanup.push(() => {
-    folderLocationPopup = document.getElementById("folderLocationPopup") ||
+    folderLocationPopup =
+      document.getElementById("folderLocationPopup") ||
       palette.querySelector("#folderLocationPopup");
     folderLocationPopup.removeAttribute("hidden");
 
-    quickmoveLocationPopup = document.getElementById("quickmove-folderlocation-menupopup") ||
+    quickmoveLocationPopup =
+      document.getElementById("quickmove-folderlocation-menupopup") ||
       palette.querySelector("#quickmove-folderlocation-menupopup");
     quickmoveLocationPopup.remove();
   });
@@ -222,7 +223,7 @@ this.quickmove = class extends ExtensionAPI {
     ExtensionSupport.registerWindowListener("quickmove", {
       chromeURLs: [
         "chrome://messenger/content/messageWindow.xhtml",
-        "chrome://messenger/content/messenger.xhtml"
+        "chrome://messenger/content/messenger.xhtml",
       ],
       onLoadWindow: async function(window) {
         let document = window.document;
@@ -239,9 +240,8 @@ this.quickmove = class extends ExtensionAPI {
         } else if (window.location.href.startsWith("chrome://messenger/content/messenger.")) {
           initFolderLocation(window, document);
         }
-      }
+      },
     });
-
   }
 
   onShutdown(isAppShutdown) {
@@ -273,7 +273,7 @@ this.quickmove = class extends ExtensionAPI {
 
   getAPI(context) {
     return {
-      quickmove: {}
+      quickmove: {},
     };
   }
 };
