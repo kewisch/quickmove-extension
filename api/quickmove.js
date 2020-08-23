@@ -1,17 +1,14 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- * Portions Copyright (C) Philipp Kewisch, 2019 */
+ * Portions Copyright (C) Philipp Kewisch, 2019-2020 */
 
-var { ExtensionSupport } = ChromeUtils.import(
-  "resource:///modules/ExtensionSupport.jsm"
-);
+const { ExtensionCommon } = ChromeUtils.import("resource://gre/modules/ExtensionCommon.jsm");
+const { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-var { Services } = ChromeUtils.import(
-  "resource://gre/modules/Services.jsm"
-);
+const { ExtensionAPI } = ExtensionCommon;
 
-/* exported startup, shutdown, install, uninstall */
+const { ExtensionSupport } = ChromeUtils.import("resource:///modules/ExtensionSupport.jsm");
 
 function initScript(window, document) {
   Services.scriptloader.loadSubScript("chrome://quickmove/content/quickmove.js", window);
@@ -211,50 +208,72 @@ function initFolderLocation(window, document) {
   });
 }
 
-function startup(data, reason) {
-  ExtensionSupport.registerWindowListener("quickmove", {
-    chromeURLs: [
-      "chrome://messenger/content/messageWindow.xul",
-      "chrome://messenger/content/messenger.xul",
+this.quickmove = class extends ExtensionAPI {
+  onStartup() {
+    let aomStartup = Cc["@mozilla.org/addons/addon-manager-startup;1"].getService(
+      Ci.amIAddonManagerStartup
+    );
+    let manifestURI = Services.io.newURI("manifest.json", null, this.extension.rootURI);
 
-      // Thunderbird 72+
-      "chrome://messenger/content/messageWindow.xhtml",
-      "chrome://messenger/content/messenger.xhtml"
-    ],
-    onLoadWindow: async function(window) {
-      let document = window.document;
+    this.chromeHandle = aomStartup.registerChrome(manifestURI, [
+      ["content", "quickmove", "content/"],
+    ]);
 
-      initScript(window, document);
-      initCSS(window, document);
-      initKeys(window, document);
+    ExtensionSupport.registerWindowListener("quickmove", {
+      chromeURLs: [
+        "chrome://messenger/content/messageWindow.xhtml",
+        "chrome://messenger/content/messenger.xhtml"
+      ],
+      onLoadWindow: async function(window) {
+        let document = window.document;
 
-      initButtonFile(window, document);
-      initContextMenus(window, document);
+        initScript(window, document);
+        initCSS(window, document);
+        initKeys(window, document);
 
-      if (window.location.href.startsWith("chrome://messenger/content/messageWindow.")) {
-        document.getElementById("quickmove-goto").remove();
-      } else if (window.location.href.startsWith("chrome://messenger/content/messenger.")) {
-        initFolderLocation(window, document);
+        initButtonFile(window, document);
+        initContextMenus(window, document);
+
+        if (window.location.href.startsWith("chrome://messenger/content/messageWindow.")) {
+          document.getElementById("quickmove-goto").remove();
+        } else if (window.location.href.startsWith("chrome://messenger/content/messenger.")) {
+          initFolderLocation(window, document);
+        }
       }
+    });
+
+  }
+
+  onShutdown(isAppShutdown) {
+    if (isAppShutdown) {
+      return;
     }
-  });
-}
 
-function shutdown() {
-  ExtensionSupport.unregisterWindowListener("quickmove");
+    this.chromeHandle.destruct();
+    this.chromeHandle = null;
 
-  for (let window of ExtensionSupport.openWindows) {
-    if (window.quickmove && window.quickmove.cleanup) {
-      for (let func of window.quickmove.cleanup.reverse()) {
-        try {
-          func();
-        } catch (e) {
-          Cu.reportError(e);
+    ExtensionSupport.unregisterWindowListener("quickmove");
+
+    for (let window of ExtensionSupport.openWindows) {
+      if (window.quickmove && window.quickmove.cleanup) {
+        for (let func of window.quickmove.cleanup.reverse()) {
+          try {
+            func();
+          } catch (e) {
+            Cu.reportError(e);
+          }
         }
       }
     }
-  }
-}
 
-function install() {}
-function uninstall() {}
+    // if (this.extension.addonData.temporarilyInstalled) {
+    Services.obs.notifyObservers(null, "startupcache-invalidate");
+    // }
+  }
+
+  getAPI(context) {
+    return {
+      quickmove: {}
+    };
+  }
+};

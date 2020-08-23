@@ -2,26 +2,23 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "default_locale": "en",
   "author": "Philipp Kewisch",
   "applications": {
     "gecko": {
       "id": "quickmove@mozilla.kewis.ch",
-      "strict_min_version": "68.0"
+      "strict_min_version": "78.0"
     }
   },
   "browser_specific_settings": {
     "gecko": {
       "id": "quickmove@mozilla.kewis.ch",
-      "strict_min_version": "68.0"
+      "strict_min_version": "78.0"
     }
   },
-  "legacy": {
-    "type": "bootstrap"
-  },
   "icons": {
-    "32": "content/addon.png"
+    "32": "icon.png"
   },
   "options_ui": {
     "page": "options/options.html",
@@ -29,5 +26,18 @@
   },
   "permissions": [
     "storage"
-  ]
+  ],
+  "experiment_apis": {
+    "quickmove": {
+      "schema": "api/schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "script": "api/quickmove.js",
+        "events": ["startup"],
+        "paths": [
+          ["quickmove"]
+        ]
+      }
+    }
+  }
 }

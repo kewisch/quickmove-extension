@@ -8,7 +8,7 @@
 var quickmove = (function() {
   const ADDON_ID = "quickmove@mozilla.kewis.ch";
 
-  var { MultiSuffixTree } = ChromeUtils.import("resource:///modules/gloda/suffixtree.js");
+  var { MultiSuffixTree } = ChromeUtils.import("resource:///modules/gloda/SuffixTree.jsm");
   var { ExtensionParent } = ChromeUtils.import("resource://gre/modules/ExtensionParent.jsm");
 
   var Quickmove = {
