@@ -110,8 +110,7 @@ function initButtonFile(window, document) {
     </menupopup>
   `);
 
-  let menupopup = buttonFile.querySelector("#button-filePopup");
-
+  let menupopup = buttonFile.querySelector("#button-filePopup") || buttonFile.children[0];
   buttonFilePopup.oldPopup = buttonFile.replaceChild(buttonFilePopup, menupopup);
 
   window.quickmove.cleanup.push(() => {
