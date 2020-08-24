@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "default_locale": "en",
   "author": "Philipp Kewisch",
   "applications": {
@@ -31,11 +31,17 @@
     "quickmove": {
       "schema": "api/schema.json",
       "parent": {
-        "scopes": ["addon_parent"],
+        "scopes": [
+          "addon_parent"
+        ],
         "script": "api/quickmove.js",
-        "events": ["startup"],
+        "events": [
+          "startup"
+        ],
         "paths": [
-          ["quickmove"]
+          [
+            "quickmove"
+          ]
         ]
       }
     }

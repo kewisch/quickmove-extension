@@ -18,7 +18,7 @@ function initScript(window, document) {
 }
 
 function initCSS(window, document) {
-  let link = document.createElementNS("http://www.w3.org/1999/xhtml", "link");
+  let link = document.createElement("link");
 
   link.setAttribute("id", "quickmove-styles");
   link.setAttribute("rel", "stylesheet");
@@ -102,7 +102,7 @@ function initButtonFile(window, document) {
                onpopupshowing="quickmove.popupshowing(event)"
                onpopupshown="quickmove.popupshown(event)"
                onpopuphidden="quickmove.hide(event.target)">
-      <html:input id="quickmove-filebutton-textbox"
+      <html:input class="quickmove-textbox"
                   onfocus="quickmove.focus(event)"
                   onkeypress="quickmove.keypress(event, quickmove.executeMove)"
                   oninput="quickmove.searchDelayed(event.target); event.stopPropagation();"/>
@@ -151,7 +151,7 @@ function initContextMenus(window, document) {
                onpopupshown="quickmove.popupshown(event)"
                onpopuphidden="quickmove.hide(event.target)"
                oncommand="quickmove.command(event, quickmove.executeCopy, true)">
-      <html:input class="quickmove-copy-textbox"
+      <html:input class="quickmove-textbox"
                   onfocus="quickmove.focus(event)"
                   onkeypress="quickmove.keypress(event, quickmove.executeCopy)"
                   oninput="quickmove.searchDelayed(event.target); event.stopPropagation();"/>
