@@ -443,11 +443,7 @@ class TBFolderList extends HTMLElement {
     }
   }
 
-  async repopulate() {
-    this._repopulate();
-  }
-
-  _repopulate() {
+  repopulate() {
     let lowerSearchTerm = this.searchValue.toLowerCase();
     this._clearFolders();
 
