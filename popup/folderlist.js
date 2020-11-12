@@ -444,8 +444,6 @@ class TBFolderList extends HTMLElement {
   }
 
   async repopulate() {
-    let vars = await browser.storage.local.get({ showFolderPath: true });
-    this._showFolderPath = vars.showFolderPath;
     this._repopulate();
   }
 
