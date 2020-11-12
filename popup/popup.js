@@ -24,7 +24,7 @@ async function load() {
   let accountNodes = accounts.map(account => new AccountNode(account));
   let folders = accountNodes.reduce((acc, node) => acc.concat([...node]), []);
 
-  let { maxRecentFolders } = await browser.storage.local.get({ maxRecentFolders: 15 });
+  let { maxRecentFolders, showFolderPath } = await browser.storage.local.get({ maxRecentFolders: 15, showFolderPath: true });
   let recent = await browser.quickmove.query({ recent: true, limit: maxRecentFolders, canFileMessages: true });
 
   let folderList = document.getElementById("folderList");
@@ -32,6 +32,7 @@ async function load() {
   folderList.accountNodes = accountNodes;
   folderList.allFolders = folders;
   folderList.defaultFolders = recent;
+  folderList.showFolderPath = showFolderPath;
 
   folderList.addEventListener("folder-selected", async (event) => {
     let operation = document.querySelector("input[name='action']:checked").value;

@@ -426,6 +426,15 @@ class TBFolderList extends HTMLElement {
     this.repopulate();
   }
 
+  get showFolderPath() {
+    return this._showFolderPath;
+  }
+
+  set showFolderPath(val) {
+    this._showFolderPath = val;
+    this.repopulate();
+  }
+
   focusSearch() {
     this.search.focus();
     let selected = this.shadowRoot.querySelector(".folder-list-body .folder-item.selected");
@@ -435,8 +444,6 @@ class TBFolderList extends HTMLElement {
   }
 
   async repopulate() {
-    let vars = await browser.storage.local.get({ showFolderPath: true });
-    this._showFolderPath = vars.showFolderPath;
     this._repopulate();
   }
 
