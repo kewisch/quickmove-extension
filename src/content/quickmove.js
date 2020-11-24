@@ -77,7 +77,7 @@ var quickmove = (function() {
       await storage.local.set({
         maxRecentFolders: Services.prefs.getIntPref("extensions.quickmove.maxRecentFolders", 15),
         markAsRead: Services.prefs.getBoolPref("extensions.quickmove.markAsRead", true),
-        excludeArchives: Services.prefs.getBoolPref("extensions.quickmove.excludeArchives", false)
+        excludeArchives: Services.prefs.getBoolPref("extensions.quickmove.excludeArchives", false),
       });
 
       Services.prefs.clearUserPref("extensions.quickmove.maxRecentFolders");
@@ -258,9 +258,8 @@ var quickmove = (function() {
        * @param excludeArchives  if Archives folder must be excluded
        */
       function processFolder(aFolder, excludeArchives) {
-         if (excludeArchives 
-          && aFolder.isSpecialFolder(Ci.nsMsgFolderFlags.Archive, false)) {
-           return;
+        if (excludeArchives && aFolder.isSpecialFolder(Ci.nsMsgFolderFlags.Archive, false)) {
+          return;
         }
         addIfRecent(aFolder);
         allFolders.push(aFolder);
