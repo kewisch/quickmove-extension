@@ -6,6 +6,7 @@
 const DEFAULT_PREFERENCES = {
   markAsRead: true,
   maxRecentFolders: 15,
+  showFolderPath: false
 };
 
 async function restore_options() {
