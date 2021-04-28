@@ -25,5 +25,23 @@
   },
   "excludeArchives.title": {
     "message": ""
+  },
+  "alwaysShowFullPath": {
+    "message": "Always show the full path of destination folders"
+  },
+  "alwaysShowFullPath.title": {
+    "message": ""
+  },
+  "alwaysShowMailbox": {
+    "message": "Always show the folder's mailbox"
+  },
+  "alwaysShowMailbox.title": {
+    "message": ""
+  },
+  "doNotCrop": {
+    "message": "Do not crop folder names"
+  },
+  "doNotCrop.title": {
+    "message": ""
   }
 }
