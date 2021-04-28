@@ -19,5 +19,29 @@
   },
   "noResults": {
     "message": "<Keine Ergebnisse>"
+  },
+  "excludeArchives": {
+    "message": "Schliesse die Archivordner aus den Suchresultaten aus"
+  },
+  "excludeArchives.title": {
+    "message": ""
+  },
+  "alwaysShowFullPath": {
+    "message": "Zeige immer den gesamten Pfad zum Zielordner"
+  },
+  "alwaysShowFullPath.title": {
+    "message": ""
+  },
+  "alwaysShowMailbox": {
+    "message": "Zeige die Mailbox zu der der Zielordner gehört immer an"
+  },
+  "alwaysShowMailbox.title": {
+    "message": ""
+  },
+  "doNotCrop": {
+    "message": "Schneide die Ordnernamen nie ab"
+  },
+  "doNotCrop.title": {
+    "message": ""
   }
 }

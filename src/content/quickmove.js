@@ -178,10 +178,13 @@ var quickmove = (function() {
      * @param popup       The popup to add to
      * @param targetValue The searched text
      */
-    addFolders: function(folders, popup, targetValue) {
+    addFolders: async function(folders, popup, targetValue) {
       let dupeMap = {};
       let serverMap = {};
       let fullPathMap = {};
+      let alwaysShowFullPath = await Quickmove.getPref("alwaysShowFullPath", false);
+      let alwaysShowMailbox = await Quickmove.getPref("alwaysShowMailbox", false);
+      let doNotCrop = await Quickmove.getPref("doNotCrop", false);
 
       // First create a map of pretty names to find possible duplicates.
       for (let folder of folders) {
@@ -210,18 +213,22 @@ var quickmove = (function() {
         dupeMap[lowerName]++;
       }
 
+
       // Now add each folder, appending the server name if the folder name
       // itself would appear more than once.
       for (let folder of folders) {
         let node = document.createXULElement("menuitem");
+        if (doNotCrop) {
+          node.setAttribute("crop", "none");
+        }
         let label = folder.prettyName;
         let lowerLabel = label.toLowerCase();
 
-        if (lowerLabel in fullPathMap) {
+        if (lowerLabel in fullPathMap || alwaysShowFullPath) {
           label = Quickmove.getFullName(folder);
         }
 
-        if (lowerLabel in dupeMap && dupeMap[lowerLabel] > 1) {
+        if ((lowerLabel in dupeMap && dupeMap[lowerLabel] > 1) || alwaysShowMailbox) {
           label += " - " + folder.server.prettyName;
         }
         node.setAttribute("label", label);

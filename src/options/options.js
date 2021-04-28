@@ -8,6 +8,9 @@
     markAsRead: true,
     maxRecentFolders: 15,
     excludeArchives: false,
+    alwaysShowFullPath: false,
+    alwaysShowMailbox: false,
+    doNotCrop: false,
   });
 
   for (let [name, value] of Object.entries(prefs)) {
@@ -39,6 +42,9 @@
       maxRecentFolders: parseInt(document.getElementById("maxRecentFolders").value, 10),
       markAsRead: document.getElementById("markAsRead").checked,
       excludeArchives: document.getElementById("excludeArchives").checked,
+      alwaysShowFullPath: document.getElementById("alwaysShowFullPath").checked,
+      alwaysShowMailbox: document.getElementById("alwaysShowMailbox").checked,
+      doNotCrop: document.getElementById("doNotCrop").checked,
     });
   });
 })();
