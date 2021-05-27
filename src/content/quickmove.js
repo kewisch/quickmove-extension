@@ -266,9 +266,8 @@ var quickmove = (function() {
         allNames.push(aFolder.prettyName.toLowerCase());
 
         if (aFolder.hasSubFolders) {
-          let myenum = aFolder.subFolders;
-          while (myenum.hasMoreElements()) {
-            processFolder(myenum.getNext().QueryInterface(Ci.nsIMsgFolder), excludeArchives);
+          for(let xFolder of aFolder.subFolders) {
+            processFolder(xFolder, excludeArchives);
           }
         }
       }
@@ -306,7 +305,7 @@ var quickmove = (function() {
       let maxRecent = await Quickmove.getPref("maxRecentFolders", 15);
       let excludeArchives = await Quickmove.getPref("excludeArchives", false);
 
-      for (let acct of fixIterator(MailServices.accounts.accounts, Ci.nsIMsgAccount)) {
+      for (let acct of MailServices.accounts.accounts) {
         if (acct.incomingServer) {
           processFolder(acct.incomingServer.rootFolder, excludeArchives);
         }
