@@ -2,10 +2,26 @@
   "namespace": "quickmove",
   "types": [
     {
+      "id": "MailIdentity",
+      "type": "object",
+      "properties": {
+        "accountId": { "type": "string" },
+        "composeHtml": { "type": "boolean" },
+        "email": { "type": "string" },
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "name": { "type": "string" },
+        "organization": { "type": "string", "optional": true },
+        "replyTo": { "type": "string", "optional": true },
+        "signature": { "type": "string", "optional": true },
+        "signatureIsPlainText": { "type": "boolean", "optional": true }
+      }
+    }, {
       "id": "MailAccount",
       "type": "object",
       "properties": {
         "folders": { "type": "array", "items": { "$ref": "folders.MailFolder" }},
+        "identities": { "type": "array", "items": { "$ref": "MailIdentity" }},
         "id": { "type": "string" },
         "name": { "type": "string" },
         "type": { "type": "string" }
