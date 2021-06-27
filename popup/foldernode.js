@@ -74,7 +74,14 @@ export class FolderNode extends BaseNode {
   add(item) {
     let node = this.lookup(item.path, true);
     node.item = item;
+    this.lookupSubfolders(item.subFolders);
     return node;
+  }
+
+  lookupSubfolders(subFolders) {
+    for (let subFolder of subFolders) {
+      this.add(subFolder);
+    }
   }
 
   lookup(path, create=false) {

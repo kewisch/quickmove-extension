@@ -51,7 +51,7 @@ function change_options(event) {
 function setup_listeners() {
   document.body.addEventListener("change", change_options);
   document.getElementById("useLegacyShortcuts").addEventListener("click", () => {
-    browser.quickmove.migrateShortcut();
+    browser.runtime.sendMessage({ action: "setupShortcuts" });
     let doneLabel = document.getElementById("useLegacyShortcutsDone");
     let button = document.getElementById("useLegacyShortcuts");
 

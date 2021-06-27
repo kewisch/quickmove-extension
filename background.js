@@ -56,6 +56,8 @@ browser.runtime.onMessage.addListener(async (message, sender) => {
     return command;
   } else if (message.action == "processSelectedMessages") {
     return processSelectedMessages(message.folder, message.operation);
+  } else if (message.action == "setupShortcuts") {
+    browser.quickmove.migrateShortcut();
   } else {
     console.error("Unexpected message", message);
   }

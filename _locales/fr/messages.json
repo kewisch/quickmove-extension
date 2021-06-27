@@ -1,0 +1,44 @@
+{
+  "extensionName": {
+    "message": "Quick Folder Move"
+  },
+  "extensionDescription": {
+    "message": "Déplace rapidement vos messages dans d'auters dossiers en utilisant le clavier"
+  },
+  "actionMove": {
+    "message": "Déplacer"
+  },
+  "actionCopy": {
+    "message": "Copier"
+  },
+  "actionGoto": {
+    "message": "Aller"
+  },
+  "markAsRead": {
+    "message": "Marque les messages comme lu après le déplacement"
+  },
+  "markAsRead.title": {
+    "message": ""
+  },
+  "showFolderPath": {
+    "message": "Affiche le chemin complet de chaque dossier dans la boîte de recherche"
+  },
+  "showFolderPath.title": {
+    "message": ""
+  },
+  "maxRecentFolders": {
+    "message": "Nombre de dossiers récents"
+  },
+  "maxRecentFolders.title": {
+    "message": "Modifie le nombre de dossiers récents à afficher lorsqu'aucun critère de recherche n'est entré."
+  },
+  "useLegacyShortcuts": {
+    "message": "Utiliser les raccourcis clavier classiques"
+  },
+  "useLegacyShortcuts.title": {
+    "message": "Utilisez ⇧M comme raccourci pour déplacer les messages"
+  },
+  "useLegacyShortcutsDone": {
+    "message": "Vous pouvez à présent utiliser ⇧M ⇧Y et ⇧G.  Utilisez l'extention shortcut pour les modifier."
+  }
+}
