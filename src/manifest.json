@@ -8,13 +8,13 @@
   "applications": {
     "gecko": {
       "id": "quickmove@mozilla.kewis.ch",
-      "strict_min_version": "91.0b1"
+      "strict_min_version": "91.0a1"
     }
   },
   "browser_specific_settings": {
     "gecko": {
       "id": "quickmove@mozilla.kewis.ch",
-      "strict_min_version": "91.0b1"
+      "strict_min_version": "91.0a1"
     }
   },
   "icons": {
