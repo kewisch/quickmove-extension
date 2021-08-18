@@ -50,7 +50,6 @@ body, html {
 
   --folder-list-item-bgcolor-hover: var(--menu-background-color-select);
   --folder-list-item-color-hover: var(--menu-color-select);
-  /*--folder-list-item-border*/
   --folder-list-item-bgcolor-active: var(--menu-background-color);
   --folder-list-item-color-active: var(--menu-color);
 
