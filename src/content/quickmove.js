@@ -213,7 +213,6 @@ var quickmove = (function() {
         dupeMap[lowerName]++;
       }
 
-
       // Now add each folder, appending the server name if the folder name
       // itself would appear more than once.
       for (let folder of folders) {
@@ -331,9 +330,7 @@ var quickmove = (function() {
       let popup = textboxNode.parentNode;
       Quickmove.clearItems(popup);
       dump(`=== text |${textboxNode.value}|\n`);
-      if (textboxNode.value.length == 0) {
-        quickmove.addFolders(quickmove.recentFolders, popup, textboxNode.value);
-      } else {
+      if (textboxNode.value.length) {
         let folders = quickmove.suffixTree
           .findMatches(textboxNode.value.toLowerCase())
           .filter(x => x.canFileMessages);
@@ -346,6 +343,8 @@ var quickmove = (function() {
           node.setAttribute("label", Quickmove.getString("noResults"));
           popup.appendChild(node);
         }
+      } else {
+        quickmove.addFolders(quickmove.recentFolders, popup, textboxNode.value);
       }
 
       // The search is done, reset the dirty count and call the search complete
