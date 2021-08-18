@@ -266,7 +266,7 @@ var quickmove = (function() {
         allNames.push(aFolder.prettyName.toLowerCase());
 
         if (aFolder.hasSubFolders) {
-          for(let xFolder of aFolder.subFolders) {
+          for (let xFolder of aFolder.subFolders) {
             processFolder(xFolder, excludeArchives);
           }
         }
