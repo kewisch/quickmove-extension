@@ -106,6 +106,12 @@ var quickmove = (function() {
       };
       // End MIT license code
     },
+
+    recentFolderSorter: function(a, b) {
+      let atime = Number(a.getStringProperty("MRUTime")) || 0;
+      let btime = Number(b.getStringProperty("MRUTime")) || 0;
+      return btime - atime;
+    },
   };
 
   return {
@@ -249,12 +255,6 @@ var quickmove = (function() {
      * Prepare the recent folders and the suffix tree with all available folders.
      */
     prepareFolders: async function() {
-      function sorter(a, b) {
-        let atime = Number(a.getStringProperty("MRUTime")) || 0;
-        let btime = Number(b.getStringProperty("MRUTime")) || 0;
-        return atime < btime;
-      }
-
       /**
        * This function will iterate through any existing sub-folders and
        * (1) check if they're recent and (2) recursively call this function
@@ -294,13 +294,14 @@ var quickmove = (function() {
           return;
         }
 
-        if (recentFolders.length == maxRecent) {
-          recentFolders.sort(sorter);
-          recentFolders.pop();
-          oldestTime =
-            Number(recentFolders[recentFolders.length - 1].getStringProperty("MRUTime")) || 0;
-        }
         recentFolders.push(aFolder);
+
+        if (recentFolders.length > maxRecent) {
+          recentFolders.sort(Quickmove.recentFolderSorter);
+          recentFolders.pop();
+          let oldestFolder = recentFolders[recentFolders.length - 1]
+          oldestTime = Number(oldestFolder.getStringProperty("MRUTime")) || 0;
+        }
       }
 
       let allFolders = [];
@@ -319,7 +320,7 @@ var quickmove = (function() {
 
       quickmove.suffixTree = new MultiSuffixTree(allNames, allFolders);
 
-      recentFolders.sort(sorter);
+      recentFolders.sort(Quickmove.recentFolderSorter);
     },
 
     /**
@@ -335,6 +336,7 @@ var quickmove = (function() {
           .findMatches(textboxNode.value.toLowerCase())
           .filter(x => x.canFileMessages);
         if (folders.length) {
+          folders.sort(Quickmove.recentFolderSorter)
           quickmove.addFolders(folders, popup, textboxNode.value);
         } else {
           let node = document.createXULElement("menuitem");
