@@ -36,39 +36,51 @@ function initKeys(window, document) {
     window.MozXULElement.parseXULToFragment(`
       <menupopup id="quickmove-menupopup"
              ignorekeys="true"
-             onpopupshowing="quickmove.popupshowing(event)"
+             onpopupshowing="quickmove.popupshowing(event, quickmove.folderMenuOptions)"
              onpopupshown="quickmove.popupshown(event)"
              onpopuphidden="quickmove.hide(event.target)"
              oncommand="quickmove.command(event, quickmove.executeMove)">
         <html:input class="quickmove-textbox"
                     onfocus="quickmove.focus(event)"
                     onkeypress="quickmove.keypress(event, quickmove.executeMove)"
-                    oninput="quickmove.searchDelayed(event.target); event.stopPropagation();"/>
+                    oninput="quickmove.searchFoldersDelayed(event.target); event.stopPropagation();"/>
         <menuseparator class="quickmove-separator"/>
       </menupopup>
       <menupopup id="quickmove-goto-menupopup"
                  ignorekeys="true"
-                 onpopupshowing="quickmove.popupshowing(event)"
+                 onpopupshowing="quickmove.popupshowing(event, quickmove.folderMenuOptions)"
                  onpopupshown="quickmove.popupshown(event)"
                  onpopuphidden="quickmove.hide(event.target)"
                  oncommand="quickmove.command(event, quickmove.executeGoto)">
         <html:input class="quickmove-textbox"
                     onfocus="quickmove.focus(event)"
                     onkeypress="quickmove.keypress(event, quickmove.executeGoto)"
-                    oninput="quickmove.searchDelayed(event.target); event.stopPropagation();"/>
+                    oninput="quickmove.searchFoldersDelayed(event.target); event.stopPropagation();"/>
         <menuseparator id="quickmove-goto-separator" class="quickmove-separator"/>
       </menupopup>
       <menupopup id="quickmove-copy-menupopup"
                  ignorekeys="true"
-                 onpopupshowing="quickmove.popupshowing(event)"
+                 onpopupshowing="quickmove.popupshowing(event, quickmove.folderMenuOptions)"
                  onpopupshown="quickmove.popupshown(event)"
                  onpopuphidden="quickmove.hide(event.target)"
                  oncommand="quickmove.command(event, quickmove.executeCopy)">
         <html:input class="quickmove-textbox"
                     onfocus="quickmove.focus(event)"
                     onkeypress="quickmove.keypress(event, quickmove.executeCopy)"
-                    oninput="quickmove.searchDelayed(event.target); event.stopPropagation();"/>
+                    oninput="quickmove.searchFoldersDelayed(event.target); event.stopPropagation();"/>
         <menuseparator id="quickmove-copy-separator" class="quickmove-separator"/>
+      </menupopup>
+      <menupopup id="quickmove-tag-menupopup"
+                 ignorekeys="true"
+                 onpopupshowing="quickmove.popupshowing(event, quickmove.tagMenuOptions)"
+                 onpopupshown="quickmove.popupshown(event)"
+                 onpopuphidden="quickmove.hide(event.target)"
+                 oncommand="quickmove.command(event, quickmove.executeTag)">
+        <html:input class="quickmove-textbox"
+                    onfocus="quickmove.focus(event)"
+                    onkeypress="quickmove.keypress(event, quickmove.executeTag)"
+                    oninput="quickmove.searchTagsDelayed(event.target); event.stopPropagation();"/>
+        <menuseparator id="quickmove-tag-separator" class="quickmove-separator"/>
       </menupopup>
     `)
   );
@@ -79,6 +91,7 @@ function initKeys(window, document) {
         <key id="quickmove-file" key="M" modifiers="shift" oncommand="quickmove.openFile()"/>
         <key id="quickmove-goto" key="G" modifiers="shift" oncommand="quickmove.openGoto()"/>
         <key id="quickmove-copy" key="Y" modifiers="shift" oncommand="quickmove.openCopy()"/>
+        <key id="quickmove-tag" key="T" modifiers="shift" oncommand="quickmove.openTag()"/>
       </keyset>
     `)
   );
@@ -88,6 +101,7 @@ function initKeys(window, document) {
     document.getElementById("quickmove-menupopup").remove();
     document.getElementById("quickmove-copy-menupopup").remove();
     document.getElementById("quickmove-goto-menupopup").remove();
+    document.getElementById("quickmove-tag-menupopup").remove();
   });
 }
 
@@ -99,13 +113,14 @@ function initButtonFile(window, document) {
   let buttonFilePopup = window.MozXULElement.parseXULToFragment(`
     <menupopup id="quickmove-filebutton-menupopup"
                ignorekeys="true"
-               onpopupshowing="quickmove.popupshowing(event)"
+               onpopupshowing="quickmove.popupshowing(event, quickmove.folderMenuOptions)"
                onpopupshown="quickmove.popupshown(event)"
-               onpopuphidden="quickmove.hide(event.target)">
+               onpopuphidden="quickmove.hide(event.target)"
+               oncommand="quickmove.command(event, quickmove.executeMove)">
       <html:input class="quickmove-textbox"
                   onfocus="quickmove.focus(event)"
                   onkeypress="quickmove.keypress(event, quickmove.executeMove)"
-                  oninput="quickmove.searchDelayed(event.target); event.stopPropagation();"/>
+                  oninput="quickmove.searchFoldersDelayed(event.target); event.stopPropagation();"/>
       <menuseparator id="quickmove-filebutton-separator" class="quickmove-separator"/>
     </menupopup>
   `);
@@ -128,14 +143,14 @@ function initContextMenus(window, document) {
   let quickMoveFileHere = window.MozXULElement.parseXULToFragment(`
     <menupopup id="quickmove-context-menupopup"
                ignorekeys="true"
-               onpopupshowing="quickmove.popupshowing(event)"
+               onpopupshowing="quickmove.popupshowing(event, quickmove.folderMenuOptions)"
                onpopupshown="quickmove.popupshown(event)"
                onpopuphidden="quickmove.hide(event.target)"
                oncommand="quickmove.command(event, quickmove.executeMove, true)">
       <html:input class="quickmove-textbox"
                   onfocus="quickmove.focus(event)"
                   onkeypress="quickmove.keypress(event, quickmove.executeMove)"
-                  oninput="quickmove.searchDelayed(event.target); event.stopPropagation();"/>
+                  oninput="quickmove.searchFoldersDelayed(event.target); event.stopPropagation();"/>
       <menuseparator class="quickmove-separator"/>
     </menupopup>
   `);
@@ -146,14 +161,14 @@ function initContextMenus(window, document) {
   let quickMoveCopyHere = window.MozXULElement.parseXULToFragment(`
     <menupopup id="quickmove-context-copy-menupopup"
                ignorekeys="true"
-               onpopupshowing="quickmove.popupshowing(event)"
+               onpopupshowing="quickmove.popupshowing(event, quickmove.folderMenuOptions)"
                onpopupshown="quickmove.popupshown(event)"
                onpopuphidden="quickmove.hide(event.target)"
                oncommand="quickmove.command(event, quickmove.executeCopy, true)">
       <html:input class="quickmove-textbox"
                   onfocus="quickmove.focus(event)"
                   onkeypress="quickmove.keypress(event, quickmove.executeCopy)"
-                  oninput="quickmove.searchDelayed(event.target); event.stopPropagation();"/>
+                  oninput="quickmove.searchFoldersDelayed(event.target); event.stopPropagation();"/>
       <menuseparator class="quickmove-separator"/>
     </menupopup>
   `);
@@ -173,14 +188,14 @@ function initFolderLocation(window, document) {
   let quickmoveLocationPopup = window.MozXULElement.parseXULToFragment(`
     <menupopup id="quickmove-folderlocation-menupopup"
                ignorekeys="true"
-               onpopupshowing="quickmove.popupshowing(event)"
+               onpopupshowing="quickmove.popupshowing(event, quickmove.folderMenuOptions)"
                onpopupshown="quickmove.popupshown(event)"
                onpopuphidden="quickmove.hide(event.target)"
                oncommand="quickmove.command(event, quickmove.executeGoto)">
       <html:input class="quickmove-textbox"
                   onfocus="quickmove.focus(event)"
                   onkeypress="quickmove.keypress(event, quickmove.executeGoto)"
-                  oninput="quickmove.searchDelayed(event.target); event.stopPropagation();"/>
+                  oninput="quickmove.searchFoldersDelayed(event.target); event.stopPropagation();"/>
       <menuseparator id="quickmove-location-separator" class="quickmove-separator"/>
     </menupopup>
   `);

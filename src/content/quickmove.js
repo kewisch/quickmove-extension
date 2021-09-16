@@ -115,8 +115,14 @@ var quickmove = (function() {
     /** An array of recent folders, to be shown when no search term is entered */
     recentFolders: [],
 
+    /** An array of all tags, to be shown when no search term is entered */
+    allTags: [],
+
     /** A gloda suffix tree to provide quick search access to the folders */
-    suffixTree: null,
+    foldersSuffixTree: null,
+
+    /** A gloda suffix tree to provide quick search access to the tags */
+    tagsSuffixTree: null,
 
     /** True when something was typed but the search has not completed */
     dirty: false,
@@ -128,10 +134,10 @@ var quickmove = (function() {
     initiator: null,
 
     /**
-     * Event listener method to be called when the 'move to' or 'copy to'
-     * context menu is shown.
+     * Event listener method to be called when the 'move to', 'copy to', 'go to', or 'tag'
+     * context menus are shown.
      */
-    popupshowing: function(event) {
+    popupshowing: function(event, popupOptions) {
       if (event.target.getAttribute("ignorekeys") != "true") {
         // If we are showing the menuitems, then don't set up the folders but
         // keep the old list.
@@ -142,8 +148,9 @@ var quickmove = (function() {
       if (focusedElement && focusedElement.id) {
         quickmove.initiator = document.commandDispatcher.focusedElement;
       }
+
       Quickmove.clearItems(event.target);
-      quickmove.prepareFolders().then(() => {
+      popupOptions.prepare().then(() => {
         let initialText = "";
         if (typeof GetMessagePaneFrame != "undefined") {
           let selection = GetMessagePaneFrame().getSelection() || "";
@@ -153,10 +160,10 @@ var quickmove = (function() {
         event.target.firstChild.value = initialText;
         quickmove.dirty = false;
         if (initialText) {
-          quickmove.search(event.target.firstChild);
+          popupOptions.search(event.target.firstChild);
         } else {
-          quickmove.addFolders(
-            quickmove.recentFolders,
+          popupOptions.addMenuItems(
+            popupOptions.defaults(),
             event.target,
             event.target.firstChild.value
           );
@@ -231,10 +238,38 @@ var quickmove = (function() {
           label += " - " + folder.server.prettyName;
         }
         node.setAttribute("label", label);
-        node._folder = folder;
+        node._payload = folder;
 
         node.setAttribute("class", "folderMenuItem menuitem-iconic");
         if (lowerLabel == targetValue.toLowerCase()) {
+          // An exact match, put this at the top after the separator
+          let separator = popup.getElementsByClassName("quickmove-separator")[0];
+          popup.insertBefore(node, separator.nextSibling);
+        } else {
+          // Otherwise append to the end
+          popup.appendChild(node);
+        }
+      }
+    },
+
+    /**
+     * Add a set of tags to the context menu.
+     *
+     * @param tags        An array of tags to add
+     * @param popup       The popup to add to
+     * @param targetValue The searched text
+     */
+    addTags: async function(tags, popup, targetValue) {
+      for (let tag of tags) {
+        let node = document.createXULElement("menuitem");
+        let label = tag.tag;
+
+        node.setAttribute("label", label);
+        node.setAttribute("class", "menuitem-iconic");
+        node.setAttribute("style", `color: ${tag.color}`)
+        node._payload = tag;
+
+        if (label.toLowerCase() == targetValue.toLowerCase()) {
           // An exact match, put this at the top after the separator
           let separator = popup.getElementsByClassName("quickmove-separator")[0];
           popup.insertBefore(node, separator.nextSibling);
@@ -305,7 +340,9 @@ var quickmove = (function() {
 
       let allFolders = [];
       let allNames = [];
-      let recentFolders = (quickmove.recentFolders = []);
+
+      let recentFolders = quickmove.recentFolders;
+      recentFolders.length = 0;
       let oldestTime = 0;
 
       let maxRecent = await Quickmove.getPref("maxRecentFolders", 15);
@@ -317,21 +354,37 @@ var quickmove = (function() {
         }
       }
 
-      quickmove.suffixTree = new MultiSuffixTree(allNames, allFolders);
+      quickmove.foldersSuffixTree = new MultiSuffixTree(allNames, allFolders);
 
       recentFolders.sort(sorter);
+    },
+
+    /**
+     * Prepare the tags and the suffix tree with all available tags.
+     */
+    prepareTags: async function() {
+      let allTags = quickmove.allTags;
+      allTags.length = 0;
+      let allNames = [];
+
+      for (let tag of MailServices.tags.getAllTags()) {
+        allTags.push(tag);
+        allNames.push(tag.tag.toLowerCase());
+      }
+
+      quickmove.tagsSuffixTree = new MultiSuffixTree(allNames, allTags);
     },
 
     /**
      * Perform a search. If no search term is entered, the recent folders are
      * shown, otherwise folders which match the search term are shown.
      */
-    search: function(textboxNode) {
+    searchFolders: function(textboxNode) {
       let popup = textboxNode.parentNode;
       Quickmove.clearItems(popup);
       dump(`=== text |${textboxNode.value}|\n`);
       if (textboxNode.value.length) {
-        let folders = quickmove.suffixTree
+        let folders = quickmove.foldersSuffixTree
           .findMatches(textboxNode.value.toLowerCase())
           .filter(x => x.canFileMessages);
         if (folders.length) {
@@ -356,8 +409,39 @@ var quickmove = (function() {
       }
     },
 
-    searchDelayed: Quickmove.debounce(textboxNode => {
-      quickmove.search(textboxNode);
+    searchTags: function(textboxNode) {
+      let popup = textboxNode.parentNode;
+      Quickmove.clearItems(popup);
+      if (textboxNode.value.length) {
+        let tags = quickmove.tagsSuffixTree.findMatches(textboxNode.value.toLowerCase())
+        if (tags.length) {
+          quickmove.addTags(tags, popup, textboxNode.value);
+        } else {
+          let node = document.createXULElement("menuitem");
+          node.setAttribute("disabled", "true");
+          node.style.textAlign = "center";
+          node.setAttribute("label", Quickmove.getString("noResults"));
+          popup.appendChild(node);
+        }
+      } else {
+        quickmove.addTags(quickmove.allTags, popup, textboxNode.value);
+      }
+
+      // The search is done, reset the dirty count and call the search complete
+      // func if it is defined.
+      quickmove.dirty = false;
+      if (quickmove.searchCompleteFunc) {
+        quickmove.searchCompleteFunc();
+        quickmove.searchCompleteFunc = null;
+      }
+    },
+
+    searchFoldersDelayed: Quickmove.debounce(textboxNode => {
+      quickmove.searchFolders(textboxNode);
+    }, 500),
+
+    searchTagsDelayed: Quickmove.debounce(textboxNode => {
+      quickmove.searchTags(textboxNode);
     }, 500),
 
     executeCopy: function(folder) {
@@ -371,12 +455,17 @@ var quickmove = (function() {
         if (await Quickmove.getPref("markAsRead", true)) {
           MsgMarkMsgAsRead(true);
         }
+        console.log(folder);
         MsgMoveMessage(folder);
       }
     },
 
     executeGoto: function(folder) {
       gFolderTreeView.selectFolder(folder, true);
+    },
+
+    executeTag: function(tag) {
+      ToggleMessageTag(tag.key, true);
     },
 
     focus: function(event) {
@@ -389,12 +478,12 @@ var quickmove = (function() {
 
       // Executor function used later to execute the actual action
       function executor() {
-        let firstFolder =
+        let firstItem =
           event.target.nextSibling &&
           event.target.nextSibling.nextSibling &&
-          event.target.nextSibling.nextSibling._folder;
-        if (firstFolder) {
-          executeFunc(firstFolder);
+          event.target.nextSibling.nextSibling._payload;
+        if (firstItem) {
+          executeFunc(firstItem);
         }
       }
 
@@ -406,8 +495,7 @@ var quickmove = (function() {
         // If the user presses enter, execute the passed action, either directly
         // or indirectly
         if (quickmove.dirty) {
-          // We haven't finished searching for folders, wait until the search
-          // completes and then move.
+          // We haven't finished searching, wait until the search completes and then execute.
           quickmove.searchCompleteFunc = executor;
         } else {
           // Otherwise go ahead and do so directly.
@@ -462,7 +550,7 @@ var quickmove = (function() {
 
     command: function(event, executeFunc, isContext = false) {
       let popup = event.target.parentNode;
-      executeFunc(event.target._folder);
+      executeFunc(event.target._payload);
       event.stopPropagation();
       quickmove.hide(popup, isContext);
     },
@@ -526,6 +614,26 @@ var quickmove = (function() {
       }
     },
 
+    openTag: function() {
+      let threadTree = document.getElementById("threadTree");
+      let messagepane = document.getElementById("messagepane");
+      if (threadTree) {
+        // If there is a thread tree (i.e mail 3pane), then use it
+        let filepopup = document.getElementById("quickmove-tag-menupopup");
+        let threadTreeCols = document.getElementById("threadCols");
+        let selection = threadTree.view.selection;
+        let rowOffset =
+          threadTree.rowHeight * (selection.currentIndex - threadTree.getFirstVisibleRow() + 1) +
+          threadTreeCols.clientHeight;
+        filepopup.openPopup(threadTree, "overlap", threadTreeCols.clientHeight, rowOffset);
+      } else if (messagepane) {
+        let filepopup = document.getElementById("quickmove-tag-menupopup");
+        filepopup.openPopup(messagepane, "overlap");
+      } else {
+        Cu.reportError("Couldn't find a node to open the panel on");
+      }
+    },
+
     hide: function(popup, isContext = false) {
       if (!isContext) {
         popup.hidePopup();
@@ -542,6 +650,20 @@ var quickmove = (function() {
         quickmove.initiator.focus();
         quickmove.initiator = null;
       }
+    },
+
+    folderMenuOptions: {
+      prepare: () => quickmove.prepareFolders(),
+      search: (textboxNode) => quickmove.searchFolders(textboxNode),
+      addMenuItems: (folders, popup, targetValue) => quickmove.addFolders(folders, popup, targetValue),
+      defaults: () => quickmove.recentFolders
+    },
+
+    tagMenuOptions: {
+      prepare: () => quickmove.prepareTags(),
+      search: (textboxNode) => quickmove.searchTags(textboxNode),
+      addMenuItems: (tags, popup, targetValue) => quickmove.addTags(tags, popup, targetValue),
+      defaults: () => quickmove.allTags
     },
   };
 })();
