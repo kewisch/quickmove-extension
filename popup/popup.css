@@ -3,12 +3,30 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch, 2019 */
 
+@media (prefers-color-scheme: light) {
 :root {
   --menu-background-color: #EBE9E9; /* alt: Menu */
   --menu-color: black; /* alt: MenuText */
 
+  --menu-background-color-search: #EBE9E9;
+  --menu-color-search: black;
+  
   --menu-background-color-select: #3991FC;
   --menu-color-select: white;
+}
+}
+
+@media (prefers-color-scheme: dark) {
+:root {
+  --menu-background-color: #303030; /* alt: Menu */
+  --menu-color: white; /* alt: MenuText */
+
+  --menu-background-color-search: #303030;
+  --menu-color-search: white;
+
+  --menu-background-color-select: #3991FC;
+  --menu-color-select: white;
+}
 }
 
 body, html {
@@ -25,8 +43,19 @@ body, html {
 }
 
 #folderList {
+  --folder-list-search-bgcolor: var(--menu-background-color-search);
+  --folder-list-search-color: var(--menu-color-search);
+
+  --folder-list-item-color: var(--menu-color);
+
   --folder-list-item-bgcolor-hover: var(--menu-background-color-select);
   --folder-list-item-color-hover: var(--menu-color-select);
+  --folder-list-item-bgcolor-active: var(--menu-background-color);
+  --folder-list-item-color-active: var(--menu-color);
+
+  --folder-list-item-color-disabled: var(--menu-background-color);
+  --folder-list-item-shortcut-color: var(--menu-color);
+
   max-height: 60em;
 }
 
