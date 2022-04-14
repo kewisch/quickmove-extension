@@ -20,8 +20,6 @@ ChromeUtils.defineModuleGetter(
   "resource:///modules/ExtensionPopups.jsm"
 );
 
-var { fixIterator } = ChromeUtils.import("resource:///modules/iteratorUtils.jsm");
-
 var { getMostRecentFolders } = ChromeUtils.import("resource:///modules/folderUtils.jsm");
 
 const folderTypeMap = new Map([
@@ -96,7 +94,7 @@ this.quickmove = class extends ExtensionAPI {
               yield root;
             }
             if (root.hasSubFolders) {
-              for (let folder of fixIterator(root.subFolders, Components.interfaces.nsIMsgFolder)) {
+              for (let folder of root.subFolders) {
                 yield* allFolders(folder);
               }
             }
@@ -104,7 +102,7 @@ this.quickmove = class extends ExtensionAPI {
 
           let folders = [];
 
-          for (let acct of fixIterator(MailServices.accounts.accounts, Components.interfaces.nsIMsgAccount)) {
+          for (let acct of MailServices.accounts.accounts) {
             if (acct.incomingServer) {
               folders = folders.concat([...allFolders(acct.incomingServer.rootFolder)]);
             }
