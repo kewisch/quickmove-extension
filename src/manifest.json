@@ -1,0 +1,79 @@
+{
+  "manifest_version": 2,
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "version": "2.0.1",
+  "default_locale": "en",
+  "author": "Philipp Kewisch",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "quickmove@mozilla.kewis.ch",
+      "strict_min_version": "115.0b1"
+    }
+  },
+  "icons": {
+    "32": "images/addon.svg"
+  },
+
+  "options_ui": {
+    "page": "options/options.html"
+  },
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+
+  "permissions": [
+    "storage",
+    "accountsRead",
+    "messagesRead",
+    "messagesMove"
+  ],
+  "browser_action": {
+    "default_icon": "images/addon.svg",
+    "default_popup": "popup/popup.html?action=move&allowed=move,copy,goto",
+    "default_label": "Quick Move"
+  },
+
+  "message_display_action": {
+    "default_icon": "images/addon.svg",
+    "default_popup": "popup/popup.html?action=move&allowed=move,copy",
+    "default_label": "Quick Move"
+  },
+
+  "commands": {
+    "move": {
+      "description": "Move selected messages",
+      "suggested_key": {
+        "default": "Ctrl+Shift+M",
+        "mac": "MacCtrl+Shift+M"
+      }
+    },
+    "copy": {
+      "description": "Copy selected messages",
+      "suggested_key": {
+        "default": "Ctrl+Shift+C",
+        "mac": "MacCtrl+Shift+C"
+      }
+    },
+    "goto": {
+      "description": "Go to folder",
+      "suggested_key": {
+        "default": "Ctrl+Shift+G",
+        "mac": "MacCtrl+Shift+G"
+      }
+    }
+  },
+
+  "experiment_apis": {
+    "quickmove": {
+      "schema": "api/schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "paths": [["quickmove"]],
+        "script": "api/api.js"
+      }
+    }
+  }
+}

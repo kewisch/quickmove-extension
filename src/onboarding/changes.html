@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/.
+   - Portions Copyright (C) Philipp Kewisch -->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Quick Folder Move</title>
+    <script src="changes.js"></script>
+</head>
+<body>
+    <div class="content">
+        <div class="section header">
+          <h1>Quick Folder Move</h1>
+          <p>
+            Welcome to your updated Quick Folder Move, now fully compatible with Thunderbird 115.
+            With this update comes a few adjustments that might reshape your workflow. To keep you
+            in the loop, let's delve into these changes and keep any surprises at bay.
+          </p>
+          <p>
+            This version adopts a newer extensions technology (MailExtensions),
+            which promises greater stability. This means you can carry on using this add-on version
+            even with future Thunderbird updates without a hitch.
+          </p>
+          <p>
+            The flipside, though, is that this new technology doesn't support every customization
+            that you're used to. But don't worry, the following sections will guide you on adapting
+            your workflow to this new version. Enjoy your updated Quick Folder Move!
+          </p>
+        </div>
+        <div class="section image-right">
+          <img src="images/toolbar.png" alt="Popup showing in the main toolbar" />
+          <div class="text">
+            <h2>All in one place</h2>
+            <p>
+              In the previous version, you had a variety of ways to launch the Quick Folder Move
+              popup—from the message context menu to keyboard shortcuts. The location of the popup
+              would vary, depending on what elements of the UI were active at the time.
+            </p>
+            <p>
+              Now, your workflow is more streamlined. Use the button in the main toolbar no matter
+              if you want to move, copy or go to a folder. This change makes your navigation more
+              straightforward and less cluttered.
+            </p>
+          </div>
+        </div>
+        <div class="section image-left">
+          <img src="images/new-button.png" alt="New location for the button" />
+          <div class="text">
+            <h2>Moving in context</h2>
+            <p>
+              In addition to the main toolbar button, you also have the option to move messages
+              directly from the message header. This way you'll be able to take action right in
+              context, and you'll be ready to tackle the next message without delay.
+            </p>
+          </div>
+        </div>
+        <div class="section image-right">
+          <img src="images/shortcuts.png" alt="Managing shortcuts in the add-ons manager" />
+          <div class="text">
+            <h2>Changing Muscle Memory</h2>
+            <p>
+              The new technology restricts available keyboard shortcuts to prevent unexpected
+              command changes. This means we'll bid farewell to Shift+M, welcoming Ctrl+Shift+M for
+              'move' instead. Copy and Goto have undergone the same change.
+            </p>
+            <p>
+              But you're not without options. You can tweak these shortcuts in the add-on manager,
+              and this version still allows for the old shortcuts. Revert back to the legacy
+              shortcuts in this <a id="openOptions" href="about:addons">add-on's preferences</a>,
+              or <a href="https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox" target="_blank">use the shortcut manager</a>
+              to define your own.
+            </p>
+            <form id="legacy-shortcuts-form">
+              <label>
+                <input type="radio" name="shortcuts" value="new" checked>
+                Embracing change, I'm testing new shortcuts or tailoring them in the prefs.
+              </label>
+              <label>
+                <input type="radio" name="shortcuts" value="legacy">
+                Change is hard. I'll stick with the old shortcuts for now.
+              </label>
+            </form>
+          </div>
+        </div>
+        <div class="section footer">
+          <p>
+            If you have any questions, please reach out via the add-on's <a href="https://github.com/kewisch/quickmove-extension" target="_blank">GitHub page</a>.
+            This is also where you can help improve future versions of the add-on.
+          </p>
+          <p>
+            Are you enjoying Quick Folder Move? Come to realize how much you depend on this add-on?
+            I'd appreciate your support for continued development of this add-on.
+          </p>
+          <p class="donatebutton">
+            <a class="button" href="https://paypal.me/kewisch/10eur" target="_blank">Send me a token of appreciation ❤️</a>
+          </p>
+        </div>
+    </div>
+</body>
+</html>
+

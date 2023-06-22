@@ -1,0 +1,58 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Portions Copyright (C) Philipp Kewisch */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: sans-serif;
+    padding: 20px;
+    font-size: 18px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 1em 0.4em;
+}
+
+.preference {
+  display: contents;
+}
+
+.preference input {
+  justify-self: end;
+}
+
+
+input[type="checkbox"] {
+    border: 1px solid #b1b1b1;
+    background-color: #fff;
+    width: 16px;
+    height: 16px;
+}
+
+input[type="number"] {
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #b1b1b1;
+    border-radius: 5px;
+    width: 4.5em;
+}
+button {
+    padding: 10px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #0a84ff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, margin: 0.3s ease;
+}
+button:hover {
+    box-shadow: inset 4px 2px 5px rgba(0, 0, 0, 0.3);
+}

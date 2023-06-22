@@ -6,10 +6,9 @@ module.exports = {
     "webextensions": true
   },
   "parserOptions": {
-    "ecmaVersion": 8,
+    "ecmaVersion": 13,
     "sourceType": "module"
   },
-  "parser": "babel-eslint",
   "globals": {
     "self": true
   },

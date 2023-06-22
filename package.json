@@ -1,0 +1,36 @@
+{
+  "name": "quickmove",
+  "description": "Quick Folder Move",
+  "version": "2.0.1",
+  "private": true,
+  "author": "Philipp Kewisch <mozilla@kewis.ch>",
+  "license": "MPL-2.0",
+  "homepage": "https://github.com/kewisch/quickmove#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kewisch/quickmove.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kewisch/quickmove/issues"
+  },
+  "scripts": {
+    "build": "mkdir -p dist; web-ext build -s src -o",
+    "clean": "rm -f web-ext-artifacts",
+    "bump": "bumper() { bump package.json \"$1\"; bump src/manifest.json \"$1\"; }; bumper",
+    "tag": "git tag v$(jq -r '.version' src/manifest.json)",
+    "lint": "commitlint -f e51ab4971353f123c553e653c9241c466ffec5ed && eslint src || true"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.5",
+    "@commitlint/config-conventional": "^17.6.5",
+    "bump-file": "^2.0.0",
+    "conventional-changelog-cli": "^3.0.0",
+    "eslint": "^8.43.0",
+    "eslint-config-prettier": "^8.0.0",
+    "eslint-plugin-fetch-options": "^0.0.5",
+    "eslint-plugin-html": "^7.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.8",
+    "web-ext": "^7.6.2"
+  }
+}

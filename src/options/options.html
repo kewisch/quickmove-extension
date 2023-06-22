@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/.
+   - Portions Copyright (C) Philipp Kewisch -->
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="options.js"></script>
+    <link rel="stylesheet" href="options.css" type="text/css">
+  </head>
+  <body>
+    <div class="preference">
+      <input type="checkbox" id="markAsRead">
+      <label for="markAsRead" data-l10n-id="markAsRead"></label>
+    </div>
+    <div class="preference">
+      <input type="checkbox" id="showFolderPath">
+      <label for="showFolderPath" data-l10n-id="showFolderPath"></label>
+    </div>
+    <div class="preference">
+      <input type="checkbox" id="useLegacyShortcuts">
+      <label for="useLegacyShortcuts" data-l10n-id="useLegacyShortcuts"></label>
+    </div>
+    <div class="preference">
+      <input type="number" min="0" id="maxRecentFolders">
+      <label for="maxRecentFolders" data-l10n-id="maxRecentFolders"></label>
+    </div>
+    <div class="preference">
+      <span></span>
+      <div>
+        <button id="onboarding">Show instructions</button>
+      </div>
+    </div>
+  </body>
+</html>
