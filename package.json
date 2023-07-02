@@ -22,10 +22,10 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.5",
-    "@commitlint/config-conventional": "^17.6.5",
+    "@commitlint/config-conventional": "^17.6.6",
     "bump-file": "^2.0.0",
     "conventional-changelog-cli": "^3.0.0",
-    "eslint": "^8.43.0",
+    "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.0.0",
     "eslint-plugin-fetch-options": "^0.0.5",
     "eslint-plugin-html": "^7.1.0",
