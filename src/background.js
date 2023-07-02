@@ -41,14 +41,15 @@ browser.runtime.onInstalled.addListener(({ reason, previousVersion }) => {
 
 browser.commands.onCommand.addListener(async (name) => {
   let mailTab = await browser.mailTabs.getCurrent();
-  if (name != "goto" && mailTab?.messagePaneVisible) {
-    browser.messageDisplayAction.setPopup({ popup: `/popup/popup.html?action=${name}&allowed=move,copy` });
-    browser.messageDisplayAction.openPopup();
-    browser.messageDisplayAction.setPopup({ popup: "/popup/popup.html?action=move&allowed=move,copy" });
-  } else {
+  let displayedMessages = await browser.messageDisplay.getDisplayedMessages(mailTab.id);
+  if (name == "goto" || !mailTab?.messagePaneVisible || displayedMessages.length > 1) {
     browser.browserAction.setPopup({ popup: `/popup/popup.html?action=${name}&allowed=move,copy,goto` });
     browser.browserAction.openPopup();
     browser.browserAction.setPopup({ popup: "/popup/popup.html?action=move&allowed=move,copy,goto" });
+  } else {
+    browser.messageDisplayAction.setPopup({ popup: `/popup/popup.html?action=${name}&allowed=move,copy` });
+    browser.messageDisplayAction.openPopup();
+    browser.messageDisplayAction.setPopup({ popup: "/popup/popup.html?action=move&allowed=move,copy" });
   }
 });
 
