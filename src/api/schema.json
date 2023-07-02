@@ -30,13 +30,6 @@
   ],
   "functions": [
     {
-      "name": "sortAccounts",
-      "type": "function",
-      "async": true,
-      "parameters": [
-        { "name": "accounts", "type": "array", "items": { "$ref": "MailAccount" } }
-      ]
-    },{
       "name": "query",
       "type": "function",
       "async": true,
@@ -60,7 +53,7 @@
         "type": "boolean"
       }]
     },{
-      "name": "openPopup",
+      "name": "focusThreadPane",
       "type": "function",
       "async": true,
       "parameters": []

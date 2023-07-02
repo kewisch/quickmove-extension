@@ -53,7 +53,9 @@ browser.commands.onCommand.addListener(async (name) => {
 });
 
 browser.runtime.onMessage.addListener(async (message, sender) => {
-  if (message.action == "processSelectedMessages") {
+  if (message.action == "focusThreadPane") {
+    return browser.quickmove.focusThreadPane();
+  } else if (message.action == "processSelectedMessages") {
     return processSelectedMessages(message.folder, message.operation);
   } else if (message.action == "setupShortcuts") {
     browser.quickmove.setupLegacyShortcuts(message.enable);

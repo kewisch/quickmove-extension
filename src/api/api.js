@@ -118,6 +118,13 @@ this.quickmove = class extends ExtensionAPI {
             context.extension.shortcuts.resetCommand("copy");
             context.extension.shortcuts.resetCommand("goto");
           }
+        },
+
+        // bug 1840072 - thread pane is not focused when returning from browserAction
+        async focusThreadPane(windowId) {
+          let window = Services.wm.getMostRecentWindow("mail:3pane");
+          let tabmail = window.top.document.getElementById("tabmail");
+          tabmail.currentAbout3Pane.threadTree.table.body.focus();
         }
       }
     };

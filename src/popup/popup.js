@@ -72,6 +72,10 @@ async function load() {
   });
 }
 
+function unload(event) {
+  browser.runtime.sendMessage({ action: "focusThreadPane" }).catch(() => {});
+}
+
 function keydown(event) {
   if (event.key == "Escape") {
     window.close();
@@ -91,3 +95,4 @@ function keydown(event) {
 
 window.addEventListener("keydown", keydown);
 window.addEventListener("DOMContentLoaded", load, { once: true });
+window.addEventListener("unload", unload, { once: true, capture: true });
