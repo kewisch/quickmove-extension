@@ -8,7 +8,8 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "quickmove@mozilla.kewis.ch",
-      "strict_min_version": "115.0b1"
+      "strict_min_version": "115.0a1",
+      "strict_max_version": "116.*"
     }
   },
   "icons": {
