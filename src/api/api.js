@@ -67,6 +67,7 @@ this.quickmove = class extends ExtensionAPI {
   getAPI(context) {
     return {
       quickmove: {
+        // bug 1840039 - messenger.folders.query API
         async query({ recent, limit, canFileMessages }) {
           function* allFolders(root) {
             if (
@@ -98,7 +99,7 @@ this.quickmove = class extends ExtensionAPI {
           return folders;
         },
 
-        // This sets the legacy shortcuts, won't be able to use this forever.
+        // This sets the legacy shortcuts, will only keep this until the other bugs are fixed.
         setupLegacyShortcuts(enabled) {
           if (enabled) {
             context.extension.shortcuts.updateCommand({
