@@ -43,11 +43,11 @@ h1, h2 {
     width: 100%;
     margin-bottom: 2em;
     text-align: left;
-    padding 5ex 0 0;
+    padding 1ex 0 0;
 }
 .section:not(:last-child) {
     border-bottom: 1px solid #c4c4c4;
-    padding: 5ex 0;
+    padding: 1ex 0;
 }
 .section.header, .section.footer {
   flex-direction: column;
@@ -88,6 +88,25 @@ h1, h2 {
     width: 45%;
 }
 
+.section p.warning {
+  border: 1px solid #eed936;
+  background: #fff7b8;
+  border-radius: 3px;
+  padding-inline-start: 90px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  position: relative;
+}
+.section p.warning::before {
+  content: "⚠️";
+  font-size: 50px;
+  display: block;
+  position: absolute;
+  top: calc(50% - 0.5em);
+  left: 20px;
+  line-height: 1;
+}
+
 .section p {
     margin-bottom: 1em;
     color: #666;
@@ -102,7 +121,7 @@ h1, h2 {
     display: flex;
     flex-direction: column;
     width: 90%;
-    margin: 0 auto;
+    margin: 0 auto 1em;
 }
 
 .section input[type="text"] {
