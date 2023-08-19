@@ -126,6 +126,43 @@ this.quickmove = class extends ExtensionAPI {
           let window = Services.wm.getMostRecentWindow("mail:3pane");
           let tabmail = window.top.document.getElementById("tabmail");
           tabmail.currentAbout3Pane.threadTree.table.body.focus();
+        },
+
+        // bug 1849476 - messages.move/copy() doesn't set mail.last_msg_movecopy_target_uri
+        async setLastMoveCopyFolder({ accountId, path }) {
+          /* eslint-disable */
+          /* This is verbatim from ext-mail.js */
+          function folderPathToURI(accountId, path) {
+            let server = MailServices.accounts.getAccount(accountId).incomingServer;
+            let rootURI = server.rootFolder.URI;
+            if (path == "/") {
+              return rootURI;
+            }
+            // The .URI property of an IMAP folder doesn't have %-encoded characters.
+            // If encoded here, the folder lookup service won't find the folder.
+            if (server.type == "imap") {
+              return rootURI + path;
+            }
+            return (
+              rootURI +
+              path
+                .split("/")
+                .map(p =>
+                  encodeURIComponent(p)
+                    .replace(/[!'()*]/g, c => "%" + c.charCodeAt(0).toString(16))
+                    // We do not encode "+" chars in folder URIs. Manually convert them
+                    // back to literal + chars, otherwise folder lookup will fail.
+                    .replaceAll("%2B", "+")
+                )
+                .join("/")
+            );
+          }
+          /* eslint-enable */
+
+          let targetFolderUri = folderPathToURI(accountId, path);
+          if (targetFolderUri) {
+            Services.prefs.setStringPref("mail.last_msg_movecopy_target_uri", targetFolderUri);
+          }
         }
       }
     };

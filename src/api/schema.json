@@ -57,6 +57,15 @@
       "type": "function",
       "async": true,
       "parameters": []
+    },{
+      "name": "setLastMoveCopyFolder",
+      "type": "function",
+      "async": true,
+      "parameters": [{
+        "name": "destination",
+        "$ref": "folders.MailFolder",
+        "description": "The folder for the last move/copy operation"
+      }]
     }
   ]
 }]
