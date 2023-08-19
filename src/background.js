@@ -31,6 +31,8 @@ async function processSelectedMessages(folder, operation="move") {
   }
 
   await Promise.all(ops);
+
+  await browser.quickmove.setLastMoveCopyFolder(folder);
 }
 
 browser.runtime.onInstalled.addListener(({ reason, previousVersion }) => {
