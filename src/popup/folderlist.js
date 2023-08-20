@@ -232,6 +232,8 @@ class TBFolderList extends HTMLElement {
     this.folderListSelectLeave = this.folderListSelectLeave.bind(this);
     this.searchKeyDownCallback = this.searchKeyDownCallback.bind(this);
     this.searchKeyUpCallback = this.searchKeyUpCallback.bind(this);
+
+    this.ignoreFocus = false;
   }
 
   connectedCallback() {
@@ -290,7 +292,7 @@ class TBFolderList extends HTMLElement {
 
   folderListSelect(event) {
     let item = event.target.closest(".folder-item");
-    if (!item) {
+    if (!item || this.ignoreFocus) {
       return;
     }
 
