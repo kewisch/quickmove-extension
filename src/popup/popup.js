@@ -15,6 +15,14 @@ function setup_localization() {
 }
 
 async function load() {
+  let { maxRecentFolders, showFolderPath, layout } = await browser.storage.local.get({ maxRecentFolders: 15, showFolderPath: true, layout: "auto" });
+
+  if (layout == "wide" || (layout == "auto" && window.outerWidth > 1400)) {
+    document.documentElement.removeAttribute("compact");
+    document.getElementById("folder-list").removeAttribute("compact");
+  }
+  document.body.style.display = "block";
+
   setup_localization();
 
   let params = new URLSearchParams(window.location.search);
@@ -39,11 +47,9 @@ async function load() {
   }
 
   let accounts = await browser.accounts.list();
-
   let accountNodes = accounts.map(account => new AccountNode(account));
   let folders = accountNodes.reduce((acc, node) => acc.concat([...node]), []);
 
-  let { maxRecentFolders, showFolderPath } = await browser.storage.local.get({ maxRecentFolders: 15, showFolderPath: true });
   let recent = await browser.quickmove.query({ recent: true, limit: maxRecentFolders, canFileMessages: true });
 
   let folderList = document.getElementById("folder-list");

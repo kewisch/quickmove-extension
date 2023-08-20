@@ -14,6 +14,30 @@
   "actionGoto": {
     "message": "Goto"
   },
+  "layout": {
+    "message": "Popup layout"
+  },
+  "layout.title": {
+    "message": ""
+  },
+  "layout.auto": {
+    "message": "Automatic"
+  },
+  "layout.auto.title": {
+    "message": ""
+  },
+  "layout.wide": {
+    "message": "Always wide"
+  },
+  "layout.wide.title": {
+    "message": ""
+  },
+  "layout.compact": {
+    "message": "Always compact"
+  },
+  "layout.compact.title": {
+    "message": ""
+  },
   "markAsRead": {
     "message": "Mark messages as read when moving"
   },
