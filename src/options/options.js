@@ -4,6 +4,7 @@
  * Portions Copyright (C) Philipp Kewisch */
 
 const DEFAULT_PREFERENCES = {
+  layout: "auto",
   markAsRead: true,
   maxRecentFolders: 15,
   showFolderPath: false,
@@ -34,7 +35,7 @@ function change_options(event) {
   let node = event.target;
   let defaultPrefs = Object.keys(DEFAULT_PREFERENCES);
   let isPreference = defaultPrefs.includes(node.id) || defaultPrefs.includes(node.name);
-  if (!node.id || node.localName != "input" || !isPreference) {
+  if (!node.id || (node.localName != "select" && node.localName != "input") || !isPreference) {
     return;
   }
 
@@ -42,7 +43,7 @@ function change_options(event) {
     browser.storage.local.set({ [node.id]: node.checked });
   } else if (node.getAttribute("type") == "number") {
     browser.storage.local.set({ [node.id]: parseInt(node.value, 10) });
-  } else if (node.getAttribute("type") == "text") {
+  } else if (node.getAttribute("type") == "text" || node.localName == "select") {
     browser.storage.local.set({ [node.id]: node.value });
   } else if (node.getAttribute("type") == "radio") {
     browser.storage.local.set({ [node.name]: node.value });

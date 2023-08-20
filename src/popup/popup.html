@@ -4,7 +4,7 @@
    - file, You can obtain one at http://mozilla.org/MPL/2.0/.
    - Portions Copyright (C) Philipp Kewisch -->
 
-<html>
+<html compact="true">
   <head>
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="popup.css"/>
@@ -12,7 +12,7 @@
     <script type="module" src="popup.js"></script>
     <title>Quick Folder Move</title>
   </head>
-  <body>
+  <body style="display: none !important">
     <div class="action-buttons">
       <input type="radio" name="action" value="move" id="action-move" checked>
       <label for="action-move" data-l10n-id="actionMove"></label>
@@ -21,6 +21,6 @@
       <input type="radio" name="action" value="goto" id="action-goto">
       <label for="action-goto" data-l10n-id="actionGoto"></label>
     </div>
-    <folder-list id="folder-list" search="true"></folder-list>
+    <folder-list id="folder-list" search="true" compact="true"></folder-list>
   </body>
 </html>

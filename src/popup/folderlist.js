@@ -35,6 +35,24 @@ class TBFolderList extends HTMLElement {
         overflow: hidden;
       }
 
+      :host([compact]) .search-header {
+        padding: 0;
+        border-bottom: 0;
+      }
+      :host([compact]) .folder-list-body {
+        padding: 2px 0;
+      }
+      :host([compact]) .folder-item, :host([compact]) .account-item {
+        padding: 0;
+        margin: 0;
+        line-height: 1.3em;
+      }
+
+      :host([compact]) .search-input:focus-visible {
+        outline: none !important;
+        border-color: #7AACFE;
+      }
+
       .search-header {
         display: flex;
         flex-direction: column;
@@ -380,19 +398,30 @@ class TBFolderList extends HTMLElement {
     let item = this.shadowRoot.ownerDocument.importNode(template.content, true);
     item.querySelector(".icon").classList.add("folder-type-" + (folder.type || "folder"));
     item.querySelector(".icon").style.marginInlineStart = (depth * 10) + "px";
-    item.querySelector(".text").textContent = folder.name;
 
     let prettyFolderPathComponents = folder.path.split("/").filter((val) => {
       // Filter out [Gmail] and empty path components.
       return val !== "" && !val.includes("[");
     });
 
-    if (this.#showFolderPath) {
-      item.querySelector(".text-shortcut").textContent = prettyFolderPathComponents.slice(0, -1).join(" → ");
+    let compact = this.hasAttribute("compact");
+
+    if (compact) {
+      if (this.#showFolderPath) {
+        item.querySelector(".text").textContent = prettyFolderPathComponents.join("→");
+      } else {
+        item.querySelector(".text").textContent = folder.name;
+        item.querySelector(".folder-item").setAttribute("title", prettyFolderPathComponents.join(" → "));
+      }
+    } else {
+      if (this.#showFolderPath) {
+        item.querySelector(".text-shortcut").textContent = prettyFolderPathComponents.slice(0, -1).join(" → ");
+      }
+      item.querySelector(".text").textContent = folder.name;
+      item.querySelector(".folder-item").setAttribute("title", prettyFolderPathComponents.join(" → "));
     }
 
     item.querySelector(".folder-item").folder = folder;
-    item.querySelector(".folder-item").setAttribute("title", prettyFolderPathComponents.join(" → "));
 
     if (!body.lastElementChild || body.lastElementChild.folder.accountId != folder.accountId) {
       let accountTemplate = this.shadowRoot.querySelector(".account-item-template");

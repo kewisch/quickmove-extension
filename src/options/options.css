@@ -56,3 +56,10 @@ button {
 button:hover {
     box-shadow: inset 4px 2px 5px rgba(0, 0, 0, 0.3);
 }
+
+select {
+    border: 1px solid #b1b1b1;
+    padding: 5px;
+    border-radius: 5px;
+    background: #fff;
+}
