@@ -58,6 +58,7 @@ async function load() {
   folderList.allFolders = folders;
   folderList.defaultFolders = recent;
   folderList.showFolderPath = showFolderPath;
+  folderList.ignoreFocus = true;
 
   folderList.addEventListener("folder-selected", async (event) => {
     let operation = document.querySelector("input[name='action']:checked").value;
@@ -76,6 +77,10 @@ async function load() {
   document.querySelector(".action-buttons").addEventListener("click", () => {
     folderList.focusSearch();
   });
+
+  document.body.addEventListener("mousemove", () => {
+    folderList.ignoreFocus = false;
+  }, { once: true });
 }
 
 function unload(event) {
