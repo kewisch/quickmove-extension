@@ -277,13 +277,21 @@ class TBFolderList extends HTMLElement {
 
   nthFolder(n) {
     let folderList = this.shadowRoot.querySelector(".folder-list-body");
-    let topFolderItem = folderList.firstElementChild;
+    let folderItem = folderList.firstElementChild;
+    let direction = "nextElementSibling";
+
+    if (n < 0) {
+      folderItem = folderList.lastElementChild;
+      direction = "previousElementSibling";
+      n = -n - 1;
+    }
+
     for (; n > 0; n--) {
-      while (topFolderItem && !topFolderItem.classList.contains("folder-item")) {
-        topFolderItem = topFolderItem.nextElementSibling;
+      while (folderItem && !folderItem.classList.contains("folder-item")) {
+        folderItem = folderItem[direction];
       }
     }
-    return topFolderItem;
+    return folderItem;
   }
 
   folderListSelectLeave(event) {
@@ -309,14 +317,20 @@ class TBFolderList extends HTMLElement {
   }
 
   folderListKeyDown(event) {
-    if (event.key == "ArrowDown" || event.key == "ArrowUp") {
-      let direction = event.key == "ArrowDown" ? "nextElementSibling" : "previousElementSibling";
+    if (event.key == "ArrowDown" || event.key == "ArrowUp" || event.key == "Tab") {
+      let direction;
+      if (event.key == "ArrowDown" || (event.key == "Tab" && !event.shiftKey)) {
+        direction = "nextElementSibling";
+      } else {
+        direction = "previousElementSibling";
+      }
+
       let folderItem = this.selected;
       let target = this.#ensureFolder(folderItem && folderItem[direction], direction);
       if (target) {
         this.selected = target;
         this.shadowRoot.querySelector(".folder-list-body").focus();
-      } else if (event.key == "ArrowUp") {
+      } else {
         this.focusSearch();
       }
       event.preventDefault();
@@ -359,8 +373,12 @@ class TBFolderList extends HTMLElement {
   }
 
   searchKeyDownCallback(event) {
-    if (event.key == "ArrowDown") {
+    if (event.key == "ArrowDown" || (event.key == "Tab" && !event.shiftKey)) {
       this.selected = this.nthFolder(1);
+      this.shadowRoot.querySelector(".folder-list-body").focus();
+      event.preventDefault();
+    } else if (event.key == "ArrowUp" || (event.key == "Tab" && event.shiftKey)) {
+      this.selected = this.nthFolder(-1);
       this.shadowRoot.querySelector(".folder-list-body").focus();
       event.preventDefault();
     }
