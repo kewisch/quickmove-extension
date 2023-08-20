@@ -65,6 +65,9 @@
         "name": "destination",
         "$ref": "folders.MailFolder",
         "description": "The folder for the last move/copy operation"
+      }, {
+        "name": "isMove",
+        "type": "boolean"
       }]
     }
   ]

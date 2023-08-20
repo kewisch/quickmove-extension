@@ -129,7 +129,7 @@ this.quickmove = class extends ExtensionAPI {
         },
 
         // bug 1849476 - messages.move/copy() doesn't set mail.last_msg_movecopy_target_uri
-        async setLastMoveCopyFolder({ accountId, path }) {
+        async setLastMoveCopyFolder({ accountId, path }, isMove) {
           /* eslint-disable */
           /* This is verbatim from ext-mail.js */
           function folderPathToURI(accountId, path) {
@@ -162,6 +162,7 @@ this.quickmove = class extends ExtensionAPI {
           let targetFolderUri = folderPathToURI(accountId, path);
           if (targetFolderUri) {
             Services.prefs.setStringPref("mail.last_msg_movecopy_target_uri", targetFolderUri);
+            Services.prefs.setBoolPref("mail.last_msg_movecopy_was_move", isMove);
           }
         }
       }
