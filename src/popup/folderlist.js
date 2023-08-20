@@ -486,6 +486,12 @@ class TBFolderList extends HTMLElement {
     this.repopulate();
   }
 
+  initFolders(allFolders, defaultFolders) {
+    this.#allFolders = allFolders;
+    this.#defaultFolders = defaultFolders;
+    this.repopulate();
+  }
+
   get searchValue() {
     return this.shadowRoot.querySelector(".search-input").value;
   }

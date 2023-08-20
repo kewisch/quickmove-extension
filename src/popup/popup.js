@@ -55,8 +55,7 @@ async function load() {
   let folderList = document.getElementById("folder-list");
   folderList.accounts = accounts;
   folderList.accountNodes = accountNodes;
-  folderList.allFolders = folders;
-  folderList.defaultFolders = recent;
+  folderList.initFolders(folders, recent);
   folderList.showFolderPath = showFolderPath;
   folderList.ignoreFocus = true;
 
