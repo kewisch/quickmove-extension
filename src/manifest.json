@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "2.2.2",
+  "version": "2.3.0",
   "default_locale": "en",
   "author": "Philipp Kewisch",
   "browser_specific_settings": {
@@ -33,13 +33,13 @@
   ],
   "browser_action": {
     "default_icon": "images/addon.svg",
-    "default_popup": "popup/popup.html?action=move&allowed=move,copy,goto",
+    "default_popup": "popup/popup.html?action=move&allowed=move,copy,tag,goto",
     "default_label": "Quick Move"
   },
 
   "message_display_action": {
     "default_icon": "images/addon.svg",
-    "default_popup": "popup/popup.html?action=move&allowed=move,copy",
+    "default_popup": "popup/popup.html?action=move&allowed=move,copy,tag",
     "default_label": "Quick Move"
   },
 
@@ -63,6 +63,13 @@
       "suggested_key": {
         "default": "Ctrl+Shift+G",
         "mac": "MacCtrl+Shift+G"
+      }
+    },
+    "tag": {
+      "description": "Apply a tag",
+      "suggested_key": {
+        "default": "Ctrl+Shift+T",
+        "mac": "MacCtrl+Shift+T"
       }
     }
   },

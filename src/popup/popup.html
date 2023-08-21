@@ -9,6 +9,7 @@
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="popup.css"/>
     <script type="module" src="folderlist.js"></script>
+    <script type="module" src="taglist.js"></script>
     <script type="module" src="popup.js"></script>
     <title>Quick Folder Move</title>
   </head>
@@ -20,7 +21,10 @@
       <label for="action-copy" data-l10n-id="actionCopy"></label>
       <input type="radio" name="action" value="goto" id="action-goto">
       <label for="action-goto" data-l10n-id="actionGoto"></label>
+      <input type="radio" name="action" value="tag" id="action-tag">
+      <label for="action-tag" data-l10n-id="actionTag"></label>
     </div>
     <folder-list id="folder-list" search="true" compact="true"></folder-list>
+    <tag-list id="tag-list" search="true" compact="true"></tag-list>
   </body>
 </html>

@@ -34,6 +34,34 @@ async function processSelectedMessages(folder, operation="move") {
 
   await browser.quickmove.setLastMoveCopyFolder(folder, operation == "move");
 }
+async function applyTags(tag) {
+  let { markAsRead } = await browser.storage.local.get({ markAsRead: true });
+
+  let ops = [];
+
+  for await (let messages of selectedMessagePages()) {
+    let ids = messages.map(message => message.id);
+    ops.push(Promise.all(ids.map(async (id) => {
+      let msg = await browser.messages.get(id);
+      let tagset = new Set(msg.tags);
+
+      if (tagset.has(tag)) {
+        tagset.delete(tag);
+      } else {
+        tagset.add(tag);
+      }
+
+      let data = { tags: [...tagset] };
+
+      if (markAsRead) {
+        data.read = true;
+      }
+      return browser.messages.update(id, data);
+    })));
+  }
+
+  await Promise.all(ops);
+}
 
 browser.runtime.onInstalled.addListener(({ reason, previousVersion }) => {
   if (previousVersion && previousVersion.startsWith("1.")) {
@@ -45,13 +73,13 @@ browser.commands.onCommand.addListener(async (name) => {
   let mailTab = await browser.mailTabs.getCurrent();
   let displayedMessages = await browser.messageDisplay.getDisplayedMessages(mailTab.id);
   if (name == "goto" || !mailTab?.messagePaneVisible || displayedMessages.length > 1) {
-    browser.browserAction.setPopup({ popup: `/popup/popup.html?action=${name}&allowed=move,copy,goto` });
+    browser.browserAction.setPopup({ popup: `/popup/popup.html?action=${name}&allowed=move,copy,tag,goto` });
     browser.browserAction.openPopup();
-    browser.browserAction.setPopup({ popup: "/popup/popup.html?action=move&allowed=move,copy,goto" });
+    browser.browserAction.setPopup({ popup: "/popup/popup.html?action=move&allowed=move,copy,tag,goto" });
   } else {
-    browser.messageDisplayAction.setPopup({ popup: `/popup/popup.html?action=${name}&allowed=move,copy` });
+    browser.messageDisplayAction.setPopup({ popup: `/popup/popup.html?action=${name}&allowed=move,copy,tag` });
     browser.messageDisplayAction.openPopup();
-    browser.messageDisplayAction.setPopup({ popup: "/popup/popup.html?action=move&allowed=move,copy" });
+    browser.messageDisplayAction.setPopup({ popup: "/popup/popup.html?action=move&allowed=move,copy,tag" });
   }
 });
 
@@ -59,7 +87,11 @@ browser.runtime.onMessage.addListener(async (message, sender) => {
   if (message.action == "focusThreadPane") {
     return browser.quickmove.focusThreadPane();
   } else if (message.action == "processSelectedMessages") {
-    return processSelectedMessages(message.folder, message.operation);
+    if (message.operation == "tag") {
+      return applyTags(message.tag);
+    } else {
+      return processSelectedMessages(message.folder, message.operation);
+    }
   } else if (message.action == "setupShortcuts") {
     browser.quickmove.setupLegacyShortcuts(message.enable);
   } else {
