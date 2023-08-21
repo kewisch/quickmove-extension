@@ -71,8 +71,8 @@ browser.runtime.onInstalled.addListener(({ reason, previousVersion }) => {
 
 browser.commands.onCommand.addListener(async (name) => {
   let mailTab = await browser.mailTabs.getCurrent();
-  let displayedMessages = await browser.messageDisplay.getDisplayedMessages(mailTab.id);
-  if (name == "goto" || !mailTab?.messagePaneVisible || displayedMessages.length > 1) {
+  let displayedMessages = mailTab ? await browser.messageDisplay.getDisplayedMessages(mailTab.id) : [];
+  if (name == "goto" || (mailTab && (!mailTab.messagePaneVisible || displayedMessages.length > 1))) {
     browser.browserAction.setPopup({ popup: `/popup/popup.html?action=${name}&allowed=move,copy,tag,goto` });
     browser.browserAction.openPopup();
     browser.browserAction.setPopup({ popup: "/popup/popup.html?action=move&allowed=move,copy,tag,goto" });
