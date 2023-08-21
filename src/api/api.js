@@ -114,10 +114,15 @@ this.quickmove = class extends ExtensionAPI {
               name: "goto",
               shortcut: "Shift+G"
             });
+            context.extension.shortcuts.updateCommand({
+              name: "tag",
+              shortcut: "Shift+T"
+            });
           } else {
             context.extension.shortcuts.resetCommand("move");
             context.extension.shortcuts.resetCommand("copy");
             context.extension.shortcuts.resetCommand("goto");
+            context.extension.shortcuts.resetCommand("tag");
           }
         },
 
