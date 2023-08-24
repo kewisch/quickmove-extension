@@ -53,6 +53,12 @@
   "showFolderPath.title": {
     "message": ""
   },
+  "skipArchive": {
+    "message": "Never match archive folders"
+  },
+  "skipArchive.title": {
+    "message": ""
+  },
   "maxRecentFolders": {
     "message": "Number of recent folders to show"
   },

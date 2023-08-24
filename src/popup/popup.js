@@ -30,7 +30,7 @@ function switchList(action) {
 }
 
 async function load() {
-  let { maxRecentFolders, showFolderPath, layout } = await browser.storage.local.get({ maxRecentFolders: 15, showFolderPath: true, layout: "auto" });
+  let { maxRecentFolders, showFolderPath, skipArchive, layout } = await browser.storage.local.get({ maxRecentFolders: 15, showFolderPath: true, layout: "auto", skipArchive: true });
 
   if (layout == "wide" || (layout == "auto" && window.outerWidth > 1400)) {
     document.documentElement.removeAttribute("compact");
@@ -63,8 +63,9 @@ async function load() {
 
   // Setup folder list
   let accounts = await browser.accounts.list();
-  let accountNodes = accounts.map(account => new AccountNode(account));
+  let accountNodes = accounts.map(account => new AccountNode(account, skipArchive));
   let folders = accountNodes.reduce((acc, node) => acc.concat([...node]), []);
+
 
   let recent = await browser.quickmove.query({ recent: true, limit: maxRecentFolders, canFileMessages: true });
 

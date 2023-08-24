@@ -4,8 +4,9 @@
  * Portions Copyright (C) Philipp Kewisch */
 
 class BaseNode {
-  constructor(parent) {
+  constructor(parent, skipArchive=false) {
     this.parent = parent;
+    this.skipArchive = skipArchive;
     this._children = Object.create(null);
   }
 
@@ -80,6 +81,10 @@ export class FolderNode extends BaseNode {
 
   lookupSubfolders(subFolders) {
     for (let subFolder of subFolders) {
+      if (this.skipArchive && subFolder.type == "archives") {
+        continue;
+      }
+
       this.add(subFolder);
     }
   }
@@ -106,13 +111,10 @@ export class FolderNode extends BaseNode {
 }
 
 export class AccountNode extends FolderNode {
-  constructor(account) {
-    super();
+  constructor(account, skipArchive=false) {
+    super(account, skipArchive);
     this.item = account;
-
-    for (let folder of account.folders) {
-      this.add(folder);
-    }
+    this.lookupSubfolders(account.folders);
   }
 
   [Symbol.iterator]() {
