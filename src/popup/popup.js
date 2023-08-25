@@ -63,10 +63,16 @@ async function load() {
 
   // Setup folder list
   let accounts = await browser.accounts.list();
+
+  let [currentWindow] = await browser.mailTabs.query({ currentWindow: true, active: true });
+  let currentAccount = currentWindow.displayedFolder.accountId;
+  let currentAccountIndex = accounts.findIndex(account => account.id === currentAccount);
+  if (currentAccountIndex >= 0) {
+    accounts.unshift(...accounts.splice(currentAccountIndex, 1));
+  }
+
   let accountNodes = accounts.map(account => new AccountNode(account, skipArchive));
   let folders = accountNodes.reduce((acc, node) => acc.concat([...node]), []);
-
-
   let recent = await browser.quickmove.query({ recent: true, limit: maxRecentFolders, canFileMessages: true });
 
   let folderList = document.getElementById("folder-list");
@@ -79,7 +85,7 @@ async function load() {
     if (operation == "move" || operation == "copy") {
       await browser.runtime.sendMessage({ action: "processSelectedMessages", folder: event.detail, operation: operation });
     } else {
-      let [tab, ...rest] = await browser.tabs.query({ currentWindow: true, active: true });
+      let [tab] = await browser.tabs.query({ currentWindow: true, active: true });
       await browser.mailTabs.update(tab.id, { displayedFolder: event.detail });
     }
     window.close();
