@@ -3,10 +3,29 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch */
 
+@media (prefers-color-scheme: light) {
+  :root {
+    --menu-color: #18181b;
+    --menu-background-color: white;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --menu-color: #f4f4f5;
+    --menu-background-color: #18181b;
+  }
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+html {
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -17,6 +36,8 @@ body {
     grid-template-columns: auto 1fr;
     align-items: center;
     gap: 1em 0.4em;
+    background-color: var(--menu-background-color);
+    color: var(--menu-color);
 }
 
 .preference {
@@ -62,4 +83,45 @@ select {
     padding: 5px;
     border-radius: 5px;
     background: #fff;
+}
+
+folder-list {
+    max-height: 20em;
+}
+fieldset {
+    width: 100%;
+    min-height: 25em;
+    grid-column: span 2;
+    padding: 10px;
+}
+
+.overflow {
+  position: relative;
+  height: 3em;
+  width: 100%;
+}
+
+.overflow folder-list {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+#folder-picker {
+  width: 100%;
+  background-color: var(--menu-background-color);
+}
+
+
+.panel {
+  display: none;
+  margin-top: 10px;
+}
+.panel.selected {
+  display: block;
+}
+
+#defaultFolderSetting label {
+  margin-inline-end: 10px;
 }

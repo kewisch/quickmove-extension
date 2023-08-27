@@ -71,7 +71,8 @@ class TBFolderList extends BaseItemList {
   }
 
   _addItem(folder, mode) {
-    let depth = mode == BaseItemList.MODE_ALL ? (item.path.match(/\//g) || []).length - 1 : 0;
+    // let depth = mode == BaseItemList.MODE_ALL ? (folder.path.match(/\//g) || []).length - 1 : 0;
+    let depth = 0;
     let template = this.shadowRoot.querySelector(".item-template");
     let body = this.shadowRoot.querySelector(".list-body");
 
@@ -144,5 +145,4 @@ class TBFolderList extends BaseItemList {
     this.repopulate();
   }
 }
-
 customElements.define("folder-list", TBFolderList);

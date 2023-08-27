@@ -3,14 +3,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch */
 
-const DEFAULT_PREFERENCES = {
-  layout: "auto",
-  markAsRead: true,
-  maxRecentFolders: 15,
-  showFolderPath: false,
-  useLegacyShortcuts: false,
-  skipArchive: true
-};
+import { AccountNode } from "../common/foldernode.js";
+import { DEFAULT_PREFERENCES, getValidatedDefaultFolders } from "../common/util.js";
 
 async function restore_options() {
   let prefs = await browser.storage.local.get(DEFAULT_PREFERENCES);
@@ -21,11 +15,11 @@ async function restore_options() {
       continue;
     }
 
-    if (elem.type == "checkbox") {
-      elem.checked = prefs[key];
-    } else if (elem.getAttribute("type") == "radio") {
-      let item = document.querySelector(`input[type='radio'][name='${elem.id}'][value='${prefs[key]}']`);
+    if (!elem.type && elem.dataset.type == "radio") {
+      let item = document.querySelector(`input[type='radio'][name='${key}'][value='${prefs[key]}']`);
       item.checked = true;
+    } else if (elem.type == "checkbox") {
+      elem.checked = prefs[key];
     } else {
       elem.value = prefs[key];
     }
@@ -76,6 +70,55 @@ function setup_localization() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", setup_localization);
-document.addEventListener("DOMContentLoaded", setup_listeners);
-document.addEventListener("DOMContentLoaded", restore_options);
+async function setup_defaultfolders() {
+  let accounts = await browser.accounts.list();
+  let accountNodes = accounts.map(account => new AccountNode(account, skipArchive));
+  let folders = accountNodes.reduce((acc, node) => acc.concat([...node]), []);
+  let defaultFolders = await getValidatedDefaultFolders(accountNodes);
+
+  let defaultFolderList = document.getElementById("default-folders");
+  defaultFolderList.accounts = accounts;
+  defaultFolderList.initItems(defaultFolders, null, true);
+
+  let defaultFolderSet = new Set(defaultFolders);
+
+  let folderPicker = document.getElementById("folder-picker");
+  folderPicker.accounts = accounts;
+  folderPicker.initItems(folders, [], true);
+
+  folderPicker.addEventListener("item-selected", (event) => {
+    defaultFolderSet.add(event.detail);
+    let allItems = [...defaultFolderSet];
+
+    defaultFolderList.allItems = allItems;
+    folderPicker.searchValue = "";
+
+    let storageData = allItems.map(item => ({ accountId: item.accountId, path: item.path }));
+    browser.storage.local.set({ defaultFolders: storageData });
+  });
+
+  defaultFolderList.addEventListener("item-deleted", (event) => {
+    defaultFolderSet.delete(event.detail);
+    let allItems = [...defaultFolderSet];
+
+    defaultFolderList.allItems = allItems;
+
+    let storageData = allItems.map(item => ({ accountId: item.accountId, path: item.path }));
+    browser.storage.local.set({ defaultFolders: storageData });
+  });
+
+  document.getElementById("defaultFolderSetting").addEventListener("change", (event) => {
+    document.querySelector(".panel.selected")?.classList.remove("selected");
+    document.querySelector(`.panel[data-value="${event.target.value}"]`).classList.add("selected");
+  });
+
+  let currentValue = document.querySelector("#defaultFolderSetting input:checked")?.value;
+  if (currentValue) {
+    document.querySelector(`.panel[data-value="${currentValue}"]`).classList.add("selected");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", setup_localization, { once: true });
+document.addEventListener("DOMContentLoaded", setup_listeners, { once: true });
+document.addEventListener("DOMContentLoaded", restore_options, { once: true });
+document.addEventListener("DOMContentLoaded", setup_defaultfolders, { once: true });

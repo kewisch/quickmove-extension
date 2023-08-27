@@ -55,6 +55,22 @@ export default class BaseItemList extends HTMLElement {
         border-color: #7AACFE;
       }
 
+      :host(:not([delete])) .item > .delete {
+        display: none;
+      }
+
+      :host([popup]) .list-body {
+        box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.75);
+        margin: 0 10px 10px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :host([popup]) .list-body {
+          box-shadow: 0px 2px 8px 0px rgba(179, 179, 179, 0.6);
+        }
+      }
+
+
       .search-header {
         display: flex;
         flex-direction: column;
@@ -69,7 +85,6 @@ export default class BaseItemList extends HTMLElement {
       :host(:not([search])) .search-header {
         display: none;
       }
-
 
       .search-input {
         background-color: var(--item-list-background);
@@ -86,8 +101,12 @@ export default class BaseItemList extends HTMLElement {
       .list-body {
         display: flex;
         flex-direction: column;
-        padding: 5px 0;
+        padding: 2px;
         overflow-y: auto;
+        border-radius: 3px;
+      }
+      .list-body:-moz-only-whitespace {
+        display: none;
       }
 
       .list-body:focus {
@@ -142,6 +161,10 @@ export default class BaseItemList extends HTMLElement {
         height: 16px;
         margin-inline-end: 5px;
       }
+
+      .item > .delete {
+        margin: 0 5px;
+      }
     `;
   }
   static get headerItemTemplateContent() {
@@ -162,6 +185,7 @@ export default class BaseItemList extends HTMLElement {
           <div class="icon"></div>
           <div class="text"></div>
           <div class="text-shortcut"></div>
+          <button class="delete">&times;</button>
         </div>
       </template>
     `;
@@ -196,23 +220,35 @@ export default class BaseItemList extends HTMLElement {
   }
 
   connectedCallback() {
-    this.shadowRoot.querySelector(".search-input").addEventListener("input", this.searchInputCallbackRaw);
-    this.shadowRoot.querySelector(".search-input").addEventListener("keydown", this.searchKeyDownCallback);
-    this.shadowRoot.querySelector(".search-input").addEventListener("keyup", this.searchKeyUpCallback);
-    this.shadowRoot.querySelector(".list-body").addEventListener("click", this.itemListClick);
-    this.shadowRoot.querySelector(".list-body").addEventListener("keydown", this.itemListKeyDown);
-    this.shadowRoot.querySelector(".list-body").addEventListener("mouseover", this.itemListSelect);
-    this.shadowRoot.querySelector(".list-body").addEventListener("mouseleave", this.itemListSelectLeave);
+    let searchInput = this.search;
+    let listBody = this.shadowRoot.querySelector(".list-body");
+
+    searchInput.placeholder = this.getAttribute("placeholder") || "";
+
+    searchInput.addEventListener("input", this.searchInputCallbackRaw);
+    listBody.addEventListener("click", this.itemListClick);
+    if (!this.getAttribute("readonly")) {
+      searchInput.addEventListener("keydown", this.searchKeyDownCallback);
+      searchInput.addEventListener("keyup", this.searchKeyUpCallback);
+      listBody.addEventListener("keydown", this.itemListKeyDown);
+      listBody.addEventListener("mouseover", this.itemListSelect);
+      listBody.addEventListener("mouseleave", this.itemListSelectLeave);
+    }
   }
 
   disconnectedCallback() {
-    this.shadowRoot.querySelector(".search-input").removeEventListener("input", this.searchInputCallbackRaw);
-    this.shadowRoot.querySelector(".search-input").removeEventListener("keydown", this.searchKeyDownCallback);
-    this.shadowRoot.querySelector(".search-input").removeEventListener("keyup", this.searchKeyCallback);
-    this.shadowRoot.querySelector(".list-body").removeEventListener("click", this.itemListClick);
-    this.shadowRoot.querySelector(".list-body").removeEventListener("keydown", this.itemListKeyDown);
-    this.shadowRoot.querySelector(".list-body").removeEventListener("mouseover", this.itemListSelect);
-    this.shadowRoot.querySelector(".list-body").removeEventListener("mouseleave", this.itemListSelectLeave);
+    let searchInput = this.search;
+    let listBody = this.shadowRoot.querySelector(".list-body");
+
+    searchInput.removeEventListener("input", this.searchInputCallbackRaw);
+    listBody.removeEventListener("click", this.itemListClick);
+    if (!this.getAttribute("readonly")) {
+      searchInput.removeEventListener("keydown", this.searchKeyDownCallback);
+      searchInput.removeEventListener("keyup", this.searchKeyCallback);
+      listBody.removeEventListener("keydown", this.itemListKeyDown);
+      listBody.removeEventListener("mouseover", this.itemListSelect);
+      listBody.removeEventListener("mouseleave", this.itemListSelectLeave);
+    }
   }
 
   get search() {
@@ -299,7 +335,13 @@ export default class BaseItemList extends HTMLElement {
   }
 
   itemListClick(event) {
-    this.dispatchSelect(event.target.closest(".item"));
+    if (this.getAttribute("delete") && event.target.classList.contains("delete")) {
+      let listItem = event.target.closest(".item");
+      let customEvent = new CustomEvent("item-deleted", { detail: listItem.item });
+      this.dispatchEvent(customEvent);
+    } else if (!this.getAttribute("readonly")) {
+      this.dispatchSelect(event.target.closest(".item"));
+    }
   }
 
   dispatchSelect(item) {
@@ -433,7 +475,7 @@ export default class BaseItemList extends HTMLElement {
           this._addItem(item, BaseItemList.MODE_SEARCH);
         }
       }
-    } else if (this.defaultItems?.length) {
+    } else if (this.defaultItems) {
       for (let item of this.defaultItems) {
         this._addItem(item, BaseItemList.MODE_DEFAULT);
       }

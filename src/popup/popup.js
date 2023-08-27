@@ -3,7 +3,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch */
 
-import { AccountNode } from "./foldernode.js";
+import { AccountNode } from "../common/foldernode.js";
+import { getValidatedDefaultFolders } from "../common/util.js";
 
 const ALL_ACTIONS = ["move", "copy", "goto", "tag"];
 
@@ -19,24 +20,24 @@ function switchList(action) {
   let tagList = document.getElementById("tag-list");
 
   if (action == "tag") {
-    tagList.style.display = "block";
+    tagList.style.display = "revert-layer";
     folderList.style.display = "none";
     return tagList;
   } else {
-    folderList.style.display = "block";
+    folderList.style.display = "revert-layer";
     tagList.style.display = "none";
     return folderList;
   }
 }
 
 async function load() {
-  let { maxRecentFolders, showFolderPath, skipArchive, layout } = await browser.storage.local.get({ maxRecentFolders: 15, showFolderPath: true, layout: "auto", skipArchive: true });
+  let { maxRecentFolders, showFolderPath, skipArchive, layout, defaultFolderSetting } = await browser.storage.local.get({ maxRecentFolders: 15, showFolderPath: true, layout: "auto", skipArchive: true, defaultFolderSetting: "recent" });
 
   if (layout == "wide" || (layout == "auto" && window.outerWidth > 1400)) {
     document.documentElement.removeAttribute("compact");
     document.getElementById("folder-list").removeAttribute("compact");
   }
-  document.body.style.display = "block";
+  document.body.style.display = "revert-layer";
 
   setup_localization();
 
@@ -65,19 +66,27 @@ async function load() {
   let accounts = await browser.accounts.list();
 
   let [currentWindow] = await browser.mailTabs.query({ currentWindow: true, active: true });
-  let currentAccount = currentWindow.displayedFolder.accountId;
-  let currentAccountIndex = accounts.findIndex(account => account.id === currentAccount);
+  let currentAccountId = currentWindow.displayedFolder?.accountId;
+  let currentAccountIndex = accounts.findIndex(account => account.id === currentAccountId);
   if (currentAccountIndex >= 0) {
     accounts.unshift(...accounts.splice(currentAccountIndex, 1));
   }
 
   let accountNodes = accounts.map(account => new AccountNode(account, skipArchive));
   let folders = accountNodes.reduce((acc, node) => acc.concat([...node]), []);
-  let recent = await browser.quickmove.query({ recent: true, limit: maxRecentFolders, canFileMessages: true });
+  let defaultFolders;
+
+  if (defaultFolderSetting == "recent") {
+    defaultFolders = await browser.quickmove.query({ recent: true, limit: maxRecentFolders, canFileMessages: true });
+  } else if (defaultFolderSetting == "specific") {
+    defaultFolders = await getValidatedDefaultFolders(accountNodes);
+  } else {
+    defaultFolders = null;
+  }
 
   let folderList = document.getElementById("folder-list");
   folderList.accounts = accounts;
-  folderList.initItems(folders, recent, showFolderPath);
+  folderList.initItems(folders, defaultFolders, showFolderPath);
   folderList.ignoreFocus = true;
   folderList.addEventListener("item-selected", async (event) => {
     let operation = document.querySelector("input[name='action']:checked").value;
@@ -95,7 +104,7 @@ async function load() {
   let tags = await browser.messages.listTags();
   let tagList = document.getElementById("tag-list");
   tagList.ignoreFocus = true;
-  tagList.initItems(tags, []);
+  tagList.initItems(tags, null);
   tagList.addEventListener("item-selected", async (event) => {
     await browser.runtime.sendMessage({ action: "processSelectedMessages", tag: event.detail.key, operation: "tag" });
     window.close();

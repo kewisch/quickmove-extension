@@ -93,7 +93,7 @@ export class FolderNode extends BaseNode {
     let parts = path.split("/");
     let node = this; // eslint-disable-line consistent-this
     for (let part of parts) {
-      node = node.child(part);
+      node = node.child(part, create);
     }
     return node;
   }

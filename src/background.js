@@ -63,6 +63,23 @@ async function applyTags(tag) {
   await Promise.all(ops);
 }
 
+async function updateSpecificFolders(origFolder, newFolder) {
+  let { defaultFolders } = await browser.storage.local.get({ defaultFolders: [] });
+
+  let foundFolder = defaultFolders.find((folder) => {
+    return folder.accountId == origFolder.accountId && folder.path == origFolder.path;
+  });
+
+  if (foundFolder) {
+    foundFolder.accountId = newFolder.accountId;
+    foundFolder.path = newFolder.path;
+    await browser.storage.local.set({ defaultFolders });
+  }
+}
+
+browser.folders.onRenamed.addListener(updateSpecificFolders);
+browser.folders.onMoved.addListener(updateSpecificFolders);
+
 browser.runtime.onInstalled.addListener(({ reason, previousVersion }) => {
   if (previousVersion && previousVersion.startsWith("1.")) {
     browser.quickmove.migrateShortcut();

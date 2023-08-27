@@ -7,8 +7,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <script src="options.js"></script>
     <link rel="stylesheet" href="options.css" type="text/css">
+    <script type="module" src="../popup/folderlist.js"></script>
+    <script type="module" src="options.js"></script>
   </head>
   <body>
     <div class="preference">
@@ -36,14 +37,33 @@
       <label for="useLegacyShortcuts" data-l10n-id="useLegacyShortcuts"></label>
     </div>
     <div class="preference">
-      <input type="number" min="0" id="maxRecentFolders">
-      <label for="maxRecentFolders" data-l10n-id="maxRecentFolders"></label>
-    </div>
-    <div class="preference">
       <span></span>
       <div>
         <button id="onboarding">Show instructions</button>
       </div>
     </div>
+    <fieldset>
+      <legend>Default Folders</legend>
+      <div id="defaultFolderSetting" data-type="radio">
+        <input type="radio" name="defaultFolderSetting" id="defaultFolderSettingRecent" value="recent">
+        <label for="defaultFolderSettingRecent">Recent folders</label>
+        <input type="radio" name="defaultFolderSetting" id="defaultFolderSettingAll" value="all">
+        <label for="defaultFolderSettingAll">All folders</label>
+        <input type="radio" name="defaultFolderSetting" id="defaultFolderSettingSpecific" value="specific">
+        <label for="defaultFolderSettingSpecific">Specific folders</label>
+      </div>
+      <div class="panel" data-value="specific">
+        <div class="overflow">
+          <folder-list id="folder-picker" search="true" placeholder="Search for a folder to show" popup="true"></folder-list>
+        </div>
+        <folder-list id="default-folders" readonly="true" delete="true"></folder-list>
+      </div>
+      <div class="panel" data-value="recent">
+        <input type="number" min="0" id="maxRecentFolders">
+        <label for="maxRecentFolders" data-l10n-id="maxRecentFolders"></label>
+      </div>
+      <div class="panel" data-value="all">
+      </div>
+    </fieldset>
   </body>
 </html>
