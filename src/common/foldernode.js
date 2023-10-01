@@ -75,7 +75,11 @@ export class FolderNode extends BaseNode {
   add(item) {
     let node = this.lookup(item.path, true);
     node.item = item;
-    this.lookupSubfolders(item.subFolders);
+
+    if (item.type != "trash") {
+      // Include the trash folder, but not folders placed within
+      this.lookupSubfolders(item.subFolders);
+    }
     return node;
   }
 
