@@ -14,11 +14,11 @@
     "url": "https://github.com/kewisch/quickmove/issues"
   },
   "scripts": {
-    "build": "mkdir -p dist; web-ext build -s src -o",
+    "build": "web-ext build -s src -o",
     "clean": "rm -f web-ext-artifacts",
     "bump": "bumper() { bump package.json \"$1\"; bump src/manifest.json \"$1\"; }; bumper",
     "tag": "git tag v$(jq -r '.version' src/manifest.json)",
-    "lint": "commitlint -f e51ab4971353f123c553e653c9241c466ffec5ed && eslint src || true"
+    "lint": "commitlint -f e4eb27c75f2a897ca4d24f16e9fe01fe0379ceed && eslint src || true"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.5",
