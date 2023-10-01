@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="styles.css">
     <title>Quick Folder Move</title>
-    <script src="changes.js"></script>
+    <script src="onboarding.js"></script>
 </head>
 <body>
     <div class="content">
@@ -21,7 +21,7 @@
           </p>
           <p>
             This version adopts a newer extensions technology (MailExtensions), which promises
-            greater stability. The flipside, though, is that this technology doesn't support
+            greater stability. The flip side, though, is that this technology doesn't support
             every customization that you're used to. But don't worry, the following sections will
             guide you on adapting your workflow to this new version.
           </p>
@@ -31,62 +31,76 @@
           </p>
         </div>
         <div class="section image-right">
+          <h2>All in one place</h2>
           <img src="images/toolbar.png" alt="Popup showing in the main toolbar" />
-          <div class="text">
-            <h2>All in one place</h2>
-            <p>
-              In the previous version, you had a variety of ways to launch the Quick Folder Move
-              popup—from the message context menu to keyboard shortcuts. The location of the popup
-              would vary, depending on what elements of the UI were active at the time.
-            </p>
-            <p>
-              Now, your workflow is more streamlined. Use the button in the main toolbar no matter
-              if you want to move, copy or go to a folder. This change makes your navigation more
-              straightforward and less cluttered.
-            </p>
-          </div>
+          <p>
+            In the previous version, you had a variety of ways to launch the Quick Folder Move
+            popup—from the message context menu to keyboard shortcuts. The location of the popup
+            would vary, depending on what elements of the UI were active at the time.
+          </p>
+          <p>
+            Now, your workflow is more streamlined. Use the button in the main toolbar no matter
+            if you want to move, copy or go to a folder. This change makes your navigation more
+            straightforward and less cluttered.
+          </p>
         </div>
         <div class="section image-left">
+          <h2>Moving in context</h2>
           <img src="images/new-button.png" alt="New location for the button" />
-          <div class="text">
-            <h2>Moving in context</h2>
-            <p>
-              In addition to the main toolbar button, you also have the option to move messages
-              directly from the message header. This way you'll be able to take action right in
-              context, and you'll be ready to tackle the next message without delay.
-            </p>
-          </div>
+          <p>
+            In addition to the main toolbar button, you also have the option to move messages
+            directly from the message header. This way you'll be able to take action right in
+            context, and you'll be ready to tackle the next message without delay.
+          </p>
         </div>
         <div class="section image-right">
+          <h2>Changing Muscle Memory</h2>
           <img src="images/shortcuts.png" alt="Managing shortcuts in the add-ons manager" />
-          <div class="text">
-            <h2>Changing Muscle Memory</h2>
-            <p>
-              The new technology restricts available keyboard shortcuts to prevent unexpected
-              command changes. This means we'll bid farewell to Shift+M, welcoming Ctrl+Shift+M for
-              'move' instead. Copy and Goto have undergone the same change.
-            </p>
-            <p>
-              But you're not without options. You can tweak these shortcuts in
-              <a href="https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox" target="_blank">the shortcut manager</a>
-              and this version still allows forcing legacy shortcuts in
-              <a id="openOptions" href="about:addons">this add-on's preferences</a>.
-            </p>
-            <form id="legacy-shortcuts-form">
-              <label>
-                <input type="radio" name="shortcuts" value="new" checked>
-                Embracing change, I'm testing new shortcuts or tailoring them in the prefs.
-              </label>
-              <label>
-                <input type="radio" name="shortcuts" value="legacy">
-                Change is hard. I'll stick with the old shortcuts for now.
-              </label>
-            </form>
-            <p>
-              A future version of the add-on will remove the ability to use legacy shortcuts, so you
-              may as well get used to the new ones now.
-            </p>
-          </div>
+          <p>
+            The new technology restricts available keyboard shortcuts to prevent unexpected
+            command changes. This means we'll bid farewell to Shift+M, welcoming
+            <span class="platform-mac">Control+Shift+M</span>
+            <span class="platform-default">Ctrl+Shift+N</span> for
+            'move' instead <span class="platform-default">(N, not M)</span>.
+          </p>
+          <p>
+            Other actions such as 'copy' and 'goto' no longer have keyboard shortcuts defined by
+            default. You can use the above mentioned keyboard shortcut and then use the left and
+            right arrow keys to select an action, or, assign your own.
+          </p>
+          <p>
+            To add or adjust the keyboard shortcuts, use
+            <a href="https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox" target="_blank">the shortcut manager</a>
+            in Thunderbird. This
+            version also still allows forcing legacy shortcuts in
+            <a id="openOptions" href="about:addons">this add-on's preferences</a>.
+          </p>
+          <form id="legacy-shortcuts-form">
+            <label>
+              <input type="radio" name="shortcuts" value="new" checked>
+              Embracing change, I'm testing new shortcuts or tailoring them in the prefs.
+            </label>
+            <label>
+              <input type="radio" name="shortcuts" value="legacy">
+              Change is hard. I'll stick with the old shortcuts for now.
+            </label>
+          </form>
+          <p>
+            A future version of the add-on will remove the ability to use legacy shortcuts, so you
+            may as well get used to the new ones now.
+          </p>
+        </div>
+        <div class="section">
+          <p>
+            There are a number of other new features in this version, thanks to suggestions from
+            users like you.
+            <ul>
+              <li>A compact layout, for those who prefer the style of the old version</li>
+              <li>A new action to tag message with the labels in Thunderbird.</li>
+              <li>The current account is being shown first within search results</li>
+              <li>Pick a set of default folders to show instead of the recent folders</li>
+            </ul>
+          </p>
         </div>
         <div class="section footer">
           <p>

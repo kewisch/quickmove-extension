@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
     <title>Quick Folder Move</title>
     <meta charset="UTF-8">
+    <script src="onboarding.js"></script>
 </head>
 <body>
     <div class="content">
@@ -25,44 +26,41 @@
           </p>
         </div>
         <div class="section image-left">
+          <h2>Moving in context</h2>
           <img src="images/new-button.png" alt="New location for the button" />
-          <div class="text">
-            <h2>Moving in context</h2>
-            <p>
-              On each message, there is a button that will allow you to move or copy emails to a
-              folder of your choice. Once you are in the popup, you can use the following to navigate:
-            </p>
-            <p>
-              <ul>
-                <li><b>Left/Right Arrow</b>: Switch between 'move' and 'copy' modes.</li>
-                <li><b>Search box</b>: Use this to search for part of the folder name. You might only need 1-2 letters!</li>
-                <li><b>Down Arrow</b>: Move between the search box and the folder items.</li>
-                <li><b>Enter</b>: When you've picked the folder you'd like, press enter to move the message. If it is the first folder, press enter right away.</li>
-              </ul>
-            </p>
-          </div>
+          <p>
+            On each message, there is a button that will allow you to move or copy emails to a
+            folder of your choice. Once you are in the popup, you can use the following to navigate:
+          </p>
+          <p>
+            <ul>
+              <li><b>Left/Right Arrow</b>: Switch between 'move', 'copy' and other modes.</li>
+              <li><b>Search box</b>: Use this to search for part of the folder name. You might only need 1-2 letters!</li>
+              <li><b>Down/Up Arrow</b>: Move between the search box and the folder items.</li>
+              <li><b>Enter</b>: When you've picked the folder you'd like, press enter to move the message. If it is the first folder, press enter right away.</li>
+            </ul>
+          </p>
         </div>
         <div class="section image-right">
+          <h2>The keys to boost your speed</h2>
           <img src="images/shortcuts.png" alt="Managing shortcuts in the add-ons manager" />
-          <div class="text">
-            <h2>The keys to boost your speed</h2>
-            <p>
-              Navigating with the keyboard is not confined to the popup. Ideally, you don't want to
-              leave your keyboard when filing messages. Using the following shortcuts, you can take
-              action on an email immediately:
-            </p>
-              <ul>
-                <li><b>Ctrl+Shift+M</b>: Open the popup to move the selected email message.</li>
-                <li><b>Ctrl+Shift+C</b>: Open the popup to copy the selected email message.</li>
-                <li><b>Ctrl+Shift+G</b>: Go to a different folder quickly.</li>
-              </ul>
-            </p>
-            <p>
-              You can customize the keyboard shortcuts in the add-on manager to your liking. If
-              you've used this add-on in the past please note Shift+M is no longer available due to
-              restrictions in Thunderbird.
-            </p>
-          </div>
+          <p>
+            Navigating with the keyboard is not confined to the popup. Ideally, you don't want to
+            leave your keyboard when filing messages. As keyboard shortcuts in Thunderbird are
+            scarce, we'll start out with just one shortcut to take action on email:
+          </p>
+            <ul>
+              <li class="platform-mac"><b>Control+Shift+M</b>: Open the popup to move the selected email message.</li>
+              <li class="platform-default"><b>Ctrl+Shift+N</b>: Open the popup to move the selected email message.</li>
+            </ul>
+          </p>
+          <p class="clear">
+            In the add-ons manager, you can also
+            <a href="https://support.mozilla.org/kb/manage-extension-shortcuts-firefox" target="_blank">assign additional shortcuts</a>
+            to open the popup directly with the copy, tag, or goto actions selected. Here, you can
+            also customize the shortcut for moving messages. If you've used this add-on in the past
+            please note Shift+M is no longer recommended due to restrictions in Thunderbird.
+          </p>
         </div>
         <div class="section footer">
           <p>
@@ -80,4 +78,3 @@
     </div>
 </body>
 </html>
-

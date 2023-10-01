@@ -2,14 +2,14 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "2.6.2",
+  "version": "2.6.3",
   "default_locale": "en",
   "author": "Philipp Kewisch",
   "browser_specific_settings": {
     "gecko": {
       "id": "quickmove@mozilla.kewis.ch",
       "strict_min_version": "115.0a1",
-      "strict_max_version": "117.*"
+      "strict_max_version": "119.*"
     }
   },
   "icons": {
@@ -47,30 +47,18 @@
     "move": {
       "description": "Move selected messages",
       "suggested_key": {
-        "default": "Ctrl+Shift+M",
+        "default": "Ctrl+Shift+N",
         "mac": "MacCtrl+Shift+M"
       }
     },
     "copy": {
-      "description": "Copy selected messages",
-      "suggested_key": {
-        "default": "Ctrl+Shift+C",
-        "mac": "MacCtrl+Shift+C"
-      }
+      "description": "Copy selected messages"
     },
     "goto": {
-      "description": "Go to folder",
-      "suggested_key": {
-        "default": "Ctrl+Shift+G",
-        "mac": "MacCtrl+Shift+G"
-      }
+      "description": "Go to folder"
     },
     "tag": {
-      "description": "Apply a tag",
-      "suggested_key": {
-        "default": "Ctrl+Shift+T",
-        "mac": "MacCtrl+Shift+T"
-      }
+      "description": "Apply a tag"
     }
   },
 

@@ -19,6 +19,12 @@ body {
     padding: 20px;
     font-size: 18px;
 }
+
+body.platform-mac .platform-default,
+body:not(.platform-mac) .platform-mac {
+  display: none;
+}
+
 h1, h2 {
     color: #333;
 }
@@ -36,8 +42,6 @@ h1, h2 {
 }
 
 .section {
-    display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: start;
     width: 100%;
@@ -69,12 +73,25 @@ h1, h2 {
   height: 200%;
 }
 
+
+.section.image-right img {
+    float: right;
+    margin: 0 0 15px 15px;
+}
+.section.image-left img {
+    float: left;
+    margin: 0 15px 15px 0;
+}
 .section ul {
-  margin-inline-start: 2em;
+  padding-inline-start: 2em;
 }
 
-.section.image-right {
-    flex-direction: row-reverse;
+.section.image-left ul {
+  padding-inline-start: calc(50% + 2em);
+}
+
+.clear {
+  clear: both;
 }
 
 .section > img {
@@ -82,10 +99,6 @@ h1, h2 {
     border-radius: 10px;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
     margin-top: 15px;
-}
-
-.section .text {
-    width: 45%;
 }
 
 .section p.warning {
