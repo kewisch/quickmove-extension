@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch */
 
-import { AccountNode } from "../common/foldernode.js";
+import { AccountNode, FolderNode } from "../common/foldernode.js";
 import { getValidatedDefaultFolders } from "../common/util.js";
 
 const ALL_ACTIONS = ["move", "copy", "goto", "tag"];
@@ -77,9 +77,9 @@ async function load() {
   let defaultFolders;
 
   if (defaultFolderSetting == "recent") {
-    defaultFolders = await browser.quickmove.query({ recent: true, limit: maxRecentFolders, canFileMessages: true });
+    defaultFolders = FolderNode.fromList(await browser.quickmove.query({ recent: true, limit: maxRecentFolders, canFileMessages: true }), accountNodes);
   } else if (defaultFolderSetting == "specific") {
-    defaultFolders = await getValidatedDefaultFolders(accountNodes);
+    defaultFolders = FolderNode.fromList(await getValidatedDefaultFolders(accountNodes), accountNodes);
   } else {
     defaultFolders = null;
   }

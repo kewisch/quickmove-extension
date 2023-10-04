@@ -66,21 +66,24 @@ class TBFolderList extends BaseItemList {
     `;
   }
 
-  getItemText(item) {
-    return item.name;
+  getItemText(folderNode) {
+    return folderNode.item.name;
   }
 
-  _addItem(folder, mode) {
-    // let depth = mode == BaseItemList.MODE_ALL ? (folder.path.match(/\//g) || []).length - 1 : 0;
+  _addItem(folderNode, mode) {
+    // let depth = mode == BaseItemList.MODE_ALL ? (folderNode.path.match(/\//g) || []).length - 1 : 0;
     let depth = 0;
     let template = this.shadowRoot.querySelector(".item-template");
     let body = this.shadowRoot.querySelector(".list-body");
 
     let item = this.shadowRoot.ownerDocument.importNode(template.content, true);
-    item.querySelector(".icon").classList.add("folder-type-" + (folder.type || "folder"));
+    item.querySelector(".icon").classList.add("folder-type-" + (folderNode.type || "folder"));
     item.querySelector(".icon").style.marginInlineStart = (depth * 10) + "px";
+    console.log(folderNode);
 
-    let prettyFolderPathComponents = folder.path.split("/").filter((val) => {
+    console.log(folderNode.fullNameParts);
+
+    let prettyFolderPathComponents = folderNode.fullNameParts.filter((val) => {
       // Filter out [Gmail] and empty path components.
       return val !== "" && !val.includes("[");
     });
@@ -91,23 +94,23 @@ class TBFolderList extends BaseItemList {
       if (this.#showFolderPath) {
         item.querySelector(".text").textContent = prettyFolderPathComponents.join("→");
       } else {
-        item.querySelector(".text").textContent = folder.name;
+        item.querySelector(".text").textContent = folderNode.name;
         item.querySelector(".item").setAttribute("title", prettyFolderPathComponents.join(" → "));
       }
     } else {
       if (this.#showFolderPath) {
         item.querySelector(".text-shortcut").textContent = prettyFolderPathComponents.slice(0, -1).join(" → ");
       }
-      item.querySelector(".text").textContent = folder.name;
+      item.querySelector(".text").textContent = folderNode.name;
       item.querySelector(".item").setAttribute("title", prettyFolderPathComponents.join(" → "));
     }
 
-    item.querySelector(".item").item = folder;
+    item.querySelector(".item").item = folderNode.item;
 
-    if (!body.lastElementChild || body.lastElementChild.item.accountId != folder.accountId) {
+    if (!body.lastElementChild || body.lastElementChild.item.accountId != folderNode.accountId) {
       let accountTemplate = this.shadowRoot.querySelector(".header-item-template");
       let accountItem = this.shadowRoot.ownerDocument.importNode(accountTemplate.content, true);
-      let account = this.#accounts[folder.accountId];
+      let account = this.#accounts[folderNode.accountId];
 
       if (account) {
         accountItem.querySelector(".text").textContent = account.name;

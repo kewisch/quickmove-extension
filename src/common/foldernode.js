@@ -19,15 +19,15 @@ class BaseNode {
       return this;
     }
     if (!(x in this._children) && create) {
-      this._children[x] = new FolderNode(this);
+      this._children[x] = new FolderNode(this, this.skipArchive);
     }
 
     return this._children[x];
   }
 
-  * walk(sorter, includeSelf=true) {
+  * walk(sorter, includeSelf=true, yieldNodes=true) {
     if (includeSelf) {
-      yield this.item;
+      yield (yieldNodes ? this : this.item);
     }
     let children = Object.values(this._children);
     let sortFunc = sorter || this.sorter.bind(this);
@@ -36,7 +36,7 @@ class BaseNode {
     }
 
     for (let child of children) {
-      yield* child.walk(sorter);
+      yield* child.walk(sorter, true, yieldNodes);
     }
   }
 
@@ -46,6 +46,21 @@ class BaseNode {
 }
 
 export class FolderNode extends BaseNode {
+  static fromList(folders, accounts) {
+    let accountMap = {};
+    for (let account of accounts) {
+      accountMap[account.item.id] = account;
+    }
+
+    let folderNodes = [];
+    for (let folder of folders) {
+      let folderNode = accountMap[folder.accountId].lookup(folder.path);
+      if (folderNode) {
+        folderNodes.push(folderNode);
+      }
+    }
+    return folderNodes;
+  }
   static getSortKey(folder) {
     const folderTypes = {
       inbox: 1,
@@ -59,6 +74,22 @@ export class FolderNode extends BaseNode {
     };
 
     return (folderTypes[folder.type] || 9);
+  }
+
+  get name() {
+    return this.item.name;
+  }
+
+  get accountId() {
+    return this.item.accountId;
+  }
+
+  get path() {
+    return this.item.path;
+  }
+
+  get type() {
+    return this.item.type;
   }
 
   sorter(a, b) {
@@ -102,15 +133,15 @@ export class FolderNode extends BaseNode {
     return node;
   }
 
-  get fullName() {
+  get fullNameParts() {
     let parts = [];
     let node = this; // eslint-disable-line consistent-this
-    while (node) {
+    while (node && !(node instanceof AccountNode)) {
       parts.unshift(node.item.name);
       node = node.parent;
     }
 
-    return parts.join("/");
+    return parts;
   }
 }
 
