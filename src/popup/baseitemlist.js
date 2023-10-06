@@ -244,7 +244,7 @@ export default class BaseItemList extends HTMLElement {
     listBody.removeEventListener("click", this.itemListClick);
     if (!this.getAttribute("readonly")) {
       searchInput.removeEventListener("keydown", this.searchKeyDownCallback);
-      searchInput.removeEventListener("keyup", this.searchKeyCallback);
+      searchInput.removeEventListener("keyup", this.searchKeyUpCallback);
       listBody.removeEventListener("keydown", this.itemListKeyDown);
       listBody.removeEventListener("mouseover", this.itemListSelect);
       listBody.removeEventListener("mouseleave", this.itemListSelectLeave);
@@ -312,6 +312,9 @@ export default class BaseItemList extends HTMLElement {
   }
 
   itemListKeyDown(event) {
+    if (event.isComposing || event.keyCode == 229) {
+      return;
+    }
     if (event.key == "ArrowDown" || event.key == "ArrowUp" || event.key == "Tab") {
       let direction;
       if (event.key == "ArrowDown" || (event.key == "Tab" && !event.shiftKey)) {
@@ -353,6 +356,10 @@ export default class BaseItemList extends HTMLElement {
   }
 
   async searchKeyUpCallback(event) {
+    if (event.isComposing || event.keyCode == 229) {
+      return;
+    }
+
     if (event.key == "Enter") {
       if (this.#enterPending) {
         return;
@@ -374,6 +381,10 @@ export default class BaseItemList extends HTMLElement {
   }
 
   searchKeyDownCallback(event) {
+    if (event.isComposing || event.keyCode == 229) {
+      return;
+    }
+
     if (event.key == "ArrowDown" || (event.key == "Tab" && !event.shiftKey)) {
       this.selected = this.nthItem(1);
       this.shadowRoot.querySelector(".list-body").focus();
