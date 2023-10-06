@@ -94,9 +94,9 @@ browser.commands.onCommand.addListener(async (name) => {
     browser.browserAction.openPopup();
     browser.browserAction.setPopup({ popup: "/popup/popup.html?action=move&allowed=move,copy,tag,goto" });
   } else {
-    browser.messageDisplayAction.setPopup({ popup: `/popup/popup.html?action=${name}&allowed=move,copy,tag` });
+    browser.messageDisplayAction.setPopup({ popup: `/popup/popup.html?action=${name}&allowed=move,copy,tag,goto` });
     browser.messageDisplayAction.openPopup();
-    browser.messageDisplayAction.setPopup({ popup: "/popup/popup.html?action=move&allowed=move,copy,tag" });
+    browser.messageDisplayAction.setPopup({ popup: "/popup/popup.html?action=move&allowed=move,copy,tag,goto" });
   }
 });
 

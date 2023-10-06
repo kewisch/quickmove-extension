@@ -39,7 +39,7 @@
 
   "message_display_action": {
     "default_icon": "images/addon.svg",
-    "default_popup": "popup/popup.html?action=move&allowed=move,copy,tag",
+    "default_popup": "popup/popup.html?action=move&allowed=move,copy,tag,goto",
     "default_label": "Quick Move"
   },
 

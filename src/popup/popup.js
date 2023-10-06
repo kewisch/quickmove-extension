@@ -48,7 +48,7 @@ async function load() {
 
   let actions = new Set(ALL_ACTIONS);
 
-  for (let allowedAction of (params.get("allowed") || "move,copy").split(",")) {
+  for (let allowedAction of (params.get("allowed") || "move,copy,tag,goto").split(",")) {
     actions.delete(allowedAction);
   }
 
@@ -93,7 +93,7 @@ async function load() {
 
     if (operation == "move" || operation == "copy") {
       await browser.runtime.sendMessage({ action: "processSelectedMessages", folder: event.detail, operation: operation });
-    } else {
+    } else if (operation == "goto") {
       let [tab] = await browser.tabs.query({ currentWindow: true, active: true });
       await browser.mailTabs.update(tab.id, { displayedFolder: event.detail });
     }
