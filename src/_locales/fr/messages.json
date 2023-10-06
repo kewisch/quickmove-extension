@@ -8,6 +8,18 @@
   "extensionShortName": {
     "message": "Quick Move"
   },
+  "commandMoveDescription": {
+    "message": "Déplacer les messages sélectionnés"
+  },
+  "commandCopyDescription": {
+    "message": "Copier les messages sélectionnés"
+  },
+  "commandGotoDescription": {
+    "message": "Aller au dossier"
+  },
+  "commandTagDescription": {
+    "message": "Appliquer une étiquette"
+  },
   "actionMove": {
     "message": "Déplacer"
   },
@@ -16,6 +28,33 @@
   },
   "actionGoto": {
     "message": "Aller"
+  },
+  "actionTag": {
+    "message": "Étiqueter"
+  },
+  "layout": {
+    "message": "Disposition de la fenêtre contextuelle"
+  },
+  "layout.title": {
+    "message": ""
+  },
+  "layout.auto": {
+    "message": "Automatique"
+  },
+  "layout.auto.title": {
+    "message": ""
+  },
+  "layout.wide": {
+    "message": "Toujours large"
+  },
+  "layout.wide.title": {
+    "message": ""
+  },
+  "layout.compact": {
+    "message": "Toujours compact"
+  },
+  "layout.compact.title": {
+    "message": ""
   },
   "markAsRead": {
     "message": "Marque les messages comme lu après le déplacement"
@@ -27,6 +66,12 @@
     "message": "Affiche le chemin complet de chaque dossier dans la boîte de recherche"
   },
   "showFolderPath.title": {
+    "message": ""
+  },
+  "skipArchive": {
+    "message": "Ne jamais correspondre aux dossiers archivés"
+  },
+  "skipArchive.title": {
     "message": ""
   },
   "maxRecentFolders": {
@@ -42,6 +87,6 @@
     "message": "Utilisez ⇧M comme raccourci pour déplacer les messages"
   },
   "useLegacyShortcutsDone": {
-    "message": "Vous pouvez à présent utiliser ⇧M ⇧Y et ⇧G.  Utilisez l'extention shortcut pour les modifier."
+    "message": "Vous pouvez à présent utiliser ⇧M ⇧Y et ⇧G. Utilisez l'extention shortcut pour les modifier."
   }
 }
