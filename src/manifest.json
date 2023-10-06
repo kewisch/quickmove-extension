@@ -34,31 +34,31 @@
   "browser_action": {
     "default_icon": "images/addon.svg",
     "default_popup": "popup/popup.html?action=move&allowed=move,copy,tag,goto",
-    "default_label": "Quick Move"
+    "default_label": "__MSG_extensionShortName__"
   },
 
   "message_display_action": {
     "default_icon": "images/addon.svg",
     "default_popup": "popup/popup.html?action=move&allowed=move,copy,tag,goto",
-    "default_label": "Quick Move"
+    "default_label": "__MSG_extensionShortName__"
   },
 
   "commands": {
     "move": {
-      "description": "Move selected messages",
+      "description": "__MSG_commandMoveDescription__",
       "suggested_key": {
         "default": "Ctrl+Shift+N",
         "mac": "MacCtrl+Shift+M"
       }
     },
     "copy": {
-      "description": "Copy selected messages"
+      "description": "__MSG_commandCopyDescription__"
     },
     "goto": {
-      "description": "Go to folder"
+      "description": "__MSG_commandGotoDescription__"
     },
     "tag": {
-      "description": "Apply a tag"
+      "description": "__MSG_commandTagDescription__"
     }
   },
 

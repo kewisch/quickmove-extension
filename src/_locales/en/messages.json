@@ -5,6 +5,21 @@
   "extensionDescription": {
     "message": "Quickly move messages into other folders using the keyboard"
   },
+  "extensionShortName": {
+    "message": "Quick Move"
+  },
+  "commandMoveDescription": {
+    "message": "Move selected messages"
+  },
+  "commandCopyDescription": {
+    "message": "Copy selected messages"
+  },
+  "commandGotoDescription": {
+    "message": "Go to folder"
+  },
+  "commandTagDescription": {
+    "message": "Apply a tag"
+  },
   "windowWarning": {
     "message": "⚠️ It is recommended to add Quick Folder Move to the main toolbar. Please customize your toolbar to enable the button."
   },

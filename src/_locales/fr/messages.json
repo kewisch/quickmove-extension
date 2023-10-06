@@ -5,6 +5,9 @@
   "extensionDescription": {
     "message": "Déplace rapidement vos messages dans d'auters dossiers en utilisant le clavier"
   },
+  "extensionShortName": {
+    "message": "Quick Move"
+  },
   "actionMove": {
     "message": "Déplacer"
   },
