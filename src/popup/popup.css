@@ -66,6 +66,14 @@ html[compact] .action-buttons label:last-of-type {
   box-sizing: border-box;
 }
 
+#window-warning {
+  padding: 5px;
+  display: none;
+}
+#window-warning.visible {
+  display: revert;
+}
+
 #folder-list {
   max-height: 60em;
 }

@@ -3,6 +3,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch */
 
+const DEFAULT_ACTION_URL = "/popup/popup.html?action=move&allowed=move,copy,tag,goto";
+
+// Manifest v3: this needs to go into state memory or be queried for
+let gLastWindowId = null;
+
 async function* selectedMessagePages() {
   let page = await browser.mailTabs.getSelectedMessages();
   if (page.messages.length) {
@@ -87,16 +92,31 @@ browser.runtime.onInstalled.addListener(({ reason, previousVersion }) => {
 });
 
 browser.commands.onCommand.addListener(async (name) => {
-  let mailTab = await browser.mailTabs.getCurrent();
-  let displayedMessages = mailTab ? await browser.messageDisplay.getDisplayedMessages(mailTab.id) : [];
-  if (name == "goto" || (mailTab && (!mailTab.messagePaneVisible || displayedMessages.length > 1))) {
-    browser.browserAction.setPopup({ popup: `/popup/popup.html?action=${name}&allowed=move,copy,tag,goto` });
-    browser.browserAction.openPopup();
-    browser.browserAction.setPopup({ popup: "/popup/popup.html?action=move&allowed=move,copy,tag,goto" });
-  } else {
-    browser.messageDisplayAction.setPopup({ popup: `/popup/popup.html?action=${name}&allowed=move,copy,tag,goto` });
-    browser.messageDisplayAction.openPopup();
-    browser.messageDisplayAction.setPopup({ popup: "/popup/popup.html?action=move&allowed=move,copy,tag,goto" });
+  let popupOrder = [browser.messageDisplayAction, browser.browserAction];
+  let popupUrl =`/popup/popup.html?action=${name}&allowed=move,copy,tag,goto`;
+  if (name == "goto") {
+    popupOrder = popupOrder.reverse();
+  }
+
+  let success = false;
+  for (let action of popupOrder) {
+    action.setPopup({ popup: popupUrl });
+    success = await action.openPopup();
+    action.setPopup({ popup: DEFAULT_ACTION_URL });
+
+    if (success) {
+      break;
+    }
+  }
+
+  if (!success) {
+    if (gLastWindowId) {
+      await browser.windows.remove(gLastWindowId);
+      gLastWindowId = null;
+    }
+
+    let wnd = await browser.windows.create({ allowScriptsToClose: true, type: "popup", url: popupUrl + "&window=true" });
+    gLastWindowId = wnd.id;
   }
 });
 

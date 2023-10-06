@@ -125,6 +125,11 @@ async function load() {
     tagList.ignoreFocus = false;
   }, { once: true });
 
+  if (params.get("window") == "true") {
+    browser.windows.update(browser.windows.WINDOW_ID_CURRENT, { width: document.body.clientWidth });
+    document.getElementById("window-warning").classList.add("visible");
+  }
+
   switchList(action).focusSearch();
 }
 

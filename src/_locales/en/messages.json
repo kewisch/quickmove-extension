@@ -5,6 +5,9 @@
   "extensionDescription": {
     "message": "Quickly move messages into other folders using the keyboard"
   },
+  "windowWarning": {
+    "message": "⚠️ It is recommended to add Quick Folder Move to the main toolbar. Please customize your toolbar to enable the button."
+  },
   "actionMove": {
     "message": "Move"
   },
