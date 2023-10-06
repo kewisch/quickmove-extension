@@ -130,7 +130,7 @@ this.quickmove = class extends ExtensionAPI {
         async focusThreadPane(windowId) {
           let window = Services.wm.getMostRecentWindow("mail:3pane");
           let tabmail = window.top.document.getElementById("tabmail");
-          tabmail.currentAbout3Pane.threadTree.table.body.focus();
+          tabmail.currentAbout3Pane?.threadTree.table.body.focus();
         },
 
         // bug 1849476 - messages.move/copy() doesn't set mail.last_msg_movecopy_target_uri
