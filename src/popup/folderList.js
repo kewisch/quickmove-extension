@@ -1,4 +1,4 @@
-import BaseItemList from "./baseitemlist.js";
+import BaseItemList from "./baseItemList.js";
 
 class TBFolderList extends BaseItemList {
   #showFolderPath = false;

@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch */
 
-import BaseItemList from "./baseitemlist.js";
+import BaseItemList from "./baseItemList.js";
 
 class TBTagList extends BaseItemList {
   getItemText(item) {
