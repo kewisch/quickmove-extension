@@ -1,21 +1,19 @@
 "use strict";
 
 module.exports = {
-  "env": {
-    "es6": true,
-    "webextensions": true
+  env: {
+    es6: true,
+    webextensions: true
   },
-  "parserOptions": {
-    "ecmaVersion": 13,
-    "sourceType": "module"
+  parserOptions: {
+    ecmaVersion: 13,
+    sourceType: "module"
   },
-  "globals": {
-    "self": true
-  },
-  "rules": {
+  globals: { self: true },
+  rules: {
     // Enforce one true brace style (opening brace on the same line)
     // Allow single line (for now) because of the vast number of changes needed
-    "brace-style": [2, "1tbs", {"allowSingleLine": true}],
+    "brace-style": [2, "1tbs", { allowSingleLine: true }],
 
     // Enforce newline at the end of file, with no multiple empty lines.
     "eol-last": 2,
@@ -28,7 +26,7 @@ module.exports = {
     "comma-dangle": 0,
 
     // Enforce spacing before and after comma
-    "comma-spacing": [2, {"before": false, "after": true}],
+    "comma-spacing": [2, { before: false, after: true }],
 
     // Enforce one true comma style.
     "comma-style": [2, "last"],
@@ -40,10 +38,10 @@ module.exports = {
     "generator-star-spacing": [2, "after"],
 
     // Require space before/after arrow function's arrow
-    "arrow-spacing": [2, { "before": true, "after": true }],
+    "arrow-spacing": [2, { before: true, after: true }],
 
     // Enforces spacing between keys and values in object literal properties.
-    "key-spacing": [2, {"beforeColon": false, "afterColon": true, "mode": "minimum"}],
+    "key-spacing": [2, { beforeColon: false, afterColon: true, mode: "minimum" }],
 
     // Disallow the omission of parentheses when invoking a constructor with no
     // arguments.
@@ -146,10 +144,10 @@ module.exports = {
 
     // Require spaces before/after unary operators (words on by default,
     // nonwords off by default).
-    "space-unary-ops": [2, { "words": true, "nonwords": false }],
+    "space-unary-ops": [2, { words: true, nonwords: false }],
 
     // Enforce spacing after semicolons.
-    "semi-spacing": [2, {"before": false, "after": true}],
+    "semi-spacing": [2, { before: false, after: true }],
 
     // Disallow the use of Boolean literals in conditional expressions.
     "no-unneeded-ternary": 2,
@@ -190,7 +188,7 @@ module.exports = {
 
     // Require space after keyword for anonymous functions, but disallow space
     // after name of named functions.
-    "space-before-function-paren": [2, {"anonymous": "never", "named": "never"}],
+    "space-before-function-paren": [2, { anonymous: "never", named: "never" }],
 
     // Disallow unreachable statements after a return, throw, continue, or break
     // statement.
@@ -221,7 +219,7 @@ module.exports = {
     "no-var": 0,
 
     // Disallow global and local variables that aren't used, but allow unused function arguments.
-    "no-unused-vars": [2, {"vars": "all", "args": "none", "varsIgnorePattern": "EXPORTED_SYMBOLS|rest"}],
+    "no-unused-vars": [2, { vars: "all", args: "none", varsIgnorePattern: "EXPORTED_SYMBOLS|rest" }],
 
     // Require padding inside curly braces
     "object-curly-spacing": [2, "always"],
@@ -246,7 +244,7 @@ module.exports = {
 
     // Allow constant expressions in conditions
     // With 2.11.0 we can enable this with checkLoops: false
-    "no-constant-condition": [2, {"checkLoops": false}],
+    "no-constant-condition": [2, { checkLoops: false }],
 
     // Disallow Regexs That Look Like Division
     "no-div-regex": 2,
@@ -361,21 +359,21 @@ module.exports = {
     "space-before-blocks": 2,
 
     // Operators always before the line break
-    "operator-linebreak": [2, "after", { "overrides": { ":": "before", "?": "ignore"}}],
+    "operator-linebreak": [2, "after", { overrides: { ":": "before", "?": "ignore" } }],
 
     // Restricts the use of parentheses to only where they are necessary
     // Disabled for now since this also removes parens around assignments, e.g. let foo = bar == baz
     // "no-extra-parens": [2, "all", { "conditionalAssign": false, "returnAssign": false, "nestedBinaryExpressions": false }],
 
     // Double quotes should be used.
-    "quotes": [2, "double", { "avoidEscape": true }],
+    "quotes": [2, "double", { avoidEscape: true }],
 
     // Disallow if as the only statement in an else block.
     "no-lonely-if": 2,
 
     // Not more than two empty lines with in the file, and no extra lines at
     // beginning or end of file.
-    "no-multiple-empty-lines": [2, { "max": 2, "maxEOF": 0, "maxBOF": 0 }],
+    "no-multiple-empty-lines": [2, { max: 2, maxEOF: 0, maxBOF: 0 }],
 
     // Make sure all setters have a corresponding getter
     "accessor-pairs": 2,
@@ -396,10 +394,10 @@ module.exports = {
     "func-names": [2, "never"],
 
     // Enforce placing object properties on separate lines
-    "object-property-newline": [2, { "allowMultiplePropertiesPerLine": true }],
+    "object-property-newline": [2, { allowMultiplePropertiesPerLine: true }],
 
     // Enforce consistent line breaks inside braces
-    "object-curly-newline": [2, { "multiline": true }],
+    "object-curly-newline": [2, { multiline: true }],
 
     // Disallow whitespace before properties
     "no-whitespace-before-property": 2,
@@ -409,13 +407,13 @@ module.exports = {
 
     // Disallow mixes of different operators, but allow simple math operations.
     "no-mixed-operators": [2, {
-        "groups": [
-            /* ["+", "-", "*", "/", "%", "**"], */
-            ["&", "|", "^", "~", "<<", ">>", ">>>"],
-            ["==", "!=", "===", "!==", ">", ">=", "<", "<="],
-            ["&&", "||"],
-            ["in", "instanceof"]
-        ]
+      groups: [
+        /* ["+", "-", "*", "/", "%", "**"], */
+        ["&", "|", "^", "~", "<<", ">>", ">>>"],
+        ["==", "!=", "===", "!==", ">", ">=", "<", "<="],
+        ["&&", "||"],
+        ["in", "instanceof"]
+      ]
     }],
 
     // Disallow unnecessary concatenation of strings
@@ -425,19 +423,19 @@ module.exports = {
     "no-unmodified-loop-condition": 2,
 
     // Suggest using arrow functions as callbacks
-    "prefer-arrow-callback": [2, { "allowNamedFunctions": true }],
+    "prefer-arrow-callback": [2, { allowNamedFunctions: true }],
 
     // Suggest using the spread operator instead of .apply()
     "prefer-spread": 2,
 
     // Quoting style for property names
-    "quote-props": ["error", "consistent-as-needed", { "keywords": true }],
+    "quote-props": ["error", "consistent-as-needed", { keywords: true }],
 
     // Disallow negated conditions
     "no-negated-condition": 2,
 
     // Enforce a maximum number of statements allowed per line
-    "max-statements-per-line": [2, { "max": 2 }],
+    "max-statements-per-line": [2, { max: 2 }],
 
     // Disallow arrow functions where they could be confused with comparisons
     "no-confusing-arrow": 2,
@@ -447,8 +445,8 @@ module.exports = {
 
     // Enforce minimum identifier length
     "id-length": [2, {
-      "min": 3,
-      "exceptions": [
+      min: 3,
+      exceptions: [
         /* jQuery */ "$",
         /* sorting */ "a", "b",
         /* exceptions */ "e", "ex",
@@ -466,7 +464,7 @@ module.exports = {
     "no-case-declarations": 2,
 
     // Enforce consistent indentation (4-space)
-    "indent": [2, 2, { "SwitchCase": 1 }],
+    "indent": [2, 2, { SwitchCase: 1 }],
 
     // The following rules will not be enabled currently, but are kept here for
     // easier updates in the future.
