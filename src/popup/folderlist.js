@@ -79,9 +79,6 @@ class TBFolderList extends BaseItemList {
     let item = this.shadowRoot.ownerDocument.importNode(template.content, true);
     item.querySelector(".icon").classList.add("folder-type-" + (folderNode.type || "folder"));
     item.querySelector(".icon").style.marginInlineStart = (depth * 10) + "px";
-    console.log(folderNode);
-
-    console.log(folderNode.fullNameParts);
 
     let prettyFolderPathComponents = folderNode.fullNameParts.filter((val) => {
       // Filter out [Gmail] and empty path components.
