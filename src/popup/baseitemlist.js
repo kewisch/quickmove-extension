@@ -481,8 +481,19 @@ export default class BaseItemList extends HTMLElement {
     this.#clearItems();
 
     if (lowerSearchTerm) {
+      let searchWords = lowerSearchTerm.split(/\s+/);
+
       for (let item of this.allItems) {
-        if (this.getItemText(item).toLowerCase().includes(lowerSearchTerm)) {
+        let itemText = this.getItemText(item).toLowerCase();
+        let mismatch = false;
+        for (let word of searchWords) {
+          if (word && !itemText.includes(word)) {
+            mismatch = true;
+            break;
+          }
+        }
+
+        if (!mismatch) {
           this._addItem(item, BaseItemList.MODE_SEARCH);
         }
       }
