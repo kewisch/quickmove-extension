@@ -65,11 +65,17 @@ async function load() {
   // Setup folder list
   let accounts = await browser.accounts.list();
 
-  let [currentWindow] = await browser.mailTabs.query({ currentWindow: true, active: true });
-  let currentAccountId = currentWindow.displayedFolder?.accountId;
-  let currentAccountIndex = accounts.findIndex(account => account.id === currentAccountId);
-  if (currentAccountIndex >= 0) {
-    accounts.unshift(...accounts.splice(currentAccountIndex, 1));
+  let [currentTab] = await browser.tabs.query({ currentWindow: true, active: true });
+
+  if (currentTab) {
+    let currentMessage = await browser.messageDisplay.getDisplayedMessage(currentTab.id);
+    if (currentMessage) {
+      let currentAccountId = currentMessage.folder.accountId;
+      let currentAccountIndex = accounts.findIndex(account => account.id === currentAccountId);
+      if (currentAccountIndex >= 0) {
+        accounts.unshift(...accounts.splice(currentAccountIndex, 1));
+      }
+    }
   }
 
   let accountNodes = accounts.map(account => new AccountNode(account, skipArchive));
