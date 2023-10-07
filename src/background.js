@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch */
 
-const DEFAULT_ACTION_URL = "/popup/popup.html?action=move&allowed=move,copy,tag,goto";
+const DEFAULT_ACTION_URL = "/popup/popup.html?action=move&allowed=move,copy,goto,tag";
 
 // Manifest v3: this needs to go into state memory or be queried for
 let gLastWindowId = null;

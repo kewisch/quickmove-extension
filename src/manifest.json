@@ -33,13 +33,13 @@
   ],
   "browser_action": {
     "default_icon": "images/addon.svg",
-    "default_popup": "popup/popup.html?action=move&allowed=move,copy,tag,goto",
+    "default_popup": "popup/popup.html?action=move&allowed=move,copy,goto,tag",
     "default_label": "__MSG_extensionShortName__"
   },
 
   "message_display_action": {
     "default_icon": "images/addon.svg",
-    "default_popup": "popup/popup.html?action=move&allowed=move,copy,tag,goto",
+    "default_popup": "popup/popup.html?action=move&allowed=move,copy,goto,tag",
     "default_label": "__MSG_extensionShortName__"
   },
 
