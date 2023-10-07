@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "2.6.8",
+  "version": "2.6.9",
   "default_locale": "en",
   "author": "Philipp Kewisch",
   "browser_specific_settings": {
@@ -47,30 +47,18 @@
     "move": {
       "description": "__MSG_commandMoveDescription__",
       "suggested_key": {
-        "default": "Ctrl+Alt+M",
+        "default": "Ctrl+Shift+N",
         "mac": "MacCtrl+Shift+M"
       }
     },
     "copy": {
-      "description": "__MSG_commandCopyDescription__",
-      "suggested_key": {
-        "default": "Ctrl+Alt+C",
-        "mac": "MacCtrl+Shift+C"
-      }
+      "description": "__MSG_commandCopyDescription__"
     },
     "goto": {
-      "description": "__MSG_commandGotoDescription__",
-      "suggested_key": {
-        "default": "Ctrl+Alt+G",
-        "mac": "MacCtrl+Shift+G"
-      }
+      "description": "__MSG_commandGotoDescription__"
     },
     "tag": {
-      "description": "__MSG_commandTagDescription__",
-      "suggested_key": {
-        "default": "Ctrl+Alt+T",
-        "mac": "MacCtrl+Shift+T"
-      }
+      "description": "__MSG_commandTagDescription__"
     }
   },
 

@@ -40,7 +40,7 @@ async function load() {
       let item = shortcutList.appendChild(document.createElement("li"));
       let shortcutText = item.appendChild(document.createElement("b"));
       shortcutText.textContent = translateShortcut(command.shortcut) || "No shortcut assigned";
-      item.appendChild(document.createTextNode(` to ${command.description.toLowerCase()}`));
+      item.appendChild(document.createTextNode(`: ${command.description}`));
     }
   }
 }
