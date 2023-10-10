@@ -25,7 +25,22 @@ async function processSelectedMessages(folder, operation="move") {
 
   let ops = [];
 
-  for await (let messages of selectedMessagePages()) {
+  let [tab] = await browser.tabs.query({ currentWindow: true, active: true });
+  if (!tab) {
+    return;
+  }
+
+  let messagePages;
+  if (tab.type == "messageDisplay") {
+    messagePages = [browser.messageDisplay.getDisplayedMessages(tab.id)];
+  } else if (tab.type == "mail") {
+    messagePages = selectedMessagePages();
+  } else {
+    console.error("Quickmove acting on unknown tab type: " + tab.type);
+    return;
+  }
+
+  for await (let messages of messagePages) {
     let ids = messages.map(message => message.id);
     let op = Promise.resolve();
     if (markAsRead) {
