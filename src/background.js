@@ -7,6 +7,7 @@ const DEFAULT_ACTION_URL = "/popup/popup.html?action=move&allowed=move,copy,goto
 
 // Manifest v3: this needs to go into state memory or be queried for
 let gLastWindowId = null;
+let gSpinLevel = 0;
 
 async function* selectedMessagePages() {
   let page = await browser.mailTabs.getSelectedMessages();
@@ -18,6 +19,26 @@ async function* selectedMessagePages() {
     page = await browser.messages.continueList(page.id);
     yield page.messages;
   }
+}
+
+
+async function spinWith(func, ...args) {
+  let rv;
+  try {
+    gSpinLevel++;
+    await browser.browserAction.setIcon({ path: "/images/spinner.svg" });
+    await browser.messageDisplayAction.setIcon({ path: "/images/spinner.svg" });
+    rv = await func(...args);
+  } finally {
+    gSpinLevel--;
+
+    if (gSpinLevel == 0) {
+      await browser.browserAction.setIcon({ path: "/images/addon.svg" });
+      await browser.messageDisplayAction.setIcon({ path: "/images/addon.svg" });
+    }
+  }
+
+  return rv;
 }
 
 async function processSelectedMessages(folder, operation="move") {
@@ -140,9 +161,9 @@ browser.runtime.onMessage.addListener(async (message, sender) => {
     return browser.quickmove.focusThreadPane();
   } else if (message.action == "processSelectedMessages") {
     if (message.operation == "tag") {
-      return applyTags(message.tag);
+      spinWith(applyTags, message.tag);
     } else {
-      return processSelectedMessages(message.folder, message.operation);
+      spinWith(processSelectedMessages, message.folder, message.operation);
     }
   } else if (message.action == "setupShortcuts") {
     browser.quickmove.setupLegacyShortcuts(message.enable);
