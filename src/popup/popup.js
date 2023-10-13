@@ -155,8 +155,16 @@ function keydown(event) {
 
     switchList(action).focusSearch();
   }
+
 }
 
+function keypress(event) {
+    if (!event.originalTarget.classList.contains("search-input")) {
+        event.preventDefault();
+    }
+}
+
+window.addEventListener("keypress", keypress);
 window.addEventListener("keydown", keydown);
 window.addEventListener("DOMContentLoaded", load, { once: true });
 window.addEventListener("unload", unload, { once: true, capture: true });
