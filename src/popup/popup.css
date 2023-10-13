@@ -8,6 +8,8 @@
   :root {
     --menu-color: #18181b;
     --menu-background-color: #fafafa;
+
+    --item-list-focus: #d3e3f5;
   }
 }
 
@@ -15,6 +17,8 @@
   :root {
     --menu-color: #f4f4f5;
     --menu-background-color: #18181b;
+
+    --item-list-focus: #4892e8;
   }
 }
 

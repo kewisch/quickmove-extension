@@ -127,7 +127,7 @@ export default class BaseItemList extends HTMLElement {
         color: var(--item-list-color);
       }
       .item.selected {
-        background-color: color-mix(in srgb, currentcolor 10%, transparent);
+        background-color: var(--item-list-focus, color-mix(in srgb, currentcolor 10%, transparent));
       }
 
       .header-item {
