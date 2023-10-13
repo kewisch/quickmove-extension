@@ -52,14 +52,19 @@ export class FolderNode extends BaseNode {
       accountMap[account.item.id] = account;
     }
 
-    let folderNodes = [];
+    let folderNodes = {};
+
     for (let folder of folders) {
       let folderNode = accountMap[folder.accountId].lookup(folder.path);
       if (folderNode) {
-        folderNodes.push(folderNode);
+        if (!(folder.accountId in folderNodes)) {
+          folderNodes[folder.accountId] = [];
+        }
+        folderNodes[folder.accountId].push(folderNode);
       }
     }
-    return folderNodes;
+
+    return accounts.reduce((nodes, account) => nodes.concat(folderNodes[account.item.id] ?? []), []);
   }
   static getSortKey(folder) {
     const folderTypes = {
