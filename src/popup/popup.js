@@ -48,7 +48,7 @@ async function load() {
 
   let actions = new Set(ALL_ACTIONS);
 
-  for (let allowedAction of (params.get("allowed") || "move,copy,tag,goto").split(",")) {
+  for (let allowedAction of (params.get("allowed") || "move,copy,goto,tag").split(",")) {
     actions.delete(allowedAction);
   }
 

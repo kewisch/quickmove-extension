@@ -129,7 +129,7 @@ browser.runtime.onInstalled.addListener(({ reason, previousVersion }) => {
 
 browser.commands.onCommand.addListener(async (name) => {
   let popupOrder = [browser.messageDisplayAction, browser.browserAction];
-  let popupUrl =`/popup/popup.html?action=${name}&allowed=move,copy,tag,goto`;
+  let popupUrl =`/popup/popup.html?action=${name}&allowed=move,copy,goto,tag`;
   if (name == "goto") {
     popupOrder = popupOrder.reverse();
   }
