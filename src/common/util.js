@@ -5,7 +5,8 @@ export const DEFAULT_PREFERENCES = {
   showFolderPath: false,
   useLegacyShortcuts: false,
   skipArchive: true,
-  defaultFolderSetting: "recent"
+  defaultFolderSetting: "recent",
+  reverseHierarchyCompact: false
 };
 
 export async function getValidatedDefaultFolders(accountNodes) {

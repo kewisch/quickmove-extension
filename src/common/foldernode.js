@@ -141,16 +141,54 @@ export class FolderNode extends BaseNode {
     return node;
   }
 
-  get fullNameParts() {
+  getFullNameParts(includeAccountNode) {
     let parts = [];
     let node = this; // eslint-disable-line consistent-this
-    while (node && !(node instanceof AccountNode)) {
-      parts.unshift(node.item.name);
+    while (node) {
+      let isAcctNode = node instanceof AccountNode;
+      if (includeAccountNode || !isAcctNode) {
+        parts.unshift(node.item.name);
+      }
+      if (isAcctNode) {
+        break;
+      }
       node = node.parent;
     }
 
     return parts;
   }
+  
+  get fullPathReversed() {
+    let fullFolderPathComponents = this.getFullNameParts(true).filter((val) => {
+      // Filter out [Gmail] and empty path components.
+      return val !== "" && !val.includes("[");
+    });
+    
+    if (fullFolderPathComponents.length === 0) { 
+      return '';
+    }
+    
+    let display = '';
+    for (var i = fullFolderPathComponents.length - 1; i >= 1; i--) {
+      if (display !== '') {
+        display += ' ← ';
+      }
+      display += fullFolderPathComponents[i];
+    }
+    
+    if (display !== '') {
+      display += ' ← ';
+    }
+    
+    display += '<b>'  + fullFolderPathComponents[0] + '</b>';
+    
+    return display;
+  }
+
+  get fullNameParts() {
+    return this.getFullNameParts(false);
+  }
+  
 }
 
 export class AccountNode extends FolderNode {

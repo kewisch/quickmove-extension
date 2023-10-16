@@ -479,9 +479,13 @@ export default class BaseItemList extends HTMLElement {
   repopulate() {
     let lowerSearchTerm = this.searchValue.toLowerCase();
     this.#clearItems();
+    let addMode;
+    let itemsToAdd;
 
     if (lowerSearchTerm) {
       let searchWords = lowerSearchTerm.split(/\s+/);
+      addMode = BaseItemList.MODE_SEARCH;
+      itemsToAdd = [];
 
       for (let item of this.allItems) {
         let itemText = this.getItemText(item).toLowerCase();
@@ -494,18 +498,26 @@ export default class BaseItemList extends HTMLElement {
         }
 
         if (!mismatch) {
-          this._addItem(item, BaseItemList.MODE_SEARCH);
+          itemsToAdd.push(item);
         }
       }
     } else if (this.defaultItems) {
-      for (let item of this.defaultItems) {
-        this._addItem(item, BaseItemList.MODE_DEFAULT);
-      }
+      addMode = BaseItemList.MODE_DEFAULT;
+      itemsToAdd = this.defaultItems;
     } else {
-      for (let item of this.allItems) {
-        this._addItem(item, BaseItemList.MODE_ALL);
-      }
+      addMode = BaseItemList.MODE_ALL;
+      itemsToAdd = this.allItems;
     }
+    
+    itemsToAdd = this.sortItems(itemsToAdd);
+    
+    for (let item of itemsToAdd) {
+      this._addItem(item, addMode);
+    }
+  }
+  
+  sortItems(items) {
+    return items;
   }
 }
 
