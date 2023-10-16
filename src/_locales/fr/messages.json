@@ -90,9 +90,9 @@
     "message": "Vous pouvez à présent utiliser ⇧M ⇧Y et ⇧G. Utilisez l'extention shortcut pour les modifier."
   },
   "reverseHierarchyCompact": {
-    "message": "Reverse hierarchy display (compact only)"
+    "message": "Affichage de la hiérarchie inversée (compact uniquement)"
   },
   "reverseHierarchyCompact.title": {
-    "message": "Compact mode only. Show the folder name first, in a reverse hierarchy, with the account name at the end. Don't show a separate line for the account. The list is sorted by the folder name (leaf node)."
+    "message": "Mode compact uniquement. Affichez d'abord le nom du dossier, dans une hiérarchie inversée, avec le nom du compte à la fin. N'affichez pas de ligne distincte pour le compte. La liste est triée par nom de dossier (nœud feuille)."
   }
 }

@@ -93,9 +93,9 @@
     "message": "Sie können nun ⇧M ⇧Y und ⇧G verwenden. Ändere die Tastenkürzel in der Erweiterungsverwaltung für Tastenkürzel."
   },
   "reverseHierarchyCompact": {
-    "message": "Reverse hierarchy display (compact only)"
+    "message": "Hierarchieanzeige umkehren (nur kompakt)"
   },
   "reverseHierarchyCompact.title": {
-    "message": "Compact mode only. Show the folder name first, in a reverse hierarchy, with the account name at the end. Don't show a separate line for the account. The list is sorted by the folder name (leaf node)."
+    "message": "Nur Kompaktmodus. Zeigen Sie zuerst den Ordnernamen in umgekehrter Hierarchie und am Ende den Kontonamen an. Für das Konto keine separate Zeile anzeigen. Die Liste ist nach dem Ordnernamen (Blattknoten) sortiert."
   }
 }
