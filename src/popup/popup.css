@@ -3,7 +3,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch */
 
-
 @media (prefers-color-scheme: light) {
   :root {
     --menu-color: #18181b;
@@ -24,11 +23,14 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .action-buttons label {
-    transition: background-color .15s, border-color .15s
+    transition:
+      background-color 0.15s,
+      border-color 0.15s;
   }
 }
 
-body, html {
+body,
+html {
   background-color: var(--menu-background-color);
   color: var(--menu-color);
   max-width: 42em;
@@ -45,7 +47,8 @@ body {
   flex-direction: column;
 }
 
-html[compact] body, html[compact] {
+html[compact] body,
+html[compact] {
   max-width: 21em;
   min-width: 21em;
 }
