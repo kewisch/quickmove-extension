@@ -14,6 +14,9 @@ export async function getValidatedDefaultFolders(accountNodes) {
   let defaultFolders = [];
 
   for (let folder of prefs.defaultFolders) {
+    if (!(folder.accountId in accountMap)) {
+      continue;
+    }
     let node = accountMap[folder.accountId].lookup(folder.path, false);
     if (node) {
       defaultFolders.push(node.item);
