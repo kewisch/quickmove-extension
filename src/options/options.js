@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch */
 
-import { AccountNode } from "../common/foldernode.js";
+import { AccountNode, FolderNode } from "../common/foldernode.js";
 import { DEFAULT_PREFERENCES, getValidatedDefaultFolders } from "../common/util.js";
 
 async function restore_options() {
@@ -74,7 +74,7 @@ async function setup_defaultfolders() {
   let accounts = await browser.accounts.list();
   let accountNodes = accounts.map(account => new AccountNode(account, skipArchive));
   let folders = accountNodes.reduce((acc, node) => acc.concat([...node]), []);
-  let defaultFolders = await getValidatedDefaultFolders(accountNodes);
+  let defaultFolders = FolderNode.fromList(await getValidatedDefaultFolders(accountNodes), accountNodes);
 
   let defaultFolderList = document.getElementById("default-folders");
   defaultFolderList.accounts = accounts;
@@ -87,10 +87,13 @@ async function setup_defaultfolders() {
   folderPicker.initItems(folders, [], true);
 
   folderPicker.addEventListener("item-selected", (event) => {
-    defaultFolderSet.add(event.detail);
+    let newNode = FolderNode.fromList([event.detail], accountNodes)[0];
+
+    defaultFolderSet.add(newNode);
     let allItems = [...defaultFolderSet];
 
     defaultFolderList.allItems = allItems;
+    defaultFolderList.repopulate();
     folderPicker.searchValue = "";
 
     let storageData = allItems.map(item => ({ accountId: item.accountId, path: item.path }));
@@ -98,10 +101,13 @@ async function setup_defaultfolders() {
   });
 
   defaultFolderList.addEventListener("item-deleted", (event) => {
-    defaultFolderSet.delete(event.detail);
+    let oldNode = FolderNode.fromList([event.detail], accountNodes)[0];
+
+    defaultFolderSet.delete(oldNode);
     let allItems = [...defaultFolderSet];
 
     defaultFolderList.allItems = allItems;
+    defaultFolderList.repopulate();
 
     let storageData = allItems.map(item => ({ accountId: item.accountId, path: item.path }));
     browser.storage.local.set({ defaultFolders: storageData });
