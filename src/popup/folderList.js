@@ -2,6 +2,7 @@ import BaseItemList from "./baseItemList.js";
 
 class TBFolderList extends BaseItemList {
   #showFolderPath = false;
+  #reverseHierarchyCompact = false;
   #accounts = {};
 
   static get style() {
@@ -70,6 +71,22 @@ class TBFolderList extends BaseItemList {
     return folderNode.item.name;
   }
 
+  sortItems(items) {
+    if (this.#reverseHierarchyCompact) {
+      // sort in a new array
+      let sorted = [];
+      for (let item of items) {
+        sorted.push(item);
+      }
+
+      sorted.sort(function(a,b){
+        return a.fullPathReversed.toLowerCase().localeCompare(b.fullPathReversed.toLowerCase());
+      });
+      items = sorted;
+    }
+    return items;
+  }
+
   _addItem(folderNode, mode) {
     // let depth = mode == BaseItemList.MODE_ALL ? (folderNode.path.match(/\//g) || []).length - 1 : 0;
     let depth = 0;
@@ -84,11 +101,15 @@ class TBFolderList extends BaseItemList {
       // Filter out [Gmail] and empty path components.
       return val !== "" && !val.includes("[");
     });
-
+    
     let compact = this.hasAttribute("compact");
+    let addAccountNode = true;
 
     if (compact) {
-      if (this.#showFolderPath) {
+      if (this.#reverseHierarchyCompact) {
+        addAccountNode = false;
+        item.querySelector(".text").innerHTML = folderNode.fullPathReversed;
+      } else if (this.#showFolderPath) {
         item.querySelector(".text").textContent = prettyFolderPathComponents.join("→");
       } else {
         item.querySelector(".text").textContent = folderNode.name;
@@ -104,7 +125,7 @@ class TBFolderList extends BaseItemList {
 
     item.querySelector(".item").item = folderNode.item;
 
-    if (!body.lastElementChild || body.lastElementChild.item.accountId != folderNode.accountId) {
+    if (addAccountNode && (!body.lastElementChild || body.lastElementChild.item.accountId != folderNode.accountId)) {
       let accountTemplate = this.shadowRoot.querySelector(".header-item-template");
       let accountItem = this.shadowRoot.ownerDocument.importNode(accountTemplate.content, true);
       let account = this.#accounts[folderNode.accountId];
@@ -129,10 +150,11 @@ class TBFolderList extends BaseItemList {
     this.#accounts = Object.fromEntries(val.map(account => [account.id, account]));
   }
 
-  initItems(allItems, defaultItems, showFolderPath) {
+  initItems(allItems, defaultItems, showFolderPath, reverseHierarchyCompact) {
     this._allItems = allItems;
     this._defaultItems = defaultItems;
     this.#showFolderPath = showFolderPath;
+    this.#reverseHierarchyCompact = reverseHierarchyCompact;
     this.repopulate();
   }
 

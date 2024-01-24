@@ -88,5 +88,11 @@
   },
   "useLegacyShortcutsDone": {
     "message": "Vous pouvez à présent utiliser ⇧M ⇧Y et ⇧G. Utilisez l'extention shortcut pour les modifier."
+  },
+  "reverseHierarchyCompact": {
+    "message": "Affichage de la hiérarchie inversée (compact uniquement)"
+  },
+  "reverseHierarchyCompact.title": {
+    "message": "Mode compact uniquement. Affichez d'abord le nom du dossier, dans une hiérarchie inversée, avec le nom du compte à la fin. N'affichez pas de ligne distincte pour le compte. La liste est triée par nom de dossier (nœud feuille)."
   }
 }

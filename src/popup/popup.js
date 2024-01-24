@@ -31,8 +31,8 @@ function switchList(action) {
 }
 
 async function load() {
-  let { maxRecentFolders, showFolderPath, skipArchive, layout, defaultFolderSetting } = await browser.storage.local.get({ maxRecentFolders: 15, showFolderPath: true, layout: "auto", skipArchive: true, defaultFolderSetting: "recent" });
-
+  let { maxRecentFolders, showFolderPath, skipArchive, layout, defaultFolderSetting, reverseHierarchyCompact } = await browser.storage.local.get({ maxRecentFolders: 15, showFolderPath: true, layout: "auto", skipArchive: true, defaultFolderSetting: "recent", reverseHierarchyCompact: false });
+  
   if (layout == "wide" || (layout == "auto" && window.outerWidth > 1400)) {
     document.documentElement.removeAttribute("compact");
     document.getElementById("folder-list").removeAttribute("compact");
@@ -97,7 +97,7 @@ async function load() {
 
   let folderList = document.getElementById("folder-list");
   folderList.accounts = accounts;
-  folderList.initItems(folders, defaultFolders, showFolderPath);
+  folderList.initItems(folders, defaultFolders, showFolderPath, reverseHierarchyCompact);
   folderList.ignoreFocus = true;
   folderList.addEventListener("item-selected", async (event) => {
     let operation = document.querySelector("input[name='action']:checked").value;

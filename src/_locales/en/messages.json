@@ -91,5 +91,11 @@
   },
   "useLegacyShortcutsDone": {
     "message": "You can now use ⇧M ⇧Y and ⇧G. Change the keys in the extension shortcuts."
+  },
+  "reverseHierarchyCompact": {
+    "message": "Reverse hierarchy display (compact only)"
+  },
+  "reverseHierarchyCompact.title": {
+    "message": "Compact mode only. Show the folder name first, in a reverse hierarchy, with the account name at the end. Don't show a separate line for the account. The list is sorted by the folder name (leaf node)."
   }
 }

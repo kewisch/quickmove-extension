@@ -91,5 +91,11 @@
   },
   "useLegacyShortcutsDone": {
     "message": "Sie können nun ⇧M ⇧Y und ⇧G verwenden. Ändere die Tastenkürzel in der Erweiterungsverwaltung für Tastenkürzel."
+  },
+  "reverseHierarchyCompact": {
+    "message": "Hierarchieanzeige umkehren (nur kompakt)"
+  },
+  "reverseHierarchyCompact.title": {
+    "message": "Nur Kompaktmodus. Zeigen Sie zuerst den Ordnernamen in umgekehrter Hierarchie und am Ende den Kontonamen an. Für das Konto keine separate Zeile anzeigen. Die Liste ist nach dem Ordnernamen (Blattknoten) sortiert."
   }
 }
