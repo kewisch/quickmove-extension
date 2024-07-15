@@ -36,7 +36,12 @@ function convertFolder(folder, accountId) {
   }
   if (!accountId) {
     let server = folder.server;
-    let account = MailServices.accounts.FindAccountForServer(server);
+    let acctMgr = MailServices.accounts;
+
+    // TB115 COMPAT
+    let findAccountForServer = (acctMgr.findAccountForServer || acctMgr.FindAccountForServer).bind(acctMgr);
+
+    let account = findAccountForServer(server);
     accountId = account.key;
   }
 
@@ -127,6 +132,7 @@ this.quickmove = class extends ExtensionAPI {
         },
 
         // bug 1840072 - thread pane is not focused when returning from browserAction
+        // TB124 COMPAT - this can be removed in the next major release
         async focusThreadPane(windowId) {
           let window = Services.wm.getMostRecentWindow("mail:3pane");
           let tabmail = window.top.document.getElementById("tabmail");
