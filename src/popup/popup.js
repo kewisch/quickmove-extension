@@ -146,6 +146,7 @@ function keydown(event) {
   if (event.key == "Escape") {
     window.close();
   } else if (event.key == "ArrowLeft" || event.key == "ArrowRight") {
+    event.preventDefault();
     let params = new URLSearchParams(window.location.search);
     let sequence = (params.get("allowed") || "move,copy").split(",");
     let direction = event.key == "ArrowLeft" ? -1 : 1;
