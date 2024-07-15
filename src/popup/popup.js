@@ -31,6 +31,9 @@ function switchList(action) {
 }
 
 async function load() {
+  // TB120 COMPAT
+  let majorVersion = parseInt((await browser.runtime.getBrowserInfo()).version.split(".")[0], 10);
+
   let { maxRecentFolders, showFolderPath, skipArchive, layout, defaultFolderSetting } = await browser.storage.local.get({ maxRecentFolders: 15, showFolderPath: true, layout: "auto", skipArchive: true, defaultFolderSetting: "recent" });
 
   if (layout == "wide" || (layout == "auto" && window.outerWidth > 1400)) {
@@ -88,7 +91,14 @@ async function load() {
   let defaultFolders;
 
   if (defaultFolderSetting == "recent") {
-    defaultFolders = FolderNode.fromList(await browser.quickmove.query({ recent: true, limit: maxRecentFolders, canFileMessages: true }), accountNodes);
+    let folderList;
+    if (majorVersion < 121) {
+      // TB120 COMPAT
+      folderList = await browser.quickmove.query({ recent: true, limit: maxRecentFolders, canFileMessages: true });
+    } else {
+      folderList = await browser.folders.query({ recent: true, limit: maxRecentFolders, canAddMessages: true });
+    }
+    defaultFolders = FolderNode.fromList(folderList, accountNodes);
   } else if (defaultFolderSetting == "specific") {
     defaultFolders = FolderNode.fromList(await getValidatedDefaultFolders(accountNodes), accountNodes);
   } else {
@@ -106,13 +116,23 @@ async function load() {
       await browser.runtime.sendMessage({ action: "processSelectedMessages", folder: event.detail, operation: operation });
     } else if (operation == "goto") {
       let [tab] = await browser.tabs.query({ currentWindow: true, active: true });
-      await browser.mailTabs.update(tab.id, { displayedFolder: event.detail });
+
+      // TB120 COMPAT
+      let folderId = majorVersion < 121 ? event.detail : event.detail.id;
+      await browser.mailTabs.update(tab.id, { displayedFolder: folderId });
     }
     window.close();
   });
 
   // Setup tag list
-  let tags = await browser.messages.listTags();
+  // TB120 COMPAT
+  let tags;
+  if (majorVersion < 121) {
+    tags = await browser.messages.listTags();
+  } else {
+    tags = await browser.messages.tags.list();
+  }
+
   let tagList = document.getElementById("tag-list");
   tagList.ignoreFocus = true;
   tagList.initItems(tags, null);

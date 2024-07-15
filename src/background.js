@@ -51,6 +51,14 @@ async function processSelectedMessages(folder, operation="move") {
     return;
   }
 
+  // TB120 COMPAT
+  let browserInfo = await browser.runtime.getBrowserInfo();
+  let folderId = folder.id;
+  if (parseInt(browserInfo.version.split(".")[0], 10) < 121) {
+    folderId = folder;
+  }
+
+
   let messagePages;
   if (tab.type == "messageDisplay") {
     messagePages = [browser.messageDisplay.getDisplayedMessages(tab.id)];
@@ -67,7 +75,7 @@ async function processSelectedMessages(folder, operation="move") {
     if (markAsRead) {
       op = op.then(() => Promise.all(ids.map(id => browser.messages.update(id, { read: true }))));
     }
-    op = op.then(() => browser.messages[operation](ids, folder));
+    op = op.then(() => browser.messages[operation](ids, folderId));
     ops.push(op);
   }
 
