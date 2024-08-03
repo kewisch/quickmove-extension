@@ -55,6 +55,10 @@ export class FolderNode extends BaseNode {
     let folderNodes = {};
 
     for (let folder of folders) {
+      if !accountMap[folder.accountId] {
+        continue;
+      }
+
       let folderNode = accountMap[folder.accountId].lookup(folder.path);
       if (folderNode) {
         if (!(folder.accountId in folderNodes)) {
