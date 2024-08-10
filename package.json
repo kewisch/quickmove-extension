@@ -1,7 +1,7 @@
 {
   "name": "quickmove",
   "description": "Quick Folder Move",
-  "version": "2.9.1",
+  "version": "2.9.2",
   "private": true,
   "author": "Philipp Kewisch <mozilla@kewis.ch>",
   "license": "MPL-2.0",
