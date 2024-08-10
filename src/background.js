@@ -26,15 +26,15 @@ async function spinWith(func, ...args) {
   let rv;
   try {
     gSpinLevel++;
-    await browser.browserAction.setIcon({ path: "/images/spinner.svg" });
-    await browser.messageDisplayAction.setIcon({ path: "/images/spinner.svg" });
+    browser.browserAction.setIcon({ path: "/images/spinner.svg" });
+    browser.messageDisplayAction.setIcon({ path: "/images/spinner.svg" });
     rv = await func(...args);
   } finally {
     gSpinLevel--;
 
     if (gSpinLevel == 0) {
-      await browser.browserAction.setIcon({ path: "/images/addon.svg" });
-      await browser.messageDisplayAction.setIcon({ path: "/images/addon.svg" });
+      browser.browserAction.setIcon({ path: "/images/addon.svg" });
+      browser.messageDisplayAction.setIcon({ path: "/images/addon.svg" });
     }
   }
 
