@@ -14,7 +14,7 @@
     <title>Quick Folder Move</title>
   </head>
   <body style="display: none !important">
-    <div id="window-warning" data-l10n-id="windowWarning"></div>
+    <div id="window-warning" class="warning hidden" data-l10n-id="windowWarning"></div>
     <div class="action-buttons">
       <input type="radio" name="action" value="move" id="action-move" checked>
       <label for="action-move" data-l10n-id="actionMove"></label>
@@ -25,7 +25,11 @@
       <input type="radio" name="action" value="tag" id="action-tag">
       <label for="action-tag" data-l10n-id="actionTag"></label>
     </div>
-    <folder-list id="folder-list" search="true" compact="true"></folder-list>
-    <tag-list id="tag-list" search="true" compact="true"></tag-list>
+    <div id="meta-action-warning" class="warning hidden">
+      <span data-l10n-id="metaActionWarning"></span>
+      <button class="close">&times;</button>
+    </div>
+    <folder-list id="folder-list" class="item-list" search="true" compact="true"></folder-list>
+    <tag-list id="tag-list"  class="item-list" search="true" compact="true"></tag-list>
   </body>
 </html>

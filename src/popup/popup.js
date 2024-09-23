@@ -34,11 +34,12 @@ async function load() {
   // TB120 COMPAT
   let majorVersion = parseInt((await browser.runtime.getBrowserInfo()).version.split(".")[0], 10);
 
-  let { maxRecentFolders, showFolderPath, skipArchive, layout, defaultFolderSetting } = await browser.storage.local.get({ maxRecentFolders: 15, showFolderPath: true, layout: "auto", skipArchive: true, defaultFolderSetting: "recent" });
+  let { maxRecentFolders, showFolderPath, skipArchive, layout, defaultFolderSetting, migratedShiftArrow } = await browser.storage.local.get({ maxRecentFolders: 15, showFolderPath: true, layout: "auto", skipArchive: true, defaultFolderSetting: "recent", migratedShiftArrow: false });
 
   if (layout == "wide" || (layout == "auto" && window.outerWidth > 1400)) {
     document.documentElement.removeAttribute("compact");
     document.getElementById("folder-list").removeAttribute("compact");
+    document.getElementById("tag-list").removeAttribute("compact");
   }
   document.body.style.display = "revert-layer";
 
@@ -145,6 +146,15 @@ async function load() {
     switchList(event.target.value).focusSearch();
   });
 
+  if (migratedShiftArrow) {
+    document.querySelector("#meta-action-warning").classList.add("migrated");
+  } else {
+    document.querySelector("#meta-action-warning .close").addEventListener("click", (event) => {
+      browser.storage.local.set({ migratedShiftArrow: true });
+      document.querySelector("#meta-action-warning").classList.add("migrated", "hidden");
+    });
+  }
+
   document.body.addEventListener("mousemove", () => {
     folderList.ignoreFocus = false;
     tagList.ignoreFocus = false;
@@ -152,7 +162,7 @@ async function load() {
 
   if (params.get("window") == "true") {
     browser.windows.update(browser.windows.WINDOW_ID_CURRENT, { width: document.body.clientWidth });
-    document.getElementById("window-warning").classList.add("visible");
+    document.getElementById("window-warning").classList.remove("hidden");
   }
 
   switchList(action).focusSearch();
@@ -162,14 +172,30 @@ function unload(event) {
   browser.runtime.sendMessage({ action: "focusThreadPane" }).catch(() => {});
 }
 
+function cmdOrCtrlKey(event) {
+  const isMac = navigator.platform.toUpperCase().includes("MAC");
+  return isMac ? event.metaKey : event.ctrlKey;
+}
+
 function keydown(event) {
   if (event.key == "Escape") {
     window.close();
   } else if (event.key == "ArrowLeft" || event.key == "ArrowRight") {
+    let direction = event.key == "ArrowLeft" ? -1 : 1;
+    if (!cmdOrCtrlKey(event)) {
+      let metaActionWarning = document.getElementById("meta-action-warning");
+      if (!event.shiftKey && !metaActionWarning.classList.contains("migrated")) {
+        metaActionWarning.classList.remove("hidden");
+      }
+      return;
+    }
+    document.getElementById("meta-action-warning").classList.add("hidden");
+
     event.preventDefault();
+    event.stopPropagation();
+
     let params = new URLSearchParams(window.location.search);
     let sequence = (params.get("allowed") || "move,copy").split(",");
-    let direction = event.key == "ArrowLeft" ? -1 : 1;
     if (getComputedStyle(document.documentElement).direction == "rtl") {
       direction *= -1;
     }
@@ -179,7 +205,12 @@ function keydown(event) {
     let action = sequence[Math.max(0, Math.min(nextIdx, sequence.length - 1))];
     document.querySelector(`.action-buttons input[value="${action}"]`).checked = true;
 
-    switchList(action).focusSearch();
+    let currentList = event.target;
+    let targetList = switchList(action);
+
+    if (currentList != targetList || event.originalTarget == currentList.search) {
+      targetList.focusSearch();
+    }
   }
 }
 
@@ -190,6 +221,6 @@ function keypress(event) {
 }
 
 window.addEventListener("keypress", keypress);
-window.addEventListener("keydown", keydown);
+window.addEventListener("keydown", keydown, { capture: true });
 window.addEventListener("DOMContentLoaded", load, { once: true });
 window.addEventListener("unload", unload, { once: true, capture: true });
