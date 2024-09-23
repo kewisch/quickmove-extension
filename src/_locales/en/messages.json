@@ -21,7 +21,10 @@
     "message": "Apply a tag"
   },
   "windowWarning": {
-    "message": "⚠️ It is recommended to add Quick Folder Move to the main toolbar. Please customize your toolbar to enable the button."
+    "message": "It is recommended to add Quick Folder Move to the main toolbar. Please customize your toolbar to enable the button."
+  },
+  "metaActionWarning": {
+    "message": "Switching between actions now requires using Ctrl/Cmd+Arrow to avoid navigation conflicts in the text box."
   },
   "actionMove": {
     "message": "Move"

@@ -74,12 +74,43 @@ html[compact] .action-buttons label:last-of-type {
   box-sizing: border-box;
 }
 
-#window-warning {
-  padding: 5px;
+.warning {
+  padding: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  background-color: light-dark(#facc15, #fef2c3);
+  border-radius: 5px;
+}
+.warning.hidden {
   display: none;
 }
-#window-warning.visible {
-  display: revert;
+
+.warning span {
+  flex: 1;
+}
+
+.warning .close {
+  background: transparent;
+  border: 1px solid black;
+  border-radius: 3px;
+  font-size: 20px;
+  font-weight: 100;
+  padding: 0 0 3px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  width: 24px;
+}
+
+.warning .close:hover {
+  background-color: color-mix(in srgb, currentColor 20%, transparent);
+}
+
+#window-warning {
+  margin-bottom: 5px;
 }
 
 #folder-list {
