@@ -1,3 +1,5 @@
+[![Active Users](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Faddons.thunderbird.net%2Fapi%2Fv4%2Faddons%2Faddon%2Fquick-folder-move%2F&query=%24.average_daily_users&label=Active%20Users)](https://addons.thunderbird.net/thunderbird/addon/quick-folder-move/)
+
 Quick Folder Move
 =================
 
