@@ -18,6 +18,11 @@ ChromeUtils.defineModuleGetter(
   "FolderUtils",
   "resource:///modules/FolderUtils.jsm"
 );
+ChromeUtils.defineModuleGetter(
+  this,
+  "UIFontSize",
+  "resource:///modules/UIFontSize.jsm"
+);
 
 const folderTypeMap = new Map([
   [Ci.nsMsgFolderFlags.Inbox, "inbox"],
@@ -175,7 +180,12 @@ this.quickmove = class extends ExtensionAPI {
             Services.prefs.setStringPref("mail.last_msg_movecopy_target_uri", targetFolderUri);
             Services.prefs.setBoolPref("mail.last_msg_movecopy_was_move", isMove);
           }
-        }
+        },
+
+        // bug 1925836 - Extension popup font size does not adapt to Thunderbird font size
+        async getUIFontSize() {
+          return UIFontSize.size;
+        },
       }
     };
   }

@@ -31,6 +31,9 @@ function switchList(action) {
 }
 
 async function load() {
+  let fontSize = await messenger.quickmove.getUIFontSize();
+  window.document.documentElement.style.setProperty("font-size", `${fontSize}px`);
+
   // TB120 COMPAT
   let majorVersion = parseInt((await browser.runtime.getBrowserInfo()).version.split(".")[0], 10);
 
