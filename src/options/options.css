@@ -3,29 +3,21 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch */
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --menu-color: #18181b;
-    --menu-background-color: white;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --menu-color: #f4f4f5;
-    --menu-background-color: #18181b;
-  }
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+:root {
+  --item-list-color: light-dark(#18181b, #f3f4f5);
+  --item-list-background: light-dark(#fff, #27272a);
+}
+
 html {
   margin: 0;
   padding: 0;
+  color-scheme: light dark;
 }
 
 body {
@@ -36,8 +28,8 @@ body {
   grid-template-columns: auto 1fr;
   align-items: center;
   gap: 1em 0.4em;
-  background-color: var(--menu-background-color);
-  color: var(--menu-color);
+  background-color: light-dark(#fff, #27272a);
+  color: light-dark(#18181b, #f4f4f5);
 }
 
 .preference {
@@ -50,13 +42,13 @@ body {
 
 input[type="checkbox"] {
   border: 1px solid #b1b1b1;
-  background-color: #fff;
+  background-color: transparent;
   width: 16px;
   height: 16px;
 }
 
 input[type="number"] {
-  background-color: #fff;
+  background-color: transparent;
   padding: 5px;
   border: 1px solid #b1b1b1;
   border-radius: 5px;
@@ -84,7 +76,7 @@ select {
   border: 1px solid #b1b1b1;
   padding: 5px;
   border-radius: 5px;
-  background: #fff;
+  background: transparent;
 }
 
 folder-list {
@@ -112,7 +104,7 @@ fieldset {
 
 #folder-picker {
   width: 100%;
-  background-color: var(--menu-background-color);
+  background-color: light-dark(#fff, #27272a);
 }
 
 .panel {

@@ -35,6 +35,7 @@ export default class BaseItemList extends HTMLElement {
         display: flex;
         flex-direction: column;
         overflow: hidden;
+        color-scheme: light dark;
       }
 
       :host([compact]) .search-header {
@@ -96,6 +97,10 @@ export default class BaseItemList extends HTMLElement {
         transition-duration: 250ms;
         transition-property: box-shadow;
         border-radius: 3px;
+      }
+
+      .search-input:focus-visible {
+        outline: 1px solid AccentColor;
       }
 
       .list-body {
