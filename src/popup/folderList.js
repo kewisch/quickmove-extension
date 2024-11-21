@@ -82,7 +82,7 @@ class TBFolderList extends BaseItemList {
 
     let prettyFolderPathComponents = folderNode.fullNameParts.filter((val) => {
       // Filter out [Gmail] and empty path components.
-      return val !== "" && !val.includes("[");
+      return val !== "" && val != "[Gmail]" && val != "[Google Mail]";
     });
 
     let compact = this.hasAttribute("compact");
