@@ -70,22 +70,31 @@ function setup_localization() {
   }
 }
 
-async function setup_defaultfolders() {
+async function init_folder_picker(skipArchive) {
   let accounts = await browser.accounts.list();
   let accountNodes = accounts.map(account => new AccountNode(account, skipArchive));
   let folders = accountNodes.reduce((acc, node) => acc.concat([...node]), []);
+
+  let folderPicker = document.getElementById("folder-picker");
+  folderPicker.accounts = accounts;
+  folderPicker.initItems(folders, []);
+
+  return accountNodes;
+}
+
+async function setup_defaultfolders() {
+  let { skipArchive } = await browser.storage.local.get({ skipArchive: DEFAULT_PREFERENCES.skipArchive });
+  let accountNodes = await init_folder_picker(skipArchive);
+
   let defaultFolders = FolderNode.fromList(await getValidatedDefaultFolders(accountNodes), accountNodes);
 
   let defaultFolderList = document.getElementById("default-folders");
-  defaultFolderList.accounts = accounts;
+  defaultFolderList.accounts = await browser.accounts.list();
   defaultFolderList.initItems(defaultFolders, null, true);
 
   let defaultFolderSet = new Set(defaultFolders);
 
   let folderPicker = document.getElementById("folder-picker");
-  folderPicker.accounts = accounts;
-  folderPicker.initItems(folders, [], true);
-
   folderPicker.addEventListener("item-selected", (event) => {
     let newNode = FolderNode.fromList([event.detail], accountNodes)[0];
 
@@ -111,6 +120,10 @@ async function setup_defaultfolders() {
 
     let storageData = allItems.map(item => ({ accountId: item.accountId, path: item.path }));
     browser.storage.local.set({ defaultFolders: storageData });
+  });
+
+  document.getElementById("skipArchive").addEventListener("change", async (event) => {
+    accountNodes = await init_folder_picker(event.target.checked);
   });
 
   document.getElementById("defaultFolderSetting").addEventListener("change", (event) => {
