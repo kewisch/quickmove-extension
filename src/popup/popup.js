@@ -73,14 +73,16 @@ async function load() {
   let accounts = await browser.accounts.list();
 
   let [currentTab] = await browser.tabs.query({ currentWindow: true, active: true });
-  let currentAccountId;
+  let currentAccountId, currentFolderPath;
 
   if (currentTab?.type == "messageDisplay") {
     let currentMessage = await browser.messageDisplay.getDisplayedMessage(currentTab.id);
     currentAccountId = currentMessage?.folder.accountId;
+    currentFolderPath = currentMessage?.folder.path;
   } else if (currentTab?.type == "mail") {
     let currentMailTab = await browser.mailTabs.getCurrent();
     currentAccountId = currentMailTab?.displayedFolder?.accountId;
+    currentFolderPath = currentMailTab?.displayedFolder?.path;
   }
 
   if (currentAccountId) {
@@ -90,7 +92,9 @@ async function load() {
     }
   }
 
-  let accountNodes = accounts.map(account => new AccountNode(account, skipArchive));
+  let exclude = currentFolderPath ? [currentFolderPath] : [];
+
+  let accountNodes = accounts.map(account => new AccountNode(account, skipArchive, exclude));
   let folders = accountNodes.reduce((acc, node) => acc.concat([...node]), []);
   let defaultFolders;
 

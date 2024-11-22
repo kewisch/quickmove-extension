@@ -4,9 +4,10 @@
  * Portions Copyright (C) Philipp Kewisch */
 
 class BaseNode {
-  constructor(parent, skipArchive=false) {
+  constructor(parent, skipArchive=false, exclude=[]) {
     this.parent = parent;
     this.skipArchive = skipArchive;
+    this.excludeSet = new Set(exclude);
     this._children = Object.create(null);
   }
 
@@ -109,6 +110,10 @@ export class FolderNode extends BaseNode {
   }
 
   add(item) {
+    if (this.excludeSet.has(item.path)) {
+      return null;
+    }
+
     let node = this.lookup(item.path, true);
     node.item = item;
 
@@ -154,8 +159,8 @@ export class FolderNode extends BaseNode {
 }
 
 export class AccountNode extends FolderNode {
-  constructor(account, skipArchive=false) {
-    super(account, skipArchive);
+  constructor(account, skipArchive=false, exclude=[]) {
+    super(account, skipArchive, exclude);
     this.item = account;
     this.lookupSubfolders(account.folders);
   }
