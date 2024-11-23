@@ -8,6 +8,7 @@ export default class BaseItemList extends HTMLElement {
   #pendingSearch;
   #pendingSearchTimeout;
   #enterPending;
+  #searchCompositionEnded = false;
 
   _defaultItems;
   _allItems = [];
@@ -222,6 +223,7 @@ export default class BaseItemList extends HTMLElement {
     this.itemListSelectLeave = this.itemListSelectLeave.bind(this);
     this.searchKeyDownCallback = this.searchKeyDownCallback.bind(this);
     this.searchKeyUpCallback = this.searchKeyUpCallback.bind(this);
+    this.searchCompositionEnd = this.searchCompositionEnd.bind(this);
   }
 
   connectedCallback() {
@@ -233,6 +235,7 @@ export default class BaseItemList extends HTMLElement {
     searchInput.addEventListener("input", this.searchInputCallbackRaw);
     listBody.addEventListener("click", this.itemListClick);
     if (!this.getAttribute("readonly")) {
+      searchInput.addEventListener("compositionend", this.searchCompositionEnd);
       searchInput.addEventListener("keydown", this.searchKeyDownCallback);
       searchInput.addEventListener("keyup", this.searchKeyUpCallback);
       listBody.addEventListener("keydown", this.itemListKeyDown);
@@ -248,6 +251,7 @@ export default class BaseItemList extends HTMLElement {
     searchInput.removeEventListener("input", this.searchInputCallbackRaw);
     listBody.removeEventListener("click", this.itemListClick);
     if (!this.getAttribute("readonly")) {
+      searchInput.removeEventListener("compositionend", this.searchCompositionEnd);
       searchInput.removeEventListener("keydown", this.searchKeyDownCallback);
       searchInput.removeEventListener("keyup", this.searchKeyUpCallback);
       listBody.removeEventListener("keydown", this.itemListKeyDown);
@@ -317,7 +321,7 @@ export default class BaseItemList extends HTMLElement {
   }
 
   itemListKeyDown(event) {
-    if (event.isComposing || event.keyCode == 229) {
+    if (event.isComposing) {
       return;
     }
     if (event.key == "ArrowDown" || event.key == "ArrowUp" || event.key == "Tab") {
@@ -359,9 +363,13 @@ export default class BaseItemList extends HTMLElement {
       this.dispatchEvent(customEvent);
     }
   }
+  searchCompositionEnd(event) {
+    this.#searchCompositionEnded = true;
+  }
 
   async searchKeyUpCallback(event) {
-    if (event.isComposing || event.keyCode == 229) {
+    if (event.isComposing || this.#searchCompositionEnded) {
+      this.#searchCompositionEnded = false;
       return;
     }
 
@@ -386,7 +394,7 @@ export default class BaseItemList extends HTMLElement {
   }
 
   searchKeyDownCallback(event) {
-    if (event.isComposing || event.keyCode == 229) {
+    if (event.isComposing) {
       return;
     }
 
