@@ -83,6 +83,14 @@ export class FolderNode extends BaseNode {
     return `${accountId}://${path}`;
   }
 
+  get id() {
+    return this.item.id;
+  }
+
+  get canFileMessages() {
+    return true;
+  }
+
   get root() {
     return this.parent.root;
   }
@@ -100,7 +108,20 @@ export class FolderNode extends BaseNode {
   }
 
   get type() {
+    if (this.item.isTag) {
+      return "tag";
+    }
     return this.item.specialUse?.[0];
+  }
+}
+
+export class VirtualNode extends FolderNode {
+  get canFileMessages() {
+    return false;
+  }
+
+  get accountId() {
+    return this.account.item.id;
   }
 }
 
@@ -120,14 +141,20 @@ export class AccountNode extends BaseNode {
   }
 }
 
+export class VirtualAccountNode extends AccountNode {
+  _childClass = VirtualNode;
+}
+
 export class RootNode extends BaseNode {
   _childClass = AccountNode;
 
-  constructor(accounts, skipArchive=false) {
+  constructor({ accounts, skipArchive=false, tagFolders=null, unifiedFolders=null }) {
     super(null, null);
     this.skipArchive = skipArchive;
     this.folderMap = new Map();
     this.accounts = accounts;
+    this.tagFolders = tagFolders;
+    this.unifiedFolders = unifiedFolders;
 
     this.expandAccounts();
   }
@@ -152,6 +179,34 @@ export class RootNode extends BaseNode {
       this._children[account.id] = node;
 
       node.expandFolders(account.rootFolder.subFolders);
+    }
+
+    if (this.tagFolders) {
+      let tagAccount = new VirtualAccountNode(this, {
+        id: "##tags",
+        name: "Tags",
+        type: "tags",
+        rootFolder: {
+          name: "Root",
+          subFolders: this.tagFolders
+        }
+      });
+      this._children["##tags"] = tagAccount;
+      tagAccount.expandFolders(this.tagFolders);
+    }
+
+    if (this.unifiedFolders) {
+      let unifiedAccount = new VirtualAccountNode(this, {
+        id: "##unified",
+        name: "Unified Folders",
+        type: "unified",
+        rootFolder: {
+          name: "Root",
+          subFolders: this.unifiedFolders
+        }
+      });
+      this._children["##unified"] = unifiedAccount;
+      unifiedAccount.expandFolders(this.unifiedFolders);
     }
   }
 

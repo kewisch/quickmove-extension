@@ -24,6 +24,7 @@ function switchList(action) {
     folderList.style.display = "none";
     return tagList;
   } else {
+    folderList.navigateOnly = action == "goto";
     folderList.style.display = "revert-layer";
     tagList.style.display = "none";
     return folderList;
@@ -68,6 +69,14 @@ async function load() {
     document.querySelector(".action-buttons").classList.add("hide");
   }
 
+  // TB120 COMPAT
+  let tags;
+  if (majorVersion < 121) {
+    tags = await browser.messages.listTags();
+  } else {
+    tags = await browser.messages.tags.list();
+  }
+
   // Setup folder list
   let accounts = await browser.accounts.list(true);
 
@@ -91,7 +100,21 @@ async function load() {
 
   let excludeSet = new Set(currentFolder ? [currentFolder.id] : []);
 
-  let rootNode = new RootNode(accounts, skipArchive);
+  let tagFolders = await Promise.all(tags.map(async tag => {
+    let folder = await messenger.folders.getTagFolder(tag.key);
+    folder.color = tag.color;
+    folder.subFolders = [];
+    return folder;
+  }));
+  let unifiedFolderTypes = ["inbox", "drafts", "sent", "trash", "templates", "archives", "junk"];
+
+  let unifiedFolders = await Promise.all(unifiedFolderTypes.map(async key => {
+    let folder = await messenger.folders.getUnifiedFolder(key);
+    folder.subFolders = [];
+    return folder;
+  }));
+
+  let rootNode = new RootNode({ accounts, skipArchive, tagFolders, unifiedFolders });
 
   let defaultFolders;
 
@@ -129,14 +152,6 @@ async function load() {
   });
 
   // Setup tag list
-  // TB120 COMPAT
-  let tags;
-  if (majorVersion < 121) {
-    tags = await browser.messages.listTags();
-  } else {
-    tags = await browser.messages.tags.list();
-  }
-
   let tagList = document.getElementById("tag-list");
   tagList.ignoreFocus = true;
   tagList.initItems(tags, null);

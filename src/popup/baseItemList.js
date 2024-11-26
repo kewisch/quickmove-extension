@@ -9,6 +9,7 @@ export default class BaseItemList extends HTMLElement {
   #pendingSearchTimeout;
   #enterPending;
   #searchCompositionEnded = false;
+  #navigateOnly = true;
 
   _defaultItems;
   _allItems = [];
@@ -488,6 +489,15 @@ export default class BaseItemList extends HTMLElement {
     this.repopulate();
   }
 
+  get navigateOnly() {
+    return this.#navigateOnly;
+  }
+
+  set navigateOnly(val) {
+    this.#navigateOnly = val;
+    this.repopulate();
+  }
+
   focusSearch() {
     this.search.focus();
     let selected = this.shadowRoot.querySelector(".list-body .item.selected");
@@ -513,17 +523,23 @@ export default class BaseItemList extends HTMLElement {
           }
         }
 
-        if (!mismatch) {
+        let canIncludeItem = this.#navigateOnly || item.canFileMessages;
+
+        if (!mismatch && canIncludeItem) {
           this._addItem(item, BaseItemList.MODE_SEARCH);
         }
       }
     } else if (this.defaultItems) {
       for (let item of this.defaultItems) {
-        this._addItem(item, BaseItemList.MODE_DEFAULT);
+        if (this.#navigateOnly || item.canFileMessages) {
+          this._addItem(item, BaseItemList.MODE_DEFAULT);
+        }
       }
     } else {
       for (let item of this.allItems) {
-        this._addItem(item, BaseItemList.MODE_ALL);
+        if (this.#navigateOnly || item.canFileMessages) {
+          this._addItem(item, BaseItemList.MODE_ALL);
+        }
       }
     }
   }
