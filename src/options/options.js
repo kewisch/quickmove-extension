@@ -49,7 +49,10 @@ function change_options(event) {
   }
 }
 
-function setup_listeners() {
+async function setup_listeners() {
+  let fontSize = await messenger.quickmove.getUIFontSize();
+  window.document.documentElement.style.setProperty("font-size", `${fontSize}px`);
+
   document.body.addEventListener("change", change_options);
 
   document.getElementById("onboarding").addEventListener("click", () => {
