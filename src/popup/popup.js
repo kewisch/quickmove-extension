@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch */
 
-import { AccountNode, FolderNode } from "../common/foldernode.js";
+import { RootNode } from "../common/foldernode.js";
 import { getValidatedDefaultFolders } from "../common/util.js";
 
 const ALL_ACTIONS = ["move", "copy", "goto", "tag"];
@@ -68,34 +68,31 @@ async function load() {
     document.querySelector(".action-buttons").classList.add("hide");
   }
 
-
   // Setup folder list
-  let accounts = await browser.accounts.list();
+  let accounts = await browser.accounts.list(true);
 
   let [currentTab] = await browser.tabs.query({ currentWindow: true, active: true });
-  let currentAccountId, currentFolderPath;
+  let currentFolder;
 
   if (currentTab?.type == "messageDisplay") {
     let currentMessage = await browser.messageDisplay.getDisplayedMessage(currentTab.id);
-    currentAccountId = currentMessage?.folder.accountId;
-    currentFolderPath = currentMessage?.folder.path;
+    currentFolder = currentMessage?.folder;
   } else if (currentTab?.type == "mail") {
     let currentMailTab = await browser.mailTabs.getCurrent();
-    currentAccountId = currentMailTab?.displayedFolder?.accountId;
-    currentFolderPath = currentMailTab?.displayedFolder?.path;
+    currentFolder = currentMailTab?.displayedFolder;
   }
 
-  if (currentAccountId) {
-    let currentAccountIndex = accounts.findIndex(account => account.id === currentAccountId);
+  if (currentFolder?.accountId) {
+    let currentAccountIndex = accounts.findIndex(account => account.id === currentFolder.accountId);
     if (currentAccountIndex >= 0) {
       accounts.unshift(...accounts.splice(currentAccountIndex, 1));
     }
   }
 
-  let exclude = currentFolderPath ? [currentFolderPath] : [];
+  let excludeSet = new Set(currentFolder ? [currentFolder.id] : []);
 
-  let accountNodes = accounts.map(account => new AccountNode(account, skipArchive, exclude));
-  let folders = accountNodes.reduce((acc, node) => acc.concat([...node]), []);
+  let rootNode = new RootNode(accounts, skipArchive);
+
   let defaultFolders;
 
   if (defaultFolderSetting == "recent") {
@@ -106,16 +103,15 @@ async function load() {
     } else {
       folderList = await browser.folders.query({ recent: true, limit: maxRecentFolders, canAddMessages: true });
     }
-    defaultFolders = FolderNode.fromList(folderList, accountNodes);
+    defaultFolders = rootNode.fromList(folderList).folderNodes;
   } else if (defaultFolderSetting == "specific") {
-    defaultFolders = FolderNode.fromList(await getValidatedDefaultFolders(accountNodes), accountNodes);
+    defaultFolders = await getValidatedDefaultFolders(rootNode);
   } else {
     defaultFolders = null;
   }
 
   let folderList = document.getElementById("folder-list");
-  folderList.accounts = accounts;
-  folderList.initItems(folders, defaultFolders, showFolderPath);
+  folderList.initItems(rootNode.folderNodes, defaultFolders, showFolderPath, excludeSet);
   folderList.ignoreFocus = true;
   folderList.addEventListener("item-selected", async (event) => {
     let operation = document.querySelector("input[name='action']:checked").value;

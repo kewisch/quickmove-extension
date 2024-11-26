@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch */
 
-import { AccountNode, FolderNode } from "../common/foldernode.js";
+import { RootNode } from "../common/foldernode.js";
 import { DEFAULT_PREFERENCES, getValidatedDefaultFolders } from "../common/util.js";
 
 async function restore_options() {
@@ -73,33 +73,23 @@ function setup_localization() {
   }
 }
 
-async function init_folder_picker(skipArchive) {
-  let accounts = await browser.accounts.list();
-  let accountNodes = accounts.map(account => new AccountNode(account, skipArchive));
-  let folders = accountNodes.reduce((acc, node) => acc.concat([...node]), []);
-
-  let folderPicker = document.getElementById("folder-picker");
-  folderPicker.accounts = accounts;
-  folderPicker.initItems(folders, []);
-
-  return accountNodes;
-}
-
 async function setup_defaultfolders() {
   let { skipArchive } = await browser.storage.local.get({ skipArchive: DEFAULT_PREFERENCES.skipArchive });
-  let accountNodes = await init_folder_picker(skipArchive);
+  let accounts = await browser.accounts.list(true);
+  let rootNode = new RootNode(accounts, skipArchive);
 
-  let defaultFolders = FolderNode.fromList(await getValidatedDefaultFolders(accountNodes), accountNodes);
+  let folderPicker = document.getElementById("folder-picker");
+  folderPicker.initItems(rootNode.folderNodes, []);
+
+  let defaultFolders = await getValidatedDefaultFolders(rootNode);
 
   let defaultFolderList = document.getElementById("default-folders");
-  defaultFolderList.accounts = await browser.accounts.list();
   defaultFolderList.initItems(defaultFolders, null, true);
 
   let defaultFolderSet = new Set(defaultFolders);
 
-  let folderPicker = document.getElementById("folder-picker");
   folderPicker.addEventListener("item-selected", (event) => {
-    let newNode = FolderNode.fromList([event.detail], accountNodes)[0];
+    let newNode = rootNode.findFolder(event.detail);
 
     defaultFolderSet.add(newNode);
     let allItems = [...defaultFolderSet];
@@ -113,7 +103,7 @@ async function setup_defaultfolders() {
   });
 
   defaultFolderList.addEventListener("item-deleted", (event) => {
-    let oldNode = FolderNode.fromList([event.detail], accountNodes)[0];
+    let oldNode = rootNode.findFolder(event.detail);
 
     defaultFolderSet.delete(oldNode);
     let allItems = [...defaultFolderSet];
@@ -126,7 +116,8 @@ async function setup_defaultfolders() {
   });
 
   document.getElementById("skipArchive").addEventListener("change", async (event) => {
-    accountNodes = await init_folder_picker(event.target.checked);
+    rootNode.skipArchive = event.target.checked;
+    rootNode.reindex();
   });
 
   document.getElementById("defaultFolderSetting").addEventListener("change", (event) => {

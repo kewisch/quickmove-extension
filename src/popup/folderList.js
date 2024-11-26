@@ -2,7 +2,7 @@ import BaseItemList from "./baseItemList.js";
 
 class TBFolderList extends BaseItemList {
   #showFolderPath = false;
-  #accounts = {};
+  #excludeSet = new Set();
 
   static get style() {
     return super.style + `
@@ -67,10 +67,14 @@ class TBFolderList extends BaseItemList {
   }
 
   getItemText(folderNode) {
-    return folderNode.item.name;
+    return folderNode.name;
   }
 
   _addItem(folderNode, mode) {
+    if (this.#excludeSet.has(folderNode.id)) {
+      return;
+    }
+
     // let depth = mode == BaseItemList.MODE_ALL ? (folderNode.path.match(/\//g) || []).length - 1 : 0;
     let depth = 0;
     let template = this.shadowRoot.querySelector(".item-template");
@@ -107,7 +111,7 @@ class TBFolderList extends BaseItemList {
     if (!body.lastElementChild || body.lastElementChild.item.accountId != folderNode.accountId) {
       let accountTemplate = this.shadowRoot.querySelector(".header-item-template");
       let accountItem = this.shadowRoot.ownerDocument.importNode(accountTemplate.content, true);
-      let account = this.#accounts[folderNode.accountId];
+      let account = folderNode.account;
 
       if (account) {
         accountItem.querySelector(".text").textContent = account.name;
@@ -121,18 +125,11 @@ class TBFolderList extends BaseItemList {
     body.appendChild(item);
   }
 
-  get accounts() {
-    return Object.values(this.#accounts);
-  }
-
-  set accounts(val) {
-    this.#accounts = Object.fromEntries(val.map(account => [account.id, account]));
-  }
-
-  initItems(allItems, defaultItems, showFolderPath) {
+  initItems(allItems, defaultItems, showFolderPath, excludeSet) {
     this._allItems = allItems;
     this._defaultItems = defaultItems;
     this.#showFolderPath = showFolderPath;
+    this.#excludeSet = excludeSet;
     this.repopulate();
   }
 
