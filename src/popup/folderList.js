@@ -46,6 +46,10 @@ class TBFolderList extends BaseItemList {
         background-image: url("../images/folder/archive.svg");
       }
 
+      .item > .icon.folder-type-tag {
+        background-image: none;
+      }
+
       .header-item > .icon {
         background: url("../images/account/local.svg") no-repeat 0 0;
       }
@@ -84,6 +88,10 @@ class TBFolderList extends BaseItemList {
     item.querySelector(".icon").classList.add("folder-type-" + (folderNode.type || "folder"));
     item.querySelector(".icon").style.marginInlineStart = (depth * 10) + "px";
 
+    if (folderNode.type == "tag") {
+      item.querySelector(".icon").innerHTML = BaseItemList.tagIcon(folderNode.item.color);
+    }
+
     let prettyFolderPathComponents = folderNode.fullNameParts.filter((val) => {
       // Filter out [Gmail] and empty path components.
       return val !== "" && val != "[Gmail]" && val != "[Google Mail]";
@@ -106,9 +114,9 @@ class TBFolderList extends BaseItemList {
       item.querySelector(".item").setAttribute("title", prettyFolderPathComponents.join(" → "));
     }
 
-    item.querySelector(".item").item = folderNode.item;
+    item.querySelector(".item").itemNode = folderNode;
 
-    if (!body.lastElementChild || body.lastElementChild.item.accountId != folderNode.accountId) {
+    if (!body.lastElementChild || body.lastElementChild.itemNode.accountId != folderNode.accountId) {
       let accountTemplate = this.shadowRoot.querySelector(".header-item-template");
       let accountItem = this.shadowRoot.ownerDocument.importNode(accountTemplate.content, true);
       let account = folderNode.account;

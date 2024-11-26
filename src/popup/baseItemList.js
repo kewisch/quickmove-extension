@@ -197,6 +197,13 @@ export default class BaseItemList extends HTMLElement {
     `;
   }
 
+  static tagIcon(color) {
+    return `<svg xmlns="http://www.w3.org/2000/svg" fill-opacity="context-fill-opacity" viewBox="0 0 16 16" height="16" width="16">
+        <path fill="color-mix(in srgb, ${color} 20%, transparent)" d="M6.502 2.5.79 8.139a.996.996 0 0 0 0 1.414l5.658 5.658a.996.996 0 0 0 1.414 0L13.501 9.5v-7zm3.5 2a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/>
+        <path fill="${color}" d="M6.502 2a.5.5 0 0 0-.352.144L.44 7.783a1.505 1.505 0 0 0-.002 2.123l5.658 5.658a1.505 1.505 0 0 0 2.123-.002l5.638-5.711a.5.5 0 0 0 .145-.352v-7a.5.5 0 0 0-.5-.5zm.205 1h6.295v6.294l-5.494 5.565c-.199.2-.503.2-.705-.002L1.145 9.199a.487.487 0 0 1-.002-.705Zm3.295 1c-1.099 0-2 .9-2 2 0 1.098.901 2 2 2s2-.902 2-2c0-1.1-.901-2-2-2zm0 1c.558 0 1 .441 1 1 0 .558-.442 1-1 1s-1-.442-1-1c0-.559.442-1 1-1z"/>
+      </svg>`;
+  }
+
   static get content() {
     return `
       ${this.itemTemplateContent}
@@ -349,7 +356,7 @@ export default class BaseItemList extends HTMLElement {
   itemListClick(event) {
     if (this.getAttribute("delete") && event.target.classList.contains("delete")) {
       let listItem = event.target.closest(".item");
-      let customEvent = new CustomEvent("item-deleted", { detail: listItem.item });
+      let customEvent = new CustomEvent("item-deleted", { detail: listItem.itemNode.item });
       this.dispatchEvent(customEvent);
     } else if (!this.getAttribute("readonly")) {
       this.dispatchSelect(event.target.closest(".item"));
@@ -359,7 +366,7 @@ export default class BaseItemList extends HTMLElement {
   dispatchSelect(item) {
     let listItem = item || this.selected;
     if (listItem) {
-      let customEvent = new CustomEvent("item-selected", { detail: listItem.item });
+      let customEvent = new CustomEvent("item-selected", { detail: listItem.itemNode.item });
       this.dispatchEvent(customEvent);
     }
   }
@@ -385,7 +392,7 @@ export default class BaseItemList extends HTMLElement {
       let selected = this.selected || this.nthItem(1);
 
       if (selected) {
-        let customEvent = new CustomEvent("item-selected", { detail: selected.item });
+        let customEvent = new CustomEvent("item-selected", { detail: selected.itemNode.item });
         this.dispatchEvent(customEvent);
       }
       this.#enterPending = false;
@@ -442,7 +449,7 @@ export default class BaseItemList extends HTMLElement {
 
     let itemNode = this.shadowRoot.ownerDocument.importNode(template.content, true);
     itemNode.querySelector(".text").textContent = item.name;
-    itemNode.querySelector(".item").item = item;
+    itemNode.querySelector(".item").itemNode = item;
 
     return body.appendChild(item);
   }

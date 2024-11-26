@@ -15,9 +15,9 @@ class TBTagList extends BaseItemList {
     let body = this.shadowRoot.querySelector(".list-body");
 
     let item = this.shadowRoot.ownerDocument.importNode(template.content, true);
-    item.querySelector(".icon").style.backgroundColor = tag.color;
+    item.querySelector(".icon").innerHTML = BaseItemList.tagIcon(tag.color);
     item.querySelector(".text").textContent = tag.tag;
-    item.querySelector(".item").item = tag;
+    item.querySelector(".item").itemNode = tag;
 
     body.appendChild(item);
   }
