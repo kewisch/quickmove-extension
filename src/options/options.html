@@ -54,7 +54,7 @@
       </div>
       <div class="panel" data-value="specific">
         <div class="overflow">
-          <folder-list id="folder-picker" search="true" placeholder="Search for a folder to show" popup="true"></folder-list>
+          <folder-list id="default-folder-picker" search="true" placeholder="Search for a folder to show" popup="true"></folder-list>
         </div>
         <folder-list id="default-folders" readonly="true" delete="true"></folder-list>
       </div>
@@ -65,5 +65,11 @@
       <div class="panel" data-value="all">
       </div>
     </fieldset>
+    <fieldset>
+      <legend>Exclude Folders</legend>
+      <div class="overflow">
+        <folder-list id="excluded-folder-picker" search="true" placeholder="Search for a folder to exclude" popup="true"></folder-list>
+      </div>
+      <folder-list id="excluded-folders" readonly="true" delete="true"></folder-list>
   </body>
 </html>

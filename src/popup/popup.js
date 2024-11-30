@@ -4,7 +4,7 @@
  * Portions Copyright (C) Philipp Kewisch */
 
 import { RootNode } from "../common/foldernode.js";
-import { getValidatedDefaultFolders } from "../common/util.js";
+import { getValidatedFolders } from "../common/util.js";
 
 const ALL_ACTIONS = ["move", "copy", "goto", "tag"];
 
@@ -98,8 +98,6 @@ async function load() {
     }
   }
 
-  let excludeSet = new Set(currentFolder ? [currentFolder.id] : []);
-
   let tagFolders = await Promise.all(tags.map(async tag => {
     let folder = await messenger.folders.getTagFolder(tag.key);
     folder.color = tag.color;
@@ -116,6 +114,12 @@ async function load() {
 
   let rootNode = new RootNode({ accounts, skipArchive, tagFolders, unifiedFolders });
 
+  let excludedFolders = await getValidatedFolders(rootNode, "excludedFolders");
+  let excludeSet = new Set(excludedFolders.map(folder => folder.id));
+  if (currentFolder) {
+    excludeSet.add(currentFolder.id);
+  }
+
   let defaultFolders;
 
   if (defaultFolderSetting == "recent") {
@@ -128,7 +132,7 @@ async function load() {
     }
     defaultFolders = rootNode.fromList(folderList).folderNodes;
   } else if (defaultFolderSetting == "specific") {
-    defaultFolders = await getValidatedDefaultFolders(rootNode);
+    defaultFolders = await getValidatedFolders(rootNode, "defaultFolders");
   } else {
     defaultFolders = null;
   }

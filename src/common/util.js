@@ -8,13 +8,13 @@ export const DEFAULT_PREFERENCES = {
   defaultFolderSetting: "recent"
 };
 
-export async function getValidatedDefaultFolders(rootNode) {
-  let prefs = await browser.storage.local.get({ defaultFolders: [] });
-  let { missing, folderNodes } = rootNode.fromList(prefs.defaultFolders);
+export async function getValidatedFolders(rootNode, prefName) {
+  let prefs = await browser.storage.local.get({ [prefName]: [] });
+  let { missing, folderNodes } = rootNode.fromList(prefs[prefName]);
 
   if (missing.length) {
-    let defaultFolders = folderNodes.map(node => ({ accountId: node.accountId, path: node.path }));
-    await browser.storage.local.set({ defaultFolders });
+    let folders = folderNodes.map(node => ({ accountId: node.accountId, path: node.path }));
+    await browser.storage.local.set({ [prefName]: folders });
   }
 
   return folderNodes;
