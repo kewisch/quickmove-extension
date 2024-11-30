@@ -139,6 +139,10 @@ export class AccountNode extends BaseNode {
   get account() {
     return this;
   }
+
+  get type() {
+    return this.item.type;
+  }
 }
 
 export class VirtualAccountNode extends AccountNode {

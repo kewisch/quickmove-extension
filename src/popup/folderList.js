@@ -67,6 +67,9 @@ class TBFolderList extends BaseItemList {
       .header-item .icon.account-type-nntp {
         background-image: url("../images/account/globe.svg");
       }
+      .header-item .icon.account-type-tags {
+        background-image: none;
+      }
     `;
   }
 
@@ -124,6 +127,10 @@ class TBFolderList extends BaseItemList {
       if (account) {
         accountItem.querySelector(".text").textContent = account.name;
         accountItem.querySelector(".icon").classList.add("account-type-" + account.type);
+
+        if (account.type == "tags") {
+          accountItem.querySelector(".icon").innerHTML = BaseItemList.tagIcon("#0a84ff");
+        }
 
         accountItem.querySelector(".header-item").account = account;
         body.appendChild(accountItem);
