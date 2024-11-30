@@ -507,6 +507,9 @@ export default class BaseItemList extends HTMLElement {
   }
 
   repopulate() {
+    let selectedFolderId = this.selected?.itemNode.id;
+    let selectNode = null;
+
     let lowerSearchTerm = this.searchValue.toLowerCase();
     this.#clearItems();
 
@@ -526,21 +529,34 @@ export default class BaseItemList extends HTMLElement {
         let canIncludeItem = this.#navigateOnly || item.canFileMessages;
 
         if (!mismatch && canIncludeItem) {
-          this._addItem(item, BaseItemList.MODE_SEARCH);
+          let node = this._addItem(item, BaseItemList.MODE_SEARCH);
+          if (selectedFolderId && item.id == selectedFolderId) {
+            selectNode = node;
+          }
         }
       }
     } else if (this.defaultItems) {
       for (let item of this.defaultItems) {
         if (this.#navigateOnly || item.canFileMessages) {
-          this._addItem(item, BaseItemList.MODE_DEFAULT);
+          let node = this._addItem(item, BaseItemList.MODE_DEFAULT);
+          if (selectedFolderId && item.id == selectedFolderId) {
+            selectNode = node;
+          }
         }
       }
     } else {
       for (let item of this.allItems) {
         if (this.#navigateOnly || item.canFileMessages) {
-          this._addItem(item, BaseItemList.MODE_ALL);
+          let node = this._addItem(item, BaseItemList.MODE_ALL);
+          if (selectedFolderId && item.id == selectedFolderId) {
+            selectNode = node;
+          }
         }
       }
+    }
+
+    if (selectNode) {
+      this.selected = selectNode;
     }
   }
 }

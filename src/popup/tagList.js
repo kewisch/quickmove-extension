@@ -20,6 +20,7 @@ class TBTagList extends BaseItemList {
     item.querySelector(".item").itemNode = tag;
 
     body.appendChild(item);
+    return body.lastElementChild;
   }
 }
 

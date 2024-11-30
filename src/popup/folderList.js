@@ -76,7 +76,7 @@ class TBFolderList extends BaseItemList {
 
   _addItem(folderNode, mode) {
     if (this.#excludeSet.has(folderNode.id)) {
-      return;
+      return null;
     }
 
     // let depth = mode == BaseItemList.MODE_ALL ? (folderNode.path.match(/\//g) || []).length - 1 : 0;
@@ -131,6 +131,7 @@ class TBFolderList extends BaseItemList {
     }
 
     body.appendChild(item);
+    return body.lastElementChild;
   }
 
   initItems(allItems, defaultItems, showFolderPath, excludeSet) {
