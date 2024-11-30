@@ -141,11 +141,11 @@ class TBFolderList extends BaseItemList {
     return body.lastElementChild;
   }
 
-  initItems(allItems, defaultItems, showFolderPath, excludeSet) {
+  initItems(allItems, defaultItems, showFolderPath=false, excludeSet=null) {
     this._allItems = allItems;
     this._defaultItems = defaultItems;
     this.#showFolderPath = showFolderPath;
-    this.#excludeSet = excludeSet;
+    this.#excludeSet = excludeSet || new Set();
     this.repopulate();
   }
 

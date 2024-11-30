@@ -76,7 +76,7 @@ function setup_localization() {
 async function setup_defaultfolders() {
   let { skipArchive } = await browser.storage.local.get({ skipArchive: DEFAULT_PREFERENCES.skipArchive });
   let accounts = await browser.accounts.list(true);
-  let rootNode = new RootNode(accounts, skipArchive);
+  let rootNode = new RootNode({ accounts, skipArchive });
 
   let folderPicker = document.getElementById("folder-picker");
   folderPicker.initItems(rootNode.folderNodes, []);
