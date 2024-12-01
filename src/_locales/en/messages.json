@@ -24,7 +24,7 @@
     "message": "It is recommended to add Quick Folder Move to the main toolbar. Please customize your toolbar to enable the button."
   },
   "metaActionWarning": {
-    "message": "Switching between actions now requires using Ctrl/Cmd+Arrow to avoid navigation conflicts in the text box."
+    "message": "Switching between actions now requires using Ctrl/⌘+Arrow to avoid navigation conflicts in the text box."
   },
   "actionMove": {
     "message": "Move"
@@ -41,13 +41,13 @@
   "layout": {
     "message": "Popup layout"
   },
-  "layout.auto": {
+  "layoutAuto": {
     "message": "Automatic"
   },
-  "layout.wide": {
+  "layoutWide": {
     "message": "Always wide"
   },
-  "layout.compact": {
+  "layoutCompact": {
     "message": "Always compact"
   },
   "markAsRead": {
@@ -62,13 +62,13 @@
   "maxRecentFolders": {
     "message": "Number of recent folders to show"
   },
-  "maxRecentFolders.title": {
+  "maxRecentFoldersTitle": {
     "message": "Changes the number of recent folders shown when no search text is entered."
   },
   "useLegacyShortcuts": {
     "message": "Force use of legacy shortcuts"
   },
-  "useLegacyShortcuts.title": {
+  "useLegacyShortcutsTitle": {
     "message": "Use ⇧M as the shortcut for moving messages"
   },
   "useLegacyShortcutsDone": {
@@ -87,15 +87,15 @@
     "message": "All Folders"
   },
   "defaultFoldersSpecific": {
-    "message": "Recent folders"
+    "message": "Specific folders"
   },
-  "defaultFoldersSearch.placeholder": {
+  "defaultFoldersSearchPlaceholder": {
     "message": "Search for a folder to add as default"
   },
   "excludedFoldersTitle": {
     "message": "Excluded Folders"
   },
-  "excludedFoldersSearch.placeholder": {
+  "excludedFoldersSearchPlaceholder": {
     "message": "Search for a folder to exclude"
   }
 }

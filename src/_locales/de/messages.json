@@ -21,7 +21,7 @@
     "message": "Schlagwort anwenden"
   },
   "windowWarning": {
-    "message": "⚠️ Es wird empfohlen Schnelles Nachrichtenverschieben zur Hauptsymbolleiste hinzuzufügen. Bitte passen Sie ihre Symbolleiste an um die Schaltfläche hinzuzufügen."
+    "message": "Es wird empfohlen Schnelles Nachrichtenverschieben zur Hauptsymbolleiste hinzuzufügen. Bitte passen Sie ihre Symbolleiste an um die Schaltfläche hinzuzufügen."
   },
   "actionMove": {
     "message": "Verschieben"
@@ -38,55 +38,31 @@
   "layout": {
     "message": "Pop-up Layout"
   },
-  "layout.title": {
-    "message": ""
-  },
-  "layout.auto": {
+  "layoutAuto": {
     "message": "Automatisch"
   },
-  "layout.auto.title": {
-    "message": ""
-  },
-  "layout.wide": {
+  "layoutWide": {
     "message": "Immer breit"
   },
-  "layout.wide.title": {
-    "message": ""
-  },
-  "layout.compact": {
+  "layoutCompact": {
     "message": "Immer kompakt"
-  },
-  "layout.compact.title": {
-    "message": ""
   },
   "markAsRead": {
     "message": "Nachrichten beim verschieben als gelesen markieren"
   },
-  "markAsRead.title": {
-    "message": ""
-  },
   "showFolderPath": {
     "message": "In der Suche den vollständigen Pfad für jeden Ordner anzeigen"
-  },
-  "showFolderPath.title": {
-    "message": ""
   },
   "skipArchive": {
     "message": "Nie den Archivordner anzeigen"
   },
-  "skipArchive.title": {
-    "message": ""
-  },
   "maxRecentFolders": {
     "message": "Anzahl der zuletzt verwendeten Ordner in der Suche"
-  },
-  "maxRecentFolders.title": {
-    "message": "Wenn kein Suchtext eingegeben wird, werden so viele kürzlich verwendete Ordner angezeigt."
   },
   "useLegacyShortcuts": {
     "message": "Veraltete Tastenkürzel erzwingen"
   },
-  "useLegacyShortcuts.title": {
+  "useLegacyShortcutsTitle": {
     "message": "Nutzt ⇧M als Tastenkürzel für das Verschieben von Nachrichten"
   },
   "useLegacyShortcutsDone": {

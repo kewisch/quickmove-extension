@@ -14,9 +14,9 @@
   <body>
     <div class="preference">
       <select id="layout">
-        <option value="auto" data-l10n-id="layout.auto"></option>
-        <option value="wide" data-l10n-id="layout.wide"></option>
-        <option value="compact" data-l10n-id="layout.compact"></option>
+        <option value="auto" data-l10n-id="layoutAuto"></option>
+        <option value="wide" data-l10n-id="layoutWide"></option>
+        <option value="compact" data-l10n-id="layoutCompact"></option>
       </select>
       <label for="layout" data-l10n-id="layout"></label>
     </div>
@@ -32,7 +32,7 @@
       <input type="checkbox" id="skipArchive">
       <label for="skipArchive" data-l10n-id="skipArchive"></label>
     </div>
-    <div class="preference" data-l10n-attr-title="useLegacyShortcuts.title">
+    <div class="preference" data-l10n-attr-title="useLegacyShortcutsTitle">
       <input type="checkbox" id="useLegacyShortcuts">
       <label for="useLegacyShortcuts" data-l10n-id="useLegacyShortcuts"></label>
     </div>
@@ -50,15 +50,15 @@
         <input type="radio" name="defaultFolderSetting" id="defaultFolderSettingAll" value="all">
         <label for="defaultFolderSettingAll" data-l10n-id="defaultFoldersAll"></label>
         <input type="radio" name="defaultFolderSetting" id="defaultFolderSettingSpecific" value="specific">
-        <label for="defaultFolderSettingSpecific" data-l10n-id="defaultFoldersSpecific">Specific folders</label>
+        <label for="defaultFolderSettingSpecific" data-l10n-id="defaultFoldersSpecific"></label>
       </div>
       <div class="panel" data-value="specific">
         <div class="overflow">
-          <folder-list id="default-folder-picker" search="true" data-l10n-attr-placeholder="defaultFoldersSearch.placeholder" popup="true"></folder-list>
+          <folder-list id="default-folder-picker" search="true" data-l10n-attr-placeholder="defaultFoldersSearchPlaceholder" popup="true"></folder-list>
         </div>
         <folder-list id="default-folders" readonly="true" delete="true"></folder-list>
       </div>
-      <div class="panel" data-value="recent" data-l10n-attr-title="maxRecentFolders.title">
+      <div class="panel" data-value="recent" data-l10n-attr-title="maxRecentFoldersTitle">
         <input type="number" min="0" id="maxRecentFolders">
         <label for="maxRecentFolders" data-l10n-id="maxRecentFolders"></label>
       </div>
@@ -68,7 +68,7 @@
     <fieldset>
       <legend data-l10n-id="excludedFoldersTitle"></legend>
       <div class="overflow">
-        <folder-list id="excluded-folder-picker" search="true" data-l10n-attr-placeholder="excludedFoldersSearch.placeholder" popup="true"></folder-list>
+        <folder-list id="excluded-folder-picker" search="true" data-l10n-attr-placeholder="excludedFoldersSearchPlaceholder" popup="true"></folder-list>
       </div>
       <folder-list id="excluded-folders" readonly="true" delete="true"></folder-list>
   </body>
