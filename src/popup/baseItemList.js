@@ -16,6 +16,8 @@ export default class BaseItemList extends HTMLElement {
 
   ignoreFocus = false;
 
+  static observedAttributes = ["placeholder"];
+
   static get style() {
     /*
      * CSS variables available
@@ -265,6 +267,12 @@ export default class BaseItemList extends HTMLElement {
       listBody.removeEventListener("keydown", this.itemListKeyDown);
       listBody.removeEventListener("mouseover", this.itemListSelect);
       listBody.removeEventListener("mouseleave", this.itemListSelectLeave);
+    }
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name == "placeholder") {
+      this.search.placeholder = newValue;
     }
   }
 

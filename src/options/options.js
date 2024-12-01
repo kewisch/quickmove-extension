@@ -94,14 +94,16 @@ async function setupListeners() {
 
 function setupLocalization() {
   for (let node of document.querySelectorAll("[data-l10n-id]")) {
-    let l10nid = node.getAttribute("data-l10n-id");
-    node.textContent = browser.i18n.getMessage(l10nid) || l10nid;
-
-    // Set the title attribute
-    if (node.localName == "label") {
-      node = node.parentNode;
-    }
-    node.title = browser.i18n.getMessage(l10nid + ".title");
+    let l10nId = node.getAttribute("data-l10n-id");
+    node.textContent = browser.i18n.getMessage(l10nId);
+  }
+  for (let node of document.querySelectorAll("[data-l10n-attr-placeholder]")) {
+    let l10nId = node.getAttribute("data-l10n-attr-placeholder");
+    node.setAttribute("placeholder", browser.i18n.getMessage(l10nId));
+  }
+  for (let node of document.querySelectorAll("[data-l10n-attr-title]")) {
+    let l10nId = node.getAttribute("data-l10n-attr-title");
+    node.setAttribute("title", browser.i18n.getMessage(l10nId));
   }
 }
 
