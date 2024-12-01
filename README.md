@@ -19,3 +19,10 @@ When testing, please keep in mind:
 * The popup can also be opened from a single message view, where the selected message is different.
 * It is possible the user removed the toolbar button.
 * There are different popup layouts to test on.
+
+Translation
+-----------
+
+This project uses weblate for its translations, you can contribute by visiting https://hosted.weblate.org/projects/quick-folder-move/main/
+
+Weblate is a continuous localization platform used by over 2,500 libre software projects. Learn more about Weblate at https://weblate.org/
