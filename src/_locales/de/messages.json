@@ -1,95 +1,62 @@
 {
-  "extensionName": {
-    "message": "Schnelles Nachrichtenverschieben"
-  },
-  "extensionDescription": {
-    "message": "Verschiebe schnell Nachrichten in andere Ordner mit der Tastatur"
-  },
-  "extensionShortName": {
-    "message": "Schnell Verschieben"
-  },
-  "commandMoveDescription": {
-    "message": "Selektierte Nachrichten verschieben"
-  },
-  "commandCopyDescription": {
-    "message": "Selektierte Nachrichten kopieren"
-  },
-  "commandGotoDescription": {
-    "message": "Zum Ordner wechseln"
-  },
-  "commandTagDescription": {
-    "message": "Schlagwort anwenden"
-  },
-  "windowWarning": {
-    "message": "⚠️ Es wird empfohlen Schnelles Nachrichtenverschieben zur Hauptsymbolleiste hinzuzufügen. Bitte passen Sie ihre Symbolleiste an um die Schaltfläche hinzuzufügen."
-  },
-  "actionMove": {
-    "message": "Verschieben"
-  },
-  "actionCopy": {
-    "message": "Kopieren"
-  },
-  "actionGoto": {
-    "message": "Zum Ordner"
-  },
-  "actionTag": {
-    "message": "Schlagwort"
-  },
-  "layout": {
-    "message": "Pop-up Layout"
-  },
-  "layout.title": {
-    "message": ""
-  },
-  "layout.auto": {
-    "message": "Automatisch"
-  },
-  "layout.auto.title": {
-    "message": ""
-  },
-  "layout.wide": {
-    "message": "Immer breit"
-  },
-  "layout.wide.title": {
-    "message": ""
-  },
-  "layout.compact": {
-    "message": "Immer kompakt"
-  },
-  "layout.compact.title": {
-    "message": ""
-  },
-  "markAsRead": {
-    "message": "Nachrichten beim verschieben als gelesen markieren"
-  },
-  "markAsRead.title": {
-    "message": ""
-  },
-  "showFolderPath": {
-    "message": "In der Suche den vollständigen Pfad für jeden Ordner anzeigen"
-  },
-  "showFolderPath.title": {
-    "message": ""
-  },
-  "skipArchive": {
-    "message": "Nie den Archivordner anzeigen"
-  },
-  "skipArchive.title": {
-    "message": ""
-  },
-  "maxRecentFolders": {
-    "message": "Anzahl der zuletzt verwendeten Ordner in der Suche"
-  },
-  "maxRecentFolders.title": {
-    "message": "Wenn kein Suchtext eingegeben wird, werden so viele kürzlich verwendete Ordner angezeigt."
-  },
-  "useLegacyShortcuts": {
-    "message": "Veraltete Tastenkürzel erzwingen"
-  },
-  "useLegacyShortcuts.title": {
-    "message": "Nutzt ⇧M als Tastenkürzel für das Verschieben von Nachrichten"
-  },
-  "useLegacyShortcutsDone": {
-    "message": "Sie können nun ⇧M ⇧Y und ⇧G verwenden. Ändere die Tastenkürzel in der Erweiterungsverwaltung für Tastenkürzel."
-  }
+    "extensionName": {
+        "message": "Schnelles Nachrichtenverschieben"
+    },
+    "extensionDescription": {
+        "message": "Verschiebe schnell Nachrichten in andere Ordner mit der Tastatur"
+    },
+    "extensionShortName": {
+        "message": "Schnell Verschieben"
+    },
+    "commandMoveDescription": {
+        "message": "Selektierte Nachrichten verschieben"
+    },
+    "commandCopyDescription": {
+        "message": "Selektierte Nachrichten kopieren"
+    },
+    "commandGotoDescription": {
+        "message": "Zum Ordner wechseln"
+    },
+    "commandTagDescription": {
+        "message": "Schlagwort anwenden"
+    },
+    "windowWarning": {
+        "message": "⚠️ Es wird empfohlen Schnelles Nachrichtenverschieben zur Hauptsymbolleiste hinzuzufügen. Bitte passen Sie ihre Symbolleiste an um die Schaltfläche hinzuzufügen."
+    },
+    "actionMove": {
+        "message": "Verschieben"
+    },
+    "actionCopy": {
+        "message": "Kopieren"
+    },
+    "actionGoto": {
+        "message": "Zum Ordner"
+    },
+    "actionTag": {
+        "message": "Schlagwort"
+    },
+    "layout": {
+        "message": "Pop-up Layout"
+    },
+    "markAsRead": {
+        "message": "Nachrichten beim verschieben als gelesen markieren"
+    },
+    "showFolderPath": {
+        "message": "In der Suche den vollständigen Pfad für jeden Ordner anzeigen"
+    },
+    "skipArchive": {
+        "message": "Nie den Archivordner anzeigen"
+    },
+    "maxRecentFolders": {
+        "message": "Anzahl der zuletzt verwendeten Ordner in der Suche"
+    },
+    "useLegacyShortcuts": {
+        "message": "Veraltete Tastenkürzel erzwingen"
+    },
+    "useLegacyShortcutsDone": {
+        "message": "Sie können nun ⇧M ⇧Y und ⇧G verwenden. Ändere die Tastenkürzel in der Erweiterungsverwaltung für Tastenkürzel."
+    },
+    "metaActionWarning": {
+        "message": "Um zwischen Aktionen zu wechseln muss jetzt Strg/⌘+Pfeiltaste verwendet werden um Tastaturkonflikte im Textfeld zu vermeiden."
+    }
 }

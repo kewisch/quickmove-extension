@@ -1,92 +1,71 @@
 {
-  "extensionName": {
-    "message": "Quick Folder Move"
-  },
-  "extensionDescription": {
-    "message": "Déplace rapidement vos messages dans d'auters dossiers en utilisant le clavier"
-  },
-  "extensionShortName": {
-    "message": "Quick Move"
-  },
-  "commandMoveDescription": {
-    "message": "Déplacer les messages sélectionnés"
-  },
-  "commandCopyDescription": {
-    "message": "Copier les messages sélectionnés"
-  },
-  "commandGotoDescription": {
-    "message": "Aller au dossier"
-  },
-  "commandTagDescription": {
-    "message": "Appliquer une étiquette"
-  },
-  "actionMove": {
-    "message": "Déplacer"
-  },
-  "actionCopy": {
-    "message": "Copier"
-  },
-  "actionGoto": {
-    "message": "Aller"
-  },
-  "actionTag": {
-    "message": "Étiqueter"
-  },
-  "layout": {
-    "message": "Disposition de la fenêtre contextuelle"
-  },
-  "layout.title": {
-    "message": ""
-  },
-  "layout.auto": {
-    "message": "Automatique"
-  },
-  "layout.auto.title": {
-    "message": ""
-  },
-  "layout.wide": {
-    "message": "Toujours large"
-  },
-  "layout.wide.title": {
-    "message": ""
-  },
-  "layout.compact": {
-    "message": "Toujours compact"
-  },
-  "layout.compact.title": {
-    "message": ""
-  },
-  "markAsRead": {
-    "message": "Marque les messages comme lu après le déplacement"
-  },
-  "markAsRead.title": {
-    "message": ""
-  },
-  "showFolderPath": {
-    "message": "Affiche le chemin complet de chaque dossier dans la boîte de recherche"
-  },
-  "showFolderPath.title": {
-    "message": ""
-  },
-  "skipArchive": {
-    "message": "Ne jamais correspondre aux dossiers archivés"
-  },
-  "skipArchive.title": {
-    "message": ""
-  },
-  "maxRecentFolders": {
-    "message": "Nombre de dossiers récents"
-  },
-  "maxRecentFolders.title": {
-    "message": "Modifie le nombre de dossiers récents à afficher lorsqu'aucun critère de recherche n'est entré."
-  },
-  "useLegacyShortcuts": {
-    "message": "Utiliser les raccourcis clavier classiques"
-  },
-  "useLegacyShortcuts.title": {
-    "message": "Utilisez ⇧M comme raccourci pour déplacer les messages"
-  },
-  "useLegacyShortcutsDone": {
-    "message": "Vous pouvez à présent utiliser ⇧M ⇧Y et ⇧G. Utilisez l'extention shortcut pour les modifier."
-  }
+    "extensionName": {
+        "message": "Quick Folder Move"
+    },
+    "extensionDescription": {
+        "message": "Déplace rapidement vos messages dans d'auters dossiers en utilisant le clavier"
+    },
+    "extensionShortName": {
+        "message": "Quick Move"
+    },
+    "commandMoveDescription": {
+        "message": "Déplacer les messages sélectionnés"
+    },
+    "commandCopyDescription": {
+        "message": "Copier les messages sélectionnés"
+    },
+    "commandGotoDescription": {
+        "message": "Aller au dossier"
+    },
+    "commandTagDescription": {
+        "message": "Appliquer une étiquette"
+    },
+    "actionMove": {
+        "message": "Déplacer"
+    },
+    "actionCopy": {
+        "message": "Copier"
+    },
+    "actionGoto": {
+        "message": "Aller"
+    },
+    "actionTag": {
+        "message": "Étiqueter"
+    },
+    "layout": {
+        "message": "Disposition de la fenêtre contextuelle",
+        "auto": {
+            "message": "Automatique"
+        },
+        "wide": {
+            "message": "Toujours large"
+        },
+        "compact": {
+            "message": "Toujours compact"
+        }
+    },
+    "markAsRead": {
+        "message": "Marque les messages comme lu après le déplacement"
+    },
+    "showFolderPath": {
+        "message": "Affiche le chemin complet de chaque dossier dans la boîte de recherche"
+    },
+    "skipArchive": {
+        "message": "Ne jamais correspondre aux dossiers archivés"
+    },
+    "maxRecentFolders": {
+        "message": "Nombre de dossiers récents",
+        "title": {
+            "message": "Modifie le nombre de dossiers récents à afficher lorsqu'aucun critère de recherche n'est entré."
+        }
+    },
+    "useLegacyShortcuts": {
+        "message": "Utiliser les raccourcis clavier classiques",
+        "title": {
+            "message": "Utilisez ⇧M comme raccourci pour déplacer les messages"
+        }
+    },
+    "useLegacyShortcutsDone": {
+        "message": "Vous pouvez à présent utiliser ⇧M ⇧Y et ⇧G. Utilisez l'extention shortcut pour les modifier."
+    }
 }
