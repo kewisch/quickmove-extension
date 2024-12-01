@@ -1,71 +1,71 @@
 {
-  "extensionName": {
-    "message": "Quick Folder Move"
-  },
-  "extensionDescription": {
-    "message": "Déplace rapidement vos messages dans d'auters dossiers en utilisant le clavier"
-  },
-  "extensionShortName": {
-    "message": "Quick Move"
-  },
-  "commandMoveDescription": {
-    "message": "Déplacer les messages sélectionnés"
-  },
-  "commandCopyDescription": {
-    "message": "Copier les messages sélectionnés"
-  },
-  "commandGotoDescription": {
-    "message": "Aller au dossier"
-  },
-  "commandTagDescription": {
-    "message": "Appliquer une étiquette"
-  },
-  "actionMove": {
-    "message": "Déplacer"
-  },
-  "actionCopy": {
-    "message": "Copier"
-  },
-  "actionGoto": {
-    "message": "Aller"
-  },
-  "actionTag": {
-    "message": "Étiqueter"
-  },
-  "layout": {
-    "message": "Disposition de la fenêtre contextuelle"
-  },
-  "layoutAuto": {
-    "message": "Automatique"
-  },
-  "layoutWide": {
-    "message": "Toujours large"
-  },
-  "layoutCompact": {
-    "message": "Toujours compact"
-  },
-  "markAsRead": {
-    "message": "Marque les messages comme lu après le déplacement"
-  },
-  "showFolderPath": {
-    "message": "Affiche le chemin complet de chaque dossier dans la boîte de recherche"
-  },
-  "skipArchive": {
-    "message": "Ne jamais correspondre aux dossiers archivés"
-  },
-  "maxRecentFolders": {
-    "message": "Nombre de dossiers récents"
-  },
-  "maxRecentFoldersTitle": {
-    "message": "Modifie le nombre de dossiers récents à afficher lorsqu'aucun critère de recherche n'est entré."
-  },
-  "useLegacyShortcuts": {
-    "message": "Utiliser les raccourcis clavier classiques"
-  },
-  "useLegacyShortcutsTitle": {
-    "message": "Utilisez ⇧M comme raccourci pour déplacer les messages"
-  },
-  "useLegacyShortcutsDone": {
-    "message": "Vous pouvez à présent utiliser ⇧M ⇧Y et ⇧G. Utilisez l'extention shortcut pour les modifier."
-  }
+    "extensionName": {
+        "message": "Quick Folder Move"
+    },
+    "extensionDescription": {
+        "message": "Déplace rapidement vos messages dans d'auters dossiers en utilisant le clavier"
+    },
+    "extensionShortName": {
+        "message": "Quick Move"
+    },
+    "commandMoveDescription": {
+        "message": "Déplacer les messages sélectionnés"
+    },
+    "commandCopyDescription": {
+        "message": "Copier les messages sélectionnés"
+    },
+    "commandGotoDescription": {
+        "message": "Aller au dossier"
+    },
+    "commandTagDescription": {
+        "message": "Appliquer une étiquette"
+    },
+    "actionMove": {
+        "message": "Déplacer"
+    },
+    "actionCopy": {
+        "message": "Copier"
+    },
+    "actionGoto": {
+        "message": "Aller"
+    },
+    "actionTag": {
+        "message": "Étiqueter"
+    },
+    "layout": {
+        "message": "Disposition de la fenêtre contextuelle"
+    },
+    "layoutAuto": {
+        "message": "Automatique"
+    },
+    "layoutWide": {
+        "message": "Toujours large"
+    },
+    "layoutCompact": {
+        "message": "Toujours compact"
+    },
+    "markAsRead": {
+        "message": "Marque les messages comme lu après le déplacement"
+    },
+    "showFolderPath": {
+        "message": "Affiche le chemin complet de chaque dossier dans la boîte de recherche"
+    },
+    "skipArchive": {
+        "message": "Ne jamais correspondre aux dossiers archivés"
+    },
+    "maxRecentFolders": {
+        "message": "Nombre de dossiers récents"
+    },
+    "maxRecentFoldersTitle": {
+        "message": "Modifie le nombre de dossiers récents à afficher lorsqu'aucun critère de recherche n'est entré."
+    },
+    "useLegacyShortcuts": {
+        "message": "Utiliser les raccourcis clavier classiques"
+    },
+    "useLegacyShortcutsTitle": {
+        "message": "Utilisez ⇧M comme raccourci pour déplacer les messages"
+    },
+    "useLegacyShortcutsDone": {
+        "message": "Vous pouvez à présent utiliser ⇧M ⇧Y et ⇧G. Utilisez l'extention shortcut pour les modifier."
+    }
 }

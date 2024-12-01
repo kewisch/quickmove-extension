@@ -1,71 +1,71 @@
 {
-  "extensionName": {
-    "message": "Schnelles Nachrichtenverschieben"
-  },
-  "extensionDescription": {
-    "message": "Verschiebe schnell Nachrichten in andere Ordner mit der Tastatur"
-  },
-  "extensionShortName": {
-    "message": "Schnell Verschieben"
-  },
-  "commandMoveDescription": {
-    "message": "Selektierte Nachrichten verschieben"
-  },
-  "commandCopyDescription": {
-    "message": "Selektierte Nachrichten kopieren"
-  },
-  "commandGotoDescription": {
-    "message": "Zum Ordner wechseln"
-  },
-  "commandTagDescription": {
-    "message": "Schlagwort anwenden"
-  },
-  "windowWarning": {
-    "message": "Es wird empfohlen Schnelles Nachrichtenverschieben zur Hauptsymbolleiste hinzuzufügen. Bitte passen Sie ihre Symbolleiste an um die Schaltfläche hinzuzufügen."
-  },
-  "actionMove": {
-    "message": "Verschieben"
-  },
-  "actionCopy": {
-    "message": "Kopieren"
-  },
-  "actionGoto": {
-    "message": "Zum Ordner"
-  },
-  "actionTag": {
-    "message": "Schlagwort"
-  },
-  "layout": {
-    "message": "Pop-up Layout"
-  },
-  "layoutAuto": {
-    "message": "Automatisch"
-  },
-  "layoutWide": {
-    "message": "Immer breit"
-  },
-  "layoutCompact": {
-    "message": "Immer kompakt"
-  },
-  "markAsRead": {
-    "message": "Nachrichten beim verschieben als gelesen markieren"
-  },
-  "showFolderPath": {
-    "message": "In der Suche den vollständigen Pfad für jeden Ordner anzeigen"
-  },
-  "skipArchive": {
-    "message": "Nie den Archivordner anzeigen"
-  },
-  "maxRecentFolders": {
-    "message": "Anzahl der zuletzt verwendeten Ordner in der Suche"
-  },
-  "useLegacyShortcuts": {
-    "message": "Veraltete Tastenkürzel erzwingen"
-  },
-  "useLegacyShortcutsTitle": {
-    "message": "Nutzt ⇧M als Tastenkürzel für das Verschieben von Nachrichten"
-  },
-  "useLegacyShortcutsDone": {
-    "message": "Sie können nun ⇧M ⇧Y und ⇧G verwenden. Ändere die Tastenkürzel in der Erweiterungsverwaltung für Tastenkürzel."
-  }
+    "extensionName": {
+        "message": "Schnelles Nachrichtenverschieben"
+    },
+    "extensionDescription": {
+        "message": "Verschiebe schnell Nachrichten in andere Ordner mit der Tastatur"
+    },
+    "extensionShortName": {
+        "message": "Schnell Verschieben"
+    },
+    "commandMoveDescription": {
+        "message": "Selektierte Nachrichten verschieben"
+    },
+    "commandCopyDescription": {
+        "message": "Selektierte Nachrichten kopieren"
+    },
+    "commandGotoDescription": {
+        "message": "Zum Ordner wechseln"
+    },
+    "commandTagDescription": {
+        "message": "Schlagwort anwenden"
+    },
+    "windowWarning": {
+        "message": "Es wird empfohlen Schnelles Nachrichtenverschieben zur Hauptsymbolleiste hinzuzufügen. Bitte passen Sie ihre Symbolleiste an um die Schaltfläche hinzuzufügen."
+    },
+    "actionMove": {
+        "message": "Verschieben"
+    },
+    "actionCopy": {
+        "message": "Kopieren"
+    },
+    "actionGoto": {
+        "message": "Zum Ordner"
+    },
+    "actionTag": {
+        "message": "Schlagwort"
+    },
+    "layout": {
+        "message": "Pop-up Layout"
+    },
+    "layoutAuto": {
+        "message": "Automatisch"
+    },
+    "layoutWide": {
+        "message": "Immer breit"
+    },
+    "layoutCompact": {
+        "message": "Immer kompakt"
+    },
+    "markAsRead": {
+        "message": "Nachrichten beim verschieben als gelesen markieren"
+    },
+    "showFolderPath": {
+        "message": "In der Suche den vollständigen Pfad für jeden Ordner anzeigen"
+    },
+    "skipArchive": {
+        "message": "Nie den Archivordner anzeigen"
+    },
+    "maxRecentFolders": {
+        "message": "Anzahl der zuletzt verwendeten Ordner in der Suche"
+    },
+    "useLegacyShortcuts": {
+        "message": "Veraltete Tastenkürzel erzwingen"
+    },
+    "useLegacyShortcutsTitle": {
+        "message": "Nutzt ⇧M als Tastenkürzel für das Verschieben von Nachrichten"
+    },
+    "useLegacyShortcutsDone": {
+        "message": "Sie können nun ⇧M ⇧Y und ⇧G verwenden. Ändere die Tastenkürzel in der Erweiterungsverwaltung für Tastenkürzel."
+    }
 }

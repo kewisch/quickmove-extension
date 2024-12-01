@@ -1,101 +1,101 @@
 {
-  "extensionName": {
-    "message": "Quick Folder Move"
-  },
-  "extensionDescription": {
-    "message": "Quickly move messages into other folders using the keyboard"
-  },
-  "extensionShortName": {
-    "message": "Quick Move"
-  },
-  "commandMoveDescription": {
-    "message": "Move selected messages"
-  },
-  "commandCopyDescription": {
-    "message": "Copy selected messages"
-  },
-  "commandGotoDescription": {
-    "message": "Go to folder"
-  },
-  "commandTagDescription": {
-    "message": "Apply a tag"
-  },
-  "windowWarning": {
-    "message": "It is recommended to add Quick Folder Move to the main toolbar. Please customize your toolbar to enable the button."
-  },
-  "metaActionWarning": {
-    "message": "Switching between actions now requires using Ctrl/⌘+Arrow to avoid navigation conflicts in the text box."
-  },
-  "actionMove": {
-    "message": "Move"
-  },
-  "actionCopy": {
-    "message": "Copy"
-  },
-  "actionGoto": {
-    "message": "Goto"
-  },
-  "actionTag": {
-    "message": "Tag"
-  },
-  "layout": {
-    "message": "Popup layout"
-  },
-  "layoutAuto": {
-    "message": "Automatic"
-  },
-  "layoutWide": {
-    "message": "Always wide"
-  },
-  "layoutCompact": {
-    "message": "Always compact"
-  },
-  "markAsRead": {
-    "message": "Mark messages as read when moving"
-  },
-  "showFolderPath": {
-    "message": "Show full path of each folder in search box"
-  },
-  "skipArchive": {
-    "message": "Never match archive folders"
-  },
-  "maxRecentFolders": {
-    "message": "Number of recent folders to show"
-  },
-  "maxRecentFoldersTitle": {
-    "message": "Changes the number of recent folders shown when no search text is entered."
-  },
-  "useLegacyShortcuts": {
-    "message": "Force use of legacy shortcuts"
-  },
-  "useLegacyShortcutsTitle": {
-    "message": "Use ⇧M as the shortcut for moving messages"
-  },
-  "useLegacyShortcutsDone": {
-    "message": "You can now use ⇧M ⇧Y and ⇧G. Change the keys in the extension shortcuts."
-  },
-  "showInstructions": {
-    "message": "Show instructions"
-  },
-  "defaultFoldersTitle": {
-    "message": "Default Folders"
-  },
-  "defaultFoldersRecent": {
-    "message": "Recent folders"
-  },
-  "defaultFoldersAll": {
-    "message": "All Folders"
-  },
-  "defaultFoldersSpecific": {
-    "message": "Specific folders"
-  },
-  "defaultFoldersSearchPlaceholder": {
-    "message": "Search for a folder to add as default"
-  },
-  "excludedFoldersTitle": {
-    "message": "Excluded Folders"
-  },
-  "excludedFoldersSearchPlaceholder": {
-    "message": "Search for a folder to exclude"
-  }
+    "extensionName": {
+        "message": "Quick Folder Move"
+    },
+    "extensionDescription": {
+        "message": "Quickly move messages into other folders using the keyboard"
+    },
+    "extensionShortName": {
+        "message": "Quick Move"
+    },
+    "commandMoveDescription": {
+        "message": "Move selected messages"
+    },
+    "commandCopyDescription": {
+        "message": "Copy selected messages"
+    },
+    "commandGotoDescription": {
+        "message": "Go to folder"
+    },
+    "commandTagDescription": {
+        "message": "Apply a tag"
+    },
+    "windowWarning": {
+        "message": "It is recommended to add Quick Folder Move to the main toolbar. Please customize your toolbar to enable the button."
+    },
+    "metaActionWarning": {
+        "message": "Switching between actions now requires using Ctrl/⌘+Arrow to avoid navigation conflicts in the text box."
+    },
+    "actionMove": {
+        "message": "Move"
+    },
+    "actionCopy": {
+        "message": "Copy"
+    },
+    "actionGoto": {
+        "message": "Goto"
+    },
+    "actionTag": {
+        "message": "Tag"
+    },
+    "layout": {
+        "message": "Popup layout"
+    },
+    "layoutAuto": {
+        "message": "Automatic"
+    },
+    "layoutWide": {
+        "message": "Always wide"
+    },
+    "layoutCompact": {
+        "message": "Always compact"
+    },
+    "markAsRead": {
+        "message": "Mark messages as read when moving"
+    },
+    "showFolderPath": {
+        "message": "Show full path of each folder in search box"
+    },
+    "skipArchive": {
+        "message": "Never match archive folders"
+    },
+    "maxRecentFolders": {
+        "message": "Number of recent folders to show"
+    },
+    "maxRecentFoldersTitle": {
+        "message": "Changes the number of recent folders shown when no search text is entered."
+    },
+    "useLegacyShortcuts": {
+        "message": "Force use of legacy shortcuts"
+    },
+    "useLegacyShortcutsTitle": {
+        "message": "Use ⇧M as the shortcut for moving messages"
+    },
+    "useLegacyShortcutsDone": {
+        "message": "You can now use ⇧M ⇧Y and ⇧G. Change the keys in the extension shortcuts."
+    },
+    "showInstructions": {
+        "message": "Show instructions"
+    },
+    "defaultFoldersTitle": {
+        "message": "Default Folders"
+    },
+    "defaultFoldersRecent": {
+        "message": "Recent folders"
+    },
+    "defaultFoldersAll": {
+        "message": "All Folders"
+    },
+    "defaultFoldersSpecific": {
+        "message": "Specific folders"
+    },
+    "defaultFoldersSearchPlaceholder": {
+        "message": "Search for a folder to add as default"
+    },
+    "excludedFoldersTitle": {
+        "message": "Excluded Folders"
+    },
+    "excludedFoldersSearchPlaceholder": {
+        "message": "Search for a folder to exclude"
+    }
 }
