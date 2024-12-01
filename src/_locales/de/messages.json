@@ -67,5 +67,35 @@
     },
     "useLegacyShortcutsDone": {
         "message": "Sie können nun ⇧M ⇧Y und ⇧G verwenden. Ändere die Tastenkürzel in der Erweiterungsverwaltung für Tastenkürzel."
+    },
+    "metaActionWarning": {
+        "message": "Um zwischen Aktionen zu wechseln muss jetzt Strg/⌘+Pfeiltaste verwendet werden um Tastaturkonflikte im Textfeld zu vermeiden."
+    },
+    "defaultFoldersSpecific": {
+        "message": "Bestimmte Ordner"
+    },
+    "showInstructions": {
+        "message": "Anleitung anzeigen"
+    },
+    "defaultFoldersAll": {
+        "message": "Alle Ordner"
+    },
+    "maxRecentFoldersTitle": {
+        "message": "Verändert die Anzahl der angezeigten kürzlich verwendeten Ordner wenn kein Suchtext eingegeben ist."
+    },
+    "defaultFoldersSearchPlaceholder": {
+        "message": "Suche einen Ordner um ihn als Standardordner anzuzeigen"
+    },
+    "excludedFoldersSearchPlaceholder": {
+        "message": "Suche einen Ordner um ihn auszuschließen"
+    },
+    "defaultFoldersTitle": {
+        "message": "Standardordner"
+    },
+    "defaultFoldersRecent": {
+        "message": "Kürzlich genutzte Ordner"
+    },
+    "excludedFoldersTitle": {
+        "message": "Ausgeschlossene Ordner"
     }
 }
