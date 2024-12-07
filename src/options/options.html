@@ -58,9 +58,15 @@
         </div>
         <folder-list id="default-folders" readonly="true" delete="true"></folder-list>
       </div>
-      <div class="panel" data-value="recent" data-l10n-attr-title="maxRecentFoldersTitle">
+      <div id="recentPanel" class="panel" data-value="recent" data-l10n-attr-title="maxRecentFoldersTitle">
         <input type="number" min="0" id="maxRecentFolders">
         <label for="maxRecentFolders" data-l10n-id="maxRecentFolders"></label>
+
+        <select id="recentStrategy">
+          <option value="modified" data-l10n-id="recentStrategyModified"></option>
+          <option value="accessed" data-l10n-id="recentStrategyAccessed"></option>
+        </select>
+        <label for="recentStrategy" data-l10n-id="recentStrategy"></label>
       </div>
       <div class="panel" data-value="all">
       </div>

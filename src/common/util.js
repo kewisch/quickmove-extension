@@ -2,10 +2,12 @@ export const DEFAULT_PREFERENCES = {
   layout: "auto",
   markAsRead: true,
   maxRecentFolders: 15,
-  showFolderPath: false,
+  showFolderPath: true,
   useLegacyShortcuts: false,
   skipArchive: true,
-  defaultFolderSetting: "recent"
+  defaultFolderSetting: "recent",
+  migratedShiftArrow: false,
+  recentStrategy: "accessed"
 };
 
 export async function getValidatedFolders(rootNode, prefName) {

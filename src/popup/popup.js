@@ -4,7 +4,7 @@
  * Portions Copyright (C) Philipp Kewisch */
 
 import { RootNode } from "../common/foldernode.js";
-import { getValidatedFolders, cmdOrCtrlKey } from "../common/util.js";
+import { DEFAULT_PREFERENCES, getValidatedFolders, cmdOrCtrlKey } from "../common/util.js";
 
 const ALL_ACTIONS = ["move", "copy", "goto", "tag"];
 
@@ -38,7 +38,10 @@ async function load() {
   // TB120 COMPAT
   let majorVersion = parseInt((await browser.runtime.getBrowserInfo()).version.split(".")[0], 10);
 
-  let { maxRecentFolders, showFolderPath, skipArchive, layout, defaultFolderSetting, migratedShiftArrow } = await browser.storage.local.get({ maxRecentFolders: 15, showFolderPath: true, layout: "auto", skipArchive: true, defaultFolderSetting: "recent", migratedShiftArrow: false });
+  let {
+    maxRecentFolders, showFolderPath, skipArchive, layout, defaultFolderSetting, migratedShiftArrow,
+    recentStrategy
+  } = await browser.storage.local.get(DEFAULT_PREFERENCES);
 
   if (layout == "wide" || (layout == "auto" && window.outerWidth > 1400)) {
     document.documentElement.removeAttribute("compact");
@@ -123,13 +126,7 @@ async function load() {
   let defaultFolders;
 
   if (defaultFolderSetting == "recent") {
-    let folderList;
-    if (majorVersion < 121) {
-      // TB120 COMPAT
-      folderList = await browser.quickmove.query({ recent: true, limit: maxRecentFolders, canFileMessages: true });
-    } else {
-      folderList = await browser.folders.query({ recent: true, limit: maxRecentFolders, canAddMessages: true });
-    }
+    let folderList = await browser.quickmove.query({ recent: recentStrategy, limit: maxRecentFolders, canFileMessages: true });
     defaultFolders = rootNode.fromList(folderList).folderNodes;
   } else if (defaultFolderSetting == "specific") {
     defaultFolders = await getValidatedFolders(rootNode, "defaultFolders");

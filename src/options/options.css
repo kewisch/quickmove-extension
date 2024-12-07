@@ -35,7 +35,8 @@ body {
   display: contents;
 }
 
-.preference input {
+.preference input,
+#recentPanel input {
   justify-self: end;
 }
 
@@ -106,11 +107,17 @@ fieldset {
 }
 
 .panel {
-  display: none;
   margin-top: 10px;
 }
-.panel.selected {
-  display: block;
+.panel:not(.selected) {
+  display: none !important;
+}
+
+#recentPanel {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 1em 0.4em;
 }
 
 #defaultFolderSetting label {

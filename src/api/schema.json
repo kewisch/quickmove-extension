@@ -39,7 +39,7 @@
           "type": "object",
           "properties": {
             "canFileMessages": { "type": "boolean", "optional": true },
-            "recent": { "type": "boolean", "optional": true },
+            "recent": { "type": "string", "enum": ["modified", "accessed"], "optional": true },
             "limit": { "type": "integer", "optional": true }
           }
         }

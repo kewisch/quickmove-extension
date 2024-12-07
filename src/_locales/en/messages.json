@@ -68,6 +68,15 @@
     "maxRecentFoldersTitle": {
         "message": "Changes the number of recent folders shown when no search text is entered."
     },
+    "recentStrategy": {
+        "message": "Folder Strategy"
+    },
+    "recentStrategyModified": {
+        "message": "Show recently modified"
+    },
+    "recentStrategyAccessed": {
+        "message": "Show recently accessed"
+    },
     "useLegacyShortcuts": {
         "message": "Force use of legacy shortcuts"
     },

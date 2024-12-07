@@ -102,7 +102,8 @@ this.quickmove = class extends ExtensionAPI {
           }
 
           if (recent) {
-            let recentFolders = FolderUtils.getMostRecentFolders(folders, limit || Infinity, "MRUTime");
+            let recentType = recent == "modified" ? "MRMTime" : "MRUTime";
+            let recentFolders = FolderUtils.getMostRecentFolders(folders, limit || Infinity, recentType);
             folders = recentFolders.map(folder => convertFolder(folder));
           }
 
