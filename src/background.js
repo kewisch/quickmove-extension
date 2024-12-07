@@ -85,7 +85,7 @@ async function processSelectedMessages(folder, operation="move", goToFolder=fals
   await browser.quickmove.setLastMoveCopyFolder(folder, operation == "move");
 
   if (goToFolder) {
-    await browser.mailTabs.update(tab.id, { displayedFolder: folderId });
+    await browser.mailTabs.update(tab.id, { displayedFolder: folderId }).catch(() => {});
   }
 }
 async function applyTags(tag) {

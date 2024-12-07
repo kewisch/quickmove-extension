@@ -26,6 +26,9 @@
     "metaActionWarning": {
         "message": "Switching between actions now requires using Ctrl/⌘+Arrow to avoid navigation conflicts in the text box."
     },
+    "tagsViewMissingWarning": {
+        "message": "Please enable the 'Tags' folder view to go to tag folders."
+    },
     "actionMove": {
         "message": "Move"
     },

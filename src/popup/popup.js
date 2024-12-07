@@ -152,7 +152,14 @@ async function load() {
 
       // TB120 COMPAT
       let folderId = majorVersion < 121 ? folder : folder.id;
-      await browser.mailTabs.update(tab.id, { displayedFolder: folderId });
+      try {
+        await browser.mailTabs.update(tab.id, { displayedFolder: folderId });
+      } catch (e) {
+        if (e.message == "Requested folder is not viewable in any of the enabled folder modes") {
+          document.getElementById("tags-view-missing-warning").classList.remove("hidden");
+          return;
+        }
+      }
     }
     window.close();
   });
