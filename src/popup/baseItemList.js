@@ -3,12 +3,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch */
 
+import { cmdOrCtrlKey } from "../common/util.js";
 
 export default class BaseItemList extends HTMLElement {
   #pendingSearch;
   #pendingSearchTimeout;
   #enterPending;
-  #searchCompositionEnded = false;
   #navigateOnly = true;
 
   _defaultItems;
@@ -232,8 +232,6 @@ export default class BaseItemList extends HTMLElement {
     this.itemListKeyDown = this.itemListKeyDown.bind(this);
     this.itemListSelectLeave = this.itemListSelectLeave.bind(this);
     this.searchKeyDownCallback = this.searchKeyDownCallback.bind(this);
-    this.searchKeyUpCallback = this.searchKeyUpCallback.bind(this);
-    this.searchCompositionEnd = this.searchCompositionEnd.bind(this);
   }
 
   connectedCallback() {
@@ -245,9 +243,7 @@ export default class BaseItemList extends HTMLElement {
     searchInput.addEventListener("input", this.searchInputCallbackRaw);
     listBody.addEventListener("click", this.itemListClick);
     if (!this.getAttribute("readonly")) {
-      searchInput.addEventListener("compositionend", this.searchCompositionEnd);
       searchInput.addEventListener("keydown", this.searchKeyDownCallback);
-      searchInput.addEventListener("keyup", this.searchKeyUpCallback);
       listBody.addEventListener("keydown", this.itemListKeyDown);
       listBody.addEventListener("mouseover", this.itemListSelect);
       listBody.addEventListener("mouseleave", this.itemListSelectLeave);
@@ -261,9 +257,7 @@ export default class BaseItemList extends HTMLElement {
     searchInput.removeEventListener("input", this.searchInputCallbackRaw);
     listBody.removeEventListener("click", this.itemListClick);
     if (!this.getAttribute("readonly")) {
-      searchInput.removeEventListener("compositionend", this.searchCompositionEnd);
       searchInput.removeEventListener("keydown", this.searchKeyDownCallback);
-      searchInput.removeEventListener("keyup", this.searchKeyUpCallback);
       listBody.removeEventListener("keydown", this.itemListKeyDown);
       listBody.removeEventListener("mouseover", this.itemListSelect);
       listBody.removeEventListener("mouseleave", this.itemListSelectLeave);
@@ -357,8 +351,8 @@ export default class BaseItemList extends HTMLElement {
         this.focusSearch();
       }
       event.preventDefault();
-    } else if (event.key == "Enter") {
-      this.dispatchSelect(this.selected);
+    } else if (event.key == "Enter" && !event.repeat) {
+      this.dispatchSelect(this.selected, cmdOrCtrlKey(event));
     }
   }
 
@@ -368,48 +362,38 @@ export default class BaseItemList extends HTMLElement {
       let customEvent = new CustomEvent("item-deleted", { detail: listItem.itemNode.item });
       this.dispatchEvent(customEvent);
     } else if (!this.getAttribute("readonly")) {
-      this.dispatchSelect(event.target.closest(".item"));
+      this.dispatchSelect(event.target.closest(".item"), cmdOrCtrlKey(event));
     }
   }
 
-  dispatchSelect(item) {
+  dispatchSelect(item, altMode) {
     let listItem = item || this.selected;
     if (listItem) {
-      let customEvent = new CustomEvent("item-selected", { detail: listItem.itemNode.item });
+      let detail = { folder: listItem.itemNode.item, altMode: altMode };
+
+      let customEvent = new CustomEvent("item-selected", { detail });
       this.dispatchEvent(customEvent);
     }
   }
-  searchCompositionEnd(event) {
-    this.#searchCompositionEnded = true;
-  }
 
-  async searchKeyUpCallback(event) {
-    if (event.isComposing || this.#searchCompositionEnded) {
-      this.#searchCompositionEnded = false;
+  async enterSelect(altMode) {
+    if (this.#enterPending) {
       return;
     }
 
-    if (event.key == "Enter") {
-      if (this.#enterPending) {
-        return;
-      }
-
-      if (this.#pendingSearch) {
-        this.#enterPending = true;
-        await this.#pendingSearch.promise;
-      }
-      let selected = this.selected || this.nthItem(1);
-
-      if (selected) {
-        let customEvent = new CustomEvent("item-selected", { detail: selected.itemNode.item });
-        this.dispatchEvent(customEvent);
-      }
-      this.#enterPending = false;
-      event.preventDefault();
+    if (this.#pendingSearch) {
+      this.#enterPending = true;
+      await this.#pendingSearch.promise;
     }
+    let selected = this.selected || this.nthItem(1);
+
+    if (selected) {
+      this.dispatchSelect(selected, altMode);
+    }
+    this.#enterPending = false;
   }
 
-  searchKeyDownCallback(event) {
+  async searchKeyDownCallback(event) {
     if (event.isComposing) {
       return;
     }
@@ -422,6 +406,8 @@ export default class BaseItemList extends HTMLElement {
       this.selected = this.nthItem(-1);
       this.shadowRoot.querySelector(".list-body").focus();
       event.preventDefault();
+    } else if (event.key == "Enter" && !event.repeat) {
+      await this.enterSelect(cmdOrCtrlKey(event));
     }
   }
 

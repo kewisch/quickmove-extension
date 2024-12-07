@@ -4,7 +4,7 @@
  * Portions Copyright (C) Philipp Kewisch */
 
 import { RootNode } from "../common/foldernode.js";
-import { getValidatedFolders } from "../common/util.js";
+import { getValidatedFolders, cmdOrCtrlKey } from "../common/util.js";
 
 const ALL_ACTIONS = ["move", "copy", "goto", "tag"];
 
@@ -141,15 +141,17 @@ async function load() {
   folderList.initItems(rootNode.folderNodes, defaultFolders, showFolderPath, excludeSet);
   folderList.ignoreFocus = true;
   folderList.addEventListener("item-selected", async (event) => {
+    let { folder, altMode } = event.detail;
+
     let operation = document.querySelector("input[name='action']:checked").value;
 
     if (operation == "move" || operation == "copy") {
-      await browser.runtime.sendMessage({ action: "processSelectedMessages", folder: event.detail, operation: operation });
+      await browser.runtime.sendMessage({ action: "processSelectedMessages", folder: folder, operation: operation, goToFolder: altMode });
     } else if (operation == "goto") {
       let [tab] = await browser.tabs.query({ currentWindow: true, active: true });
 
       // TB120 COMPAT
-      let folderId = majorVersion < 121 ? event.detail : event.detail.id;
+      let folderId = majorVersion < 121 ? folder : folder.id;
       await browser.mailTabs.update(tab.id, { displayedFolder: folderId });
     }
     window.close();
@@ -192,11 +194,6 @@ async function load() {
 
 function unload(event) {
   browser.runtime.sendMessage({ action: "focusThreadPane" }).catch(() => {});
-}
-
-function cmdOrCtrlKey(event) {
-  const isMac = navigator.platform.toUpperCase().includes("MAC");
-  return isMac ? event.metaKey : event.ctrlKey;
 }
 
 function keydown(event) {

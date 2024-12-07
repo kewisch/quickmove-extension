@@ -41,7 +41,7 @@ async function spinWith(func, ...args) {
   return rv;
 }
 
-async function processSelectedMessages(folder, operation="move") {
+async function processSelectedMessages(folder, operation="move", goToFolder=false) {
   let { markAsRead } = await browser.storage.local.get({ markAsRead: true });
 
   let ops = [];
@@ -53,8 +53,9 @@ async function processSelectedMessages(folder, operation="move") {
 
   // TB120 COMPAT
   let browserInfo = await browser.runtime.getBrowserInfo();
+  let majorVersion = parseInt(browserInfo.version.split(".")[0], 10);
   let folderId = folder.id;
-  if (parseInt(browserInfo.version.split(".")[0], 10) < 121) {
+  if (majorVersion < 121) {
     folderId = folder;
   }
 
@@ -82,6 +83,10 @@ async function processSelectedMessages(folder, operation="move") {
   await Promise.all(ops);
 
   await browser.quickmove.setLastMoveCopyFolder(folder, operation == "move");
+
+  if (goToFolder) {
+    await browser.mailTabs.update(tab.id, { displayedFolder: folderId });
+  }
 }
 async function applyTags(tag) {
   let { markAsRead } = await browser.storage.local.get({ markAsRead: true });
@@ -171,7 +176,7 @@ browser.runtime.onMessage.addListener(async (message, sender) => {
     if (message.operation == "tag") {
       spinWith(applyTags, message.tag);
     } else {
-      spinWith(processSelectedMessages, message.folder, message.operation);
+      spinWith(processSelectedMessages, message.folder, message.operation, message.goToFolder);
     }
   } else if (message.action == "setupShortcuts") {
     browser.quickmove.setupLegacyShortcuts(message.enable);

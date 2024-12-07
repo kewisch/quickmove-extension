@@ -118,7 +118,7 @@ async function setupFolderChooser({ rootNode, folderPickerId, folderListId, pref
   folderList.initItems(folders, null, true);
 
   folderPicker.addEventListener("item-selected", (event) => {
-    let newNode = rootNode.findFolder(event.detail);
+    let newNode = rootNode.findFolder(event.detail.folder);
 
     folderSet.add(newNode);
     let allItems = [...folderSet];

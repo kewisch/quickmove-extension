@@ -19,3 +19,8 @@ export async function getValidatedFolders(rootNode, prefName) {
 
   return folderNodes;
 }
+
+export function cmdOrCtrlKey(event) {
+  const isMac = navigator.platform.toUpperCase().includes("MAC");
+  return isMac ? event.metaKey : event.ctrlKey;
+}
