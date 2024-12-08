@@ -99,10 +99,6 @@ fieldset {
   top: 0;
   left: 0;
   width: 100%;
-}
-
-#folder-picker {
-  width: 100%;
   background-color: light-dark(#fff, #27272a);
 }
 
