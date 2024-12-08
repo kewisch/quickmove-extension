@@ -9,10 +9,15 @@
   padding: 0;
 }
 
+html,
+body {
+  color-scheme: light dark;
+  background-color: light-dark(#f4f4f4, #151516);
+  color: light-dark(#666, #f4f4f5);
+}
+
 body {
   font-family: sans-serif;
-  background: #f4f4f4;
-  color: #666;
   line-height: 1.6;
   width: 960px;
   margin: 0 auto;
@@ -27,7 +32,7 @@ body:not(.platform-mac) .platform-mac {
 
 h1,
 h2 {
-  color: #333;
+  color: light-dark(#333, #fff);
 }
 
 .content {
@@ -37,7 +42,7 @@ h2 {
   align-items: center;
   margin-top: 2em;
   padding: 2em;
-  background: #fff;
+  background: light-dark(#fff, #27272a);
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
@@ -123,12 +128,21 @@ h2 {
 
 .section p {
   margin-bottom: 1em;
-  color: #666;
+  color: light-dark(#666, #ddd);
 }
 .section p.donatebutton {
   text-align: center;
   width: 100%;
-  margin-top: 2ex;
+  margin-top: 3ex;
+}
+.section p.donatebutton .button {
+  padding: 20px;
+  border-radius: 30px;
+}
+.section p.donatebutton .button .icon-box {
+  background-color: light-dark(#fff, #27272a);
+  padding: 7px 5px 3px;
+  border-radius: 20px;
 }
 
 .section form {

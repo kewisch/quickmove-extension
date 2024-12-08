@@ -2,14 +2,14 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "2.9.3pre",
+  "version": "3.0.0",
   "default_locale": "en",
   "author": "Philipp Kewisch",
   "browser_specific_settings": {
     "gecko": {
       "id": "quickmove@mozilla.kewis.ch",
       "strict_min_version": "115.0a1",
-      "strict_max_version": "134.*"
+      "strict_max_version": "135.*"
     }
   },
   "icons": {

@@ -188,10 +188,12 @@ browser.runtime.onMessage.addListener(async (message, sender) => {
 
 
 browser.runtime.onInstalled.addListener(({ reason, previousVersion }) => {
-  if (reason == "update" && previousVersion?.startsWith("1.")) {
-    browser.tabs.create({ url: "/onboarding/changes.html" });
-  } else if (reason == "update" && previousVersion == "2.0.1") {
+  if (reason == "update" && previousVersion == "2.0.1") {
     browser.tabs.create({ url: "/onboarding/changes-new-shortcuts.html" });
+  } else if (reason == "update" && previousVersion?.startsWith("2.")) {
+    browser.tabs.create({ url: "/onboarding/changes-3.0.html" });
+  } else if (reason == "update" && previousVersion?.startsWith("1.")) {
+    browser.tabs.create({ url: "/onboarding/changes.html" });
   } else if (reason == "install") {
     browser.tabs.create({ url: "/onboarding/onboarding.html" });
   }
