@@ -88,7 +88,7 @@ export class FolderNode extends BaseNode {
   }
 
   get canFileMessages() {
-    return true;
+    return !this.item.isTag && !this.item.isVirtual && !this.item.isUnified;
   }
 
   get root() {
