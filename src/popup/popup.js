@@ -35,9 +35,6 @@ async function load() {
   let fontSize = await messenger.quickmove.getUIFontSize();
   window.document.documentElement.style.setProperty("font-size", `${fontSize}px`);
 
-  // TB120 COMPAT
-  let majorVersion = parseInt((await browser.runtime.getBrowserInfo()).version.split(".")[0], 10);
-
   let {
     maxRecentFolders, showFolderPath, skipArchive, layout, defaultFolderSetting, migratedShiftArrow,
     recentStrategy
@@ -72,15 +69,8 @@ async function load() {
     document.querySelector(".action-buttons").classList.add("hide");
   }
 
-  // TB120 COMPAT
-  let tags;
-  if (majorVersion < 121) {
-    tags = await browser.messages.listTags();
-  } else {
-    tags = await browser.messages.tags.list();
-  }
-
   // Setup folder list
+  let tags = await browser.messages.tags.list();
   let accounts = await browser.accounts.list(true);
 
   let [currentTab] = await browser.tabs.query({ currentWindow: true, active: true });
@@ -147,10 +137,8 @@ async function load() {
     } else if (operation == "goto") {
       let [tab] = await browser.tabs.query({ currentWindow: true, active: true });
 
-      // TB120 COMPAT
-      let folderId = majorVersion < 121 ? folder : folder.id;
       try {
-        await browser.mailTabs.update(tab.id, { displayedFolder: folderId });
+        await browser.mailTabs.update(tab.id, { displayedFolder: folder.id });
       } catch (e) {
         if (e.message == "Requested folder is not viewable in any of the enabled folder modes") {
           document.getElementById("tags-view-missing-warning").classList.remove("hidden");
@@ -194,10 +182,6 @@ async function load() {
   }
 
   switchList(action).focusSearch();
-}
-
-function unload(event) {
-  browser.runtime.sendMessage({ action: "focusThreadPane" }).catch(() => {});
 }
 
 function keydown(event) {
@@ -246,4 +230,3 @@ function keypress(event) {
 window.addEventListener("keypress", keypress);
 window.addEventListener("keydown", keydown, { capture: true });
 window.addEventListener("DOMContentLoaded", load, { once: true });
-window.addEventListener("unload", unload, { once: true, capture: true });

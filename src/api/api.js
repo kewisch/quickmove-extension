@@ -24,60 +24,12 @@ ChromeUtils.defineModuleGetter(
   "resource:///modules/UIFontSize.jsm"
 );
 
-const folderTypeMap = new Map([
-  [Ci.nsMsgFolderFlags.Inbox, "inbox"],
-  [Ci.nsMsgFolderFlags.Drafts, "drafts"],
-  [Ci.nsMsgFolderFlags.SentMail, "sent"],
-  [Ci.nsMsgFolderFlags.Trash, "trash"],
-  [Ci.nsMsgFolderFlags.Templates, "templates"],
-  [Ci.nsMsgFolderFlags.Archive, "archives"],
-  [Ci.nsMsgFolderFlags.Junk, "junk"],
-  [Ci.nsMsgFolderFlags.Queue, "outbox"],
-]);
-
-function convertFolder(folder, accountId) {
-  if (!folder) {
-    return null;
-  }
-  if (!accountId) {
-    let server = folder.server;
-    let acctMgr = MailServices.accounts;
-
-    // TB115 COMPAT
-    let findAccountForServer = (acctMgr.findAccountForServer || acctMgr.FindAccountForServer).bind(acctMgr);
-
-    let account = findAccountForServer(server);
-    accountId = account.key;
-  }
-
-  let folderObject = {
-    accountId,
-    name: folder.prettyName,
-    path: folderURIToPath(folder.URI),
-  };
-
-  for (let [flag, typeName] of folderTypeMap.entries()) {
-    if (folder.flags & flag) {
-      folderObject.type = typeName;
-    }
-  }
-
-  return folderObject;
-}
-
-function folderURIToPath(uri) {
-  let path = Services.io.newURI(uri).filePath;
-  return path
-    .split("/")
-    .map(decodeURIComponent)
-    .join("/");
-}
-
 this.quickmove = class extends ExtensionAPI {
   getAPI(context) {
     return {
       quickmove: {
         // bug 1840039 - messenger.folders.query API
+        // Keeping this around as this verison allows us to switch between MRMTime and MRUTime
         async query({ recent, limit, canFileMessages }) {
           function* allFolders(root) {
             if (
@@ -104,7 +56,7 @@ this.quickmove = class extends ExtensionAPI {
           if (recent) {
             let recentType = recent == "modified" ? "MRMTime" : "MRUTime";
             let recentFolders = FolderUtils.getMostRecentFolders(folders, limit || Infinity, recentType);
-            folders = recentFolders.map(folder => convertFolder(folder));
+            folders = recentFolders.map(folder => context.extension.folderManager.convert(folder));
           }
 
           return folders;
@@ -135,14 +87,6 @@ this.quickmove = class extends ExtensionAPI {
             context.extension.shortcuts.resetCommand("goto");
             context.extension.shortcuts.resetCommand("tag");
           }
-        },
-
-        // bug 1840072 - thread pane is not focused when returning from browserAction
-        // TB124 COMPAT - this can be removed in the next major release
-        async focusThreadPane(windowId) {
-          let window = Services.wm.getMostRecentWindow("mail:3pane");
-          let tabmail = window.top.document.getElementById("tabmail");
-          tabmail.currentAbout3Pane?.threadTree.table.body.focus();
         },
 
         // bug 1849476 - messages.move/copy() doesn't set mail.last_msg_movecopy_target_uri

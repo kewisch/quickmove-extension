@@ -51,15 +51,7 @@ async function processSelectedMessages(folder, operation="move", goToFolder=fals
     return;
   }
 
-  // TB120 COMPAT
-  let browserInfo = await browser.runtime.getBrowserInfo();
-  let majorVersion = parseInt(browserInfo.version.split(".")[0], 10);
   let folderId = folder.id;
-  if (majorVersion < 121) {
-    folderId = folder;
-  }
-
-
   let messagePages;
   if (tab.type == "messageDisplay") {
     messagePages = [browser.messageDisplay.getDisplayedMessages(tab.id)];
