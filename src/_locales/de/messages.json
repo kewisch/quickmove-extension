@@ -97,5 +97,17 @@
     },
     "excludedFoldersTitle": {
         "message": "Ausgeschlossene Ordner"
+    },
+    "tagsViewMissingWarning": {
+        "message": "Bitte aktivieren Sie die 'Schlagwörter' Ordneransicht um zu Schlagwortordner zu navigieren."
+    },
+    "recentStrategy": {
+        "message": "Ordnerstrategie"
+    },
+    "recentStrategyAccessed": {
+        "message": "Kürzlich zugegriffene Ordner"
+    },
+    "recentStrategyModified": {
+        "message": "Kürzlich modifizierte Ordner"
     }
 }
