@@ -13,7 +13,7 @@ receive every day it can add up.
 1. Use **Control+Shift+M** (or Ctrl+Shift+N on Windows/Linux) opens a popup menu that allows you to move
 the selected messages.
 
-![Quickmove Toolbar](src/onboarding/images/toolbar.png)
+<img title="Quickmove Toolbar" width="600" src="src/onboarding/images/toolbar.png">
 
 2. In the popup, you can use the following to navigate:
     * **⌘/Ctrl + Arrow Keys**: Switch between 'move', 'copy' and other modes.
@@ -29,9 +29,7 @@ A few more tips and tricks:
 * You can also assign keyboard shortcuts to copy, go to a folder, or apply tags
 via Thunderbird's [shortcut manager](https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox).
 
-
-![Shortcut options](src/onboarding/images/shortcuts.png)
-
+<img title="Shortcut Options" width="600" src="src/onboarding/images/shortcuts.png">
 
 Development
 -----------
