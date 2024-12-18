@@ -62,6 +62,9 @@ async function setupListeners() {
   document.getElementById("onboarding").addEventListener("click", () => {
     browser.tabs.create({ url: "/onboarding/onboarding.html" });
   });
+  document.getElementById("translate").addEventListener("click", () => {
+    browser.windows.openDefaultBrowser("https://hosted.weblate.org/engage/quick-folder-move/");
+  });
 
   await setupFolderChooser({
     rootNode,

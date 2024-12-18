@@ -89,6 +89,9 @@
     "showInstructions": {
         "message": "Show instructions"
     },
+    "translate": {
+        "message": "Translate into your language"
+    },
     "defaultFoldersTitle": {
         "message": "Default Folders"
     },
