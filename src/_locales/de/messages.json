@@ -65,9 +65,6 @@
     "useLegacyShortcutsTitle": {
         "message": "Nutzt ⇧M als Tastenkürzel für das Verschieben von Nachrichten"
     },
-    "useLegacyShortcutsDone": {
-        "message": "Sie können nun ⇧M ⇧Y und ⇧G verwenden. Ändere die Tastenkürzel in der Erweiterungsverwaltung für Tastenkürzel."
-    },
     "metaActionWarning": {
         "message": "Um zwischen Aktionen zu wechseln muss jetzt Strg/⌘+Pfeiltaste verwendet werden um Tastaturkonflikte im Textfeld zu vermeiden."
     },

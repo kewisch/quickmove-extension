@@ -65,9 +65,6 @@
     "useLegacyShortcutsTitle": {
         "message": "Utilisez ⇧M comme raccourci pour déplacer les messages"
     },
-    "useLegacyShortcutsDone": {
-        "message": "Vous pouvez à présent utiliser ⇧M ⇧Y et ⇧G. Utilisez l'extention shortcut pour les modifier."
-    },
     "windowWarning": {
         "message": "Il est recommandé d'ajouter Quick Folder Move à la barre d'outils principale. Merci de personnaliser votre barre d'outils pour activer le bouton."
     },

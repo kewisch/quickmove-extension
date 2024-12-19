@@ -83,9 +83,6 @@
     "useLegacyShortcutsTitle": {
         "message": "Use ⇧M as the shortcut for moving messages"
     },
-    "useLegacyShortcutsDone": {
-        "message": "You can now use ⇧M ⇧Y and ⇧G. Change the keys in the extension shortcuts."
-    },
     "showInstructions": {
         "message": "Show instructions"
     },
