@@ -67,5 +67,50 @@
     },
     "useLegacyShortcutsDone": {
         "message": "Vous pouvez à présent utiliser ⇧M ⇧Y et ⇧G. Utilisez l'extention shortcut pour les modifier."
+    },
+    "windowWarning": {
+        "message": "Il est recommandé d'ajouter Quick Folder Move à la barre d'outils principale. Merci de personnaliser votre barre d'outils pour activer le bouton."
+    },
+    "metaActionWarning": {
+        "message": "Changer d'action nécessite maintenant d'utiliser les touches Ctrl/⌘+flèche pour ne pas être en conflit avec la navigation dans la boite de recherche."
+    },
+    "defaultFoldersSearchPlaceholder": {
+        "message": "Cherche un dossier à ajouter par défaut"
+    },
+    "excludedFoldersSearchPlaceholder": {
+        "message": "Chercher un dossier à exclure"
+    },
+    "showInstructions": {
+        "message": "Voir les instructions"
+    },
+    "defaultFoldersAll": {
+        "message": "Tous les dossiers"
+    },
+    "defaultFoldersSpecific": {
+        "message": "Dossiers préférés"
+    },
+    "recentStrategy": {
+        "message": "Stratégie de dossier"
+    },
+    "recentStrategyModified": {
+        "message": "Afficher les dossiers récemment modifiés"
+    },
+    "recentStrategyAccessed": {
+        "message": "Afficher les dossiers récemment accédés"
+    },
+    "defaultFoldersTitle": {
+        "message": "Dossiers par défaut"
+    },
+    "defaultFoldersRecent": {
+        "message": "Dossiers récents"
+    },
+    "excludedFoldersTitle": {
+        "message": "Dossiers exclus"
+    },
+    "translate": {
+        "message": "Traduire dans votre langue"
+    },
+    "tagsViewMissingWarning": {
+        "message": "Merci d'activer l'affichage du dossier « Étiquettes » pour pouvoir vous déplacer."
     }
 }
