@@ -109,5 +109,8 @@
     },
     "recentStrategyModified": {
         "message": "Kürzlich modifizierte Ordner"
+    },
+    "translate": {
+        "message": "Übersetzung in deine Sprache"
     }
 }
