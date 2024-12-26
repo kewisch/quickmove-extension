@@ -1,0 +1,113 @@
+{
+    "extensionName": {
+        "message": "Quick Folder Move"
+    },
+    "extensionDescription": {
+        "message": "Sposta rapidamente i messaggi in altre cartelle usando la tastiera"
+    },
+    "extensionShortName": {
+        "message": "Spostamento Rapido"
+    },
+    "commandMoveDescription": {
+        "message": "Sposta i messaggi selezionati"
+    },
+    "commandCopyDescription": {
+        "message": "Copia i messaggi selezionati"
+    },
+    "commandGotoDescription": {
+        "message": "Vai alla cartella"
+    },
+    "commandTagDescription": {
+        "message": "Applica un'etichetta"
+    },
+    "windowWarning": {
+        "message": "Si consiglia di aggiungere Quick Folder Move alla barra degli strumenti principale. Personalizza la barra degli strumenti per abilitare il pulsante."
+    },
+    "metaActionWarning": {
+        "message": "Passare tra le azioni ora richiede l'uso di Ctrl/⌘+Freccia per evitare conflitti di navigazione nella casella di testo."
+    },
+    "tagsViewMissingWarning": {
+        "message": "Abilita la modalità cartelle 'Etichette' per accedere alle cartelle delle etichette."
+    },
+    "actionMove": {
+        "message": "Sposta"
+    },
+    "actionCopy": {
+        "message": "Copia"
+    },
+    "actionGoto": {
+        "message": "Vai"
+    },
+    "actionTag": {
+        "message": "Etichetta"
+    },
+    "layout": {
+        "message": "Layout del popup"
+    },
+    "layoutAuto": {
+        "message": "Automatico"
+    },
+    "layoutWide": {
+        "message": "Sempre ampio"
+    },
+    "layoutCompact": {
+        "message": "Sempre compatto"
+    },
+    "markAsRead": {
+        "message": "Segna i messaggi come letti quando li sposti"
+    },
+    "showFolderPath": {
+        "message": "Mostra il percorso completo di ogni cartella nella casella di ricerca"
+    },
+    "skipArchive": {
+        "message": "Non includere mai le cartelle archivio"
+    },
+    "maxRecentFolders": {
+        "message": "Numero di cartelle recenti da mostrare"
+    },
+    "maxRecentFoldersTitle": {
+        "message": "Modifica il numero di cartelle recenti visualizzate quando non è inserito alcun testo di ricerca."
+    },
+    "recentStrategy": {
+        "message": "Strategia Cartelle"
+    },
+    "recentStrategyModified": {
+        "message": "Mostra modificate di recente"
+    },
+    "recentStrategyAccessed": {
+        "message": "Mostra accedute di recente"
+    },
+    "useLegacyShortcuts": {
+        "message": "Forza l'uso di scorciatoie legacy"
+    },
+    "useLegacyShortcutsTitle": {
+        "message": "Usa ⇧M come scorciatoia per spostare i messaggi"
+    },
+    "showInstructions": {
+        "message": "Mostra istruzioni"
+    },
+    "translate": {
+        "message": "Traduci nella tua lingua"
+    },
+    "defaultFoldersTitle": {
+        "message": "Cartelle Predefinite"
+    },
+    "defaultFoldersRecent": {
+        "message": "Cartelle recenti"
+    },
+    "defaultFoldersAll": {
+        "message": "Tutte le cartelle"
+    },
+    "defaultFoldersSpecific": {
+        "message": "Cartelle specifiche"
+    },
+    "defaultFoldersSearchPlaceholder": {
+        "message": "Cerca una cartella da aggiungere come predefinita"
+    },
+    "excludedFoldersTitle": {
+        "message": "Cartelle Escluse"
+    },
+    "excludedFoldersSearchPlaceholder": {
+        "message": "Cerca una cartella da escludere"
+    }
+}
