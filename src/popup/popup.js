@@ -91,12 +91,19 @@ async function load() {
     }
   }
 
-  let tagFolders = await Promise.all(tags.map(async tag => {
-    let folder = await messenger.folders.getTagFolder(tag.key);
-    folder.color = tag.color;
-    folder.subFolders = [];
-    return folder;
-  }));
+  let tagFolders = (await Promise.all(tags.map(async tag => {
+    try {
+      let folder = await messenger.folders.getTagFolder(tag.key);
+      folder.color = tag.color;
+      folder.subFolders = [];
+      return folder;
+    } catch (e) {
+      // Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1939403
+      console.error(`Could not get tag folder ${tag.key}:`, e);
+      return null;
+    }
+  }))).filter(Boolean);
+
   let unifiedFolderTypes = ["inbox", "drafts", "sent", "trash", "templates", "archives", "junk"];
 
   let unifiedFolders = await Promise.all(unifiedFolderTypes.map(async key => {
