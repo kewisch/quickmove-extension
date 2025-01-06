@@ -516,22 +516,24 @@ export default class BaseItemList extends HTMLElement {
 
       for (let item of this.allItems) {
         let itemText = this.getItemText(item).toLowerCase();
+        let pathSegments = item.path.toLowerCase().split('/').filter(segment => segment);
 
         if (!hasAccent) {
           itemText = itemText.normalize("NFD").replace(DIACRITICS, "");
         }
 
-        let mismatch = false;
+        let match = true;
+
         for (let word of searchWords) {
-          if (word && !itemText.includes(word)) {
-            mismatch = true;
-            break;
-          }
+            if (word && !pathSegments.some(segment => segment.includes(word))) {
+                match = false;
+                break;
+            }
         }
 
         let canIncludeItem = this.#navigateOnly || item.canFileMessages;
 
-        if (!mismatch && canIncludeItem) {
+        if (match && canIncludeItem) {
           let node = this._addItem(item, BaseItemList.MODE_SEARCH);
           if (selectedFolderId && item.id == selectedFolderId) {
             selectNode = node;
