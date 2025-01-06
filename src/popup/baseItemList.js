@@ -5,6 +5,8 @@
 
 import { cmdOrCtrlKey } from "../common/util.js";
 
+const DIACRITICS = /[\u0300-\u036f]/g;
+
 export default class BaseItemList extends HTMLElement {
   #pendingSearch;
   #pendingSearchTimeout;
@@ -505,6 +507,8 @@ export default class BaseItemList extends HTMLElement {
     let selectNode = null;
 
     let lowerSearchTerm = this.searchValue.toLowerCase();
+    let hasAccent = !!lowerSearchTerm.normalize("NFD").match(DIACRITICS);
+
     this.#clearItems();
 
     if (lowerSearchTerm) {
@@ -512,6 +516,11 @@ export default class BaseItemList extends HTMLElement {
 
       for (let item of this.allItems) {
         let itemText = this.getItemText(item).toLowerCase();
+
+        if (!hasAccent) {
+          itemText = itemText.normalize("NFD").replace(DIACRITICS, "");
+        }
+
         let mismatch = false;
         for (let word of searchWords) {
           if (word && !itemText.includes(word)) {
