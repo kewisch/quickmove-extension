@@ -515,17 +515,16 @@ export default class BaseItemList extends HTMLElement {
       let searchWords = lowerSearchTerm.split(/\s+/);
 
       for (let item of this.allItems) {
-        let itemText = this.getItemText(item).toLowerCase();
-        let pathSegments = item.path.toLowerCase().split('/').filter(segment => segment);
+        let pathString = item.path.toLowerCase();
 
         if (!hasAccent) {
-          itemText = itemText.normalize("NFD").replace(DIACRITICS, "");
+          pathString = pathString.normalize("NFD").replace(DIACRITICS, "");
         }
 
         let match = true;
 
         for (let word of searchWords) {
-            if (word && !pathSegments.some(segment => segment.includes(word))) {
+            if (word && !pathString.includes(word)) {
                 match = false;
                 break;
             }
