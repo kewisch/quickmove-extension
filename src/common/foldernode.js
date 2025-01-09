@@ -78,6 +78,7 @@ class BaseNode {
 
 export class FolderNode extends BaseNode {
   _childClass = FolderNode;
+  #_fullSearchString = null;
 
   static folderKey(accountId, path) {
     return `${accountId}://${path}`;
@@ -112,6 +113,14 @@ export class FolderNode extends BaseNode {
       return "tag";
     }
     return this.item.specialUse?.[0];
+  }
+
+  get fullSearchString() {
+    if (!this._fullSearchString) {
+      this._fullSearchString = this.fullNameParts.join("/");
+    }
+    // console.log(">>>>>>>>>>>> fullSearchString: ", this._fullSearchString);
+    return this._fullSearchString;
   }
 }
 
