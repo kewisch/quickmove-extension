@@ -515,7 +515,7 @@ export default class BaseItemList extends HTMLElement {
       let searchWords = lowerSearchTerm.split(/\s+/);
 
       for (let item of this.allItems) {
-        let pathString = item.path.toLowerCase();
+        let pathString = item.fullSearchString.toLowerCase();
 
         if (!hasAccent) {
           pathString = pathString.normalize("NFD").replace(DIACRITICS, "");
