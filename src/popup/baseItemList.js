@@ -15,6 +15,7 @@ export default class BaseItemList extends HTMLElement {
 
   _defaultItems;
   _allItems = [];
+  _partialMatchFullPath = false;
 
   ignoreFocus = false;
 
@@ -510,32 +511,61 @@ export default class BaseItemList extends HTMLElement {
     let hasAccent = !!lowerSearchTerm.normalize("NFD").match(DIACRITICS);
 
     this.#clearItems();
+    
+
 
     if (lowerSearchTerm) {
       let searchWords = lowerSearchTerm.split(/\s+/);
-
-      for (let item of this.allItems) {
-        let pathString = item.fullSearchString.toLowerCase();
-
-        if (!hasAccent) {
-          pathString = pathString.normalize("NFD").replace(DIACRITICS, "");
-        }
-
-        let match = true;
-
-        for (let word of searchWords) {
-            if (word && !pathString.includes(word)) {
-                match = false;
-                break;
+      
+      if(!this._partialMatchFullPath){
+        for (let item of this.allItems) {
+          let itemText = this.getItemText(item).toLowerCase();
+  
+          if (!hasAccent) {
+            itemText = itemText.normalize("NFD").replace(DIACRITICS, "");
+          }
+  
+          let mismatch = false;
+          for (let word of searchWords) {
+            if (word && !itemText.includes(word)) {
+              mismatch = true;
+              break;
             }
+          }
+  
+          let canIncludeItem = this.#navigateOnly || item.canFileMessages;
+  
+          if (!mismatch && canIncludeItem) {
+            let node = this._addItem(item, BaseItemList.MODE_SEARCH);
+            if (selectedFolderId && item.id == selectedFolderId) {
+              selectNode = node;
+            }
+          }
         }
+      }else{
+        for (let item of this.allItems) {
+          let pathString = item.fullSearchString.toLowerCase();
 
-        let canIncludeItem = this.#navigateOnly || item.canFileMessages;
+          if (!hasAccent) {
+            pathString = pathString.normalize("NFD").replace(DIACRITICS, "");
+          }
 
-        if (match && canIncludeItem) {
-          let node = this._addItem(item, BaseItemList.MODE_SEARCH);
-          if (selectedFolderId && item.id == selectedFolderId) {
-            selectNode = node;
+          let match = true;
+
+          for (let word of searchWords) {
+              if (word && !pathString.includes(word)) {
+                  match = false;
+                  break;
+              }
+          }
+
+          let canIncludeItem = this.#navigateOnly || item.canFileMessages;
+
+          if (match && canIncludeItem) {
+            let node = this._addItem(item, BaseItemList.MODE_SEARCH);
+            if (selectedFolderId && item.id == selectedFolderId) {
+              selectNode = node;
+            }
           }
         }
       }
