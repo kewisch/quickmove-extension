@@ -119,7 +119,6 @@ export class FolderNode extends BaseNode {
     if (!this.#fullSearchString) {
       this.#fullSearchString = this.fullNameParts.join("/");
     }
-    // console.log(">>>>>>>>>>>> fullSearchString: ", this._fullSearchString);
     return this.#fullSearchString;
   }
 }
