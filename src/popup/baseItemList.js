@@ -511,8 +511,6 @@ export default class BaseItemList extends HTMLElement {
     let hasAccent = !!lowerSearchTerm.normalize("NFD").match(DIACRITICS);
 
     this.#clearItems();
-    
-
 
     if (lowerSearchTerm) {
       let searchWords = lowerSearchTerm.split(/\s+/);
