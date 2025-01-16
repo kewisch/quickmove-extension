@@ -15,9 +15,9 @@ export default class BaseItemList extends HTMLElement {
 
   _defaultItems;
   _allItems = [];
-  _partialMatchFullPath = false;
 
   ignoreFocus = false;
+  partialMatchFullPath = false;
 
   static observedAttributes = ["placeholder"];
 
@@ -515,7 +515,7 @@ export default class BaseItemList extends HTMLElement {
     if (lowerSearchTerm) {
       let searchWords = lowerSearchTerm.split(/\s+/);
       
-      if(!this._partialMatchFullPath){
+      if(!this.partialMatchFullPath){
         for (let item of this.allItems) {
           let itemText = this.getItemText(item).toLowerCase();
   
