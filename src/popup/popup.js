@@ -37,7 +37,7 @@ async function load() {
 
   let {
     maxRecentFolders, showFolderPath, skipArchive, layout, defaultFolderSetting, migratedShiftArrow,
-    recentStrategy
+    recentStrategy, partialMatchFullPath
   } = await browser.storage.local.get(DEFAULT_PREFERENCES);
 
   if (layout == "wide" || (layout == "auto" && window.outerWidth > 1400)) {
@@ -138,7 +138,7 @@ async function load() {
   }
 
   let folderList = document.getElementById("folder-list");
-  folderList.initItems(rootNode.folderNodes, defaultFolders, showFolderPath, excludeSet);
+  folderList.initItems(rootNode.folderNodes, defaultFolders, showFolderPath, excludeSet, partialMatchFullPath);
   folderList.ignoreFocus = true;
   folderList.addEventListener("item-selected", async (event) => {
     let { folder, altMode } = event.detail;
