@@ -17,6 +17,7 @@ export default class BaseItemList extends HTMLElement {
   _allItems = [];
 
   ignoreFocus = false;
+  partialMatchFullPath = false;
 
   static observedAttributes = ["placeholder"];
 
@@ -514,27 +515,55 @@ export default class BaseItemList extends HTMLElement {
     if (lowerSearchTerm) {
       let searchWords = lowerSearchTerm.split(/\s+/);
 
-      for (let item of this.allItems) {
-        let itemText = this.getItemText(item).toLowerCase();
+      if (this.partialMatchFullPath) {
+        for (let item of this.allItems) {
+          let pathString = item.fullSearchString.toLowerCase();
 
-        if (!hasAccent) {
-          itemText = itemText.normalize("NFD").replace(DIACRITICS, "");
-        }
+          if (!hasAccent) {
+            pathString = pathString.normalize("NFD").replace(DIACRITICS, "");
+          }
 
-        let mismatch = false;
-        for (let word of searchWords) {
-          if (word && !itemText.includes(word)) {
-            mismatch = true;
-            break;
+          let match = true;
+
+          for (let word of searchWords) {
+            if (word && !pathString.includes(word)) {
+              match = false;
+              break;
+            }
+          }
+
+          let canIncludeItem = this.#navigateOnly || item.canFileMessages;
+
+          if (match && canIncludeItem) {
+            let node = this._addItem(item, BaseItemList.MODE_SEARCH);
+            if (selectedFolderId && item.id == selectedFolderId) {
+              selectNode = node;
+            }
           }
         }
+      } else {
+        for (let item of this.allItems) {
+          let itemText = this.getItemText(item).toLowerCase();
 
-        let canIncludeItem = this.#navigateOnly || item.canFileMessages;
+          if (!hasAccent) {
+            itemText = itemText.normalize("NFD").replace(DIACRITICS, "");
+          }
 
-        if (!mismatch && canIncludeItem) {
-          let node = this._addItem(item, BaseItemList.MODE_SEARCH);
-          if (selectedFolderId && item.id == selectedFolderId) {
-            selectNode = node;
+          let mismatch = false;
+          for (let word of searchWords) {
+            if (word && !itemText.includes(word)) {
+              mismatch = true;
+              break;
+            }
+          }
+
+          let canIncludeItem = this.#navigateOnly || item.canFileMessages;
+
+          if (!mismatch && canIncludeItem) {
+            let node = this._addItem(item, BaseItemList.MODE_SEARCH);
+            if (selectedFolderId && item.id == selectedFolderId) {
+              selectNode = node;
+            }
           }
         }
       }

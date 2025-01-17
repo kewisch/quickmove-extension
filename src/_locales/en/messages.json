@@ -109,5 +109,8 @@
     },
     "excludedFoldersSearchPlaceholder": {
         "message": "Search for a folder to exclude"
+    },
+    "partialMatchFullPath": {
+        "message": "Search for keywords within the entire folder path"
     }
 }

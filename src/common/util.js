@@ -7,7 +7,8 @@ export const DEFAULT_PREFERENCES = {
   skipArchive: true,
   defaultFolderSetting: "recent",
   migratedShiftArrow: false,
-  recentStrategy: "accessed"
+  recentStrategy: "accessed",
+  partialMatchFullPath: false,
 };
 
 export async function getValidatedFolders(rootNode, prefName) {
