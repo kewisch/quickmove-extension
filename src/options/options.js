@@ -120,6 +120,8 @@ async function setupFolderChooser({ rootNode, folderPickerId, folderListId, pref
   let folderList = document.getElementById(folderListId);
   folderList.initItems(folders, null, true);
 
+  let { partialMatchFullPath } = await browser.storage.local.get({ partialMatchFullPath: DEFAULT_PREFERENCES.partialMatchFullPath });
+
   folderPicker.addEventListener("item-selected", (event) => {
     let newNode = rootNode.findFolder(event.detail.folder);
 
@@ -127,6 +129,7 @@ async function setupFolderChooser({ rootNode, folderPickerId, folderListId, pref
     let allItems = [...folderSet];
 
     folderList.allItems = allItems;
+    folderList.partialMatchFullPath = partialMatchFullPath;
     folderList.repopulate();
     folderPicker.searchValue = "";
 
@@ -141,6 +144,7 @@ async function setupFolderChooser({ rootNode, folderPickerId, folderListId, pref
     let allItems = [...folderSet];
 
     folderList.allItems = allItems;
+    folderList.partialMatchFullPath = partialMatchFullPath;
     folderList.repopulate();
 
     let storageData = allItems.map(item => ({ accountId: item.accountId, path: item.path }));

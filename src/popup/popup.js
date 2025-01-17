@@ -37,7 +37,7 @@ async function load() {
 
   let {
     maxRecentFolders, showFolderPath, skipArchive, layout, defaultFolderSetting, migratedShiftArrow,
-    recentStrategy
+    recentStrategy, partialMatchFullPath
   } = await browser.storage.local.get(DEFAULT_PREFERENCES);
 
   if (layout == "wide" || (layout == "auto" && window.outerWidth > 1400)) {
@@ -99,18 +99,24 @@ async function load() {
       return folder;
     } catch (e) {
       // Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1939403
-      console.error(`Could not get tag folder ${tag.key}:`, e);
+      console.error(`Could not get tag folder ${tag.key}`);
       return null;
     }
   }))).filter(Boolean);
 
   let unifiedFolderTypes = ["inbox", "drafts", "sent", "trash", "templates", "archives", "junk"];
 
-  let unifiedFolders = await Promise.all(unifiedFolderTypes.map(async key => {
-    let folder = await messenger.folders.getUnifiedFolder(key);
-    folder.subFolders = [];
-    return folder;
-  }));
+  let unifiedFolders = (await Promise.all(unifiedFolderTypes.map(async key => {
+    try {
+      let folder = await messenger.folders.getUnifiedFolder(key);
+      folder.subFolders = [];
+      return folder;
+    } catch (e) {
+      // Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1939403
+      console.error(`Could not get unified folder ${key}`);
+      return null;
+    }
+  }))).filter(Boolean);
 
   let rootNode = new RootNode({ accounts, skipArchive, tagFolders, unifiedFolders });
 
@@ -132,7 +138,7 @@ async function load() {
   }
 
   let folderList = document.getElementById("folder-list");
-  folderList.initItems(rootNode.folderNodes, defaultFolders, showFolderPath, excludeSet);
+  folderList.initItems(rootNode.folderNodes, defaultFolders, showFolderPath, excludeSet, partialMatchFullPath);
   folderList.ignoreFocus = true;
   folderList.addEventListener("item-selected", async (event) => {
     let { folder, altMode } = event.detail;
