@@ -109,5 +109,8 @@
     },
     "excludedFoldersSearchPlaceholder": {
         "message": "Cerca una cartella da escludere"
+    },
+    "partialMatchFullPath": {
+        "message": "Ricerca le parole chiave all'interno dell'intero percorso della cartella"
     }
 }

@@ -1,0 +1,116 @@
+{
+    "extensionName": {
+        "message": "விரைவான கோப்புறை நகர்வு"
+    },
+    "actionGoto": {
+        "message": "கோட்டோ"
+    },
+    "actionTag": {
+        "message": "குறிச்சொல்"
+    },
+    "defaultFoldersRecent": {
+        "message": "அண்மைக் கால கோப்புறைகள்"
+    },
+    "defaultFoldersAll": {
+        "message": "அனைத்து கோப்புறைகளும்"
+    },
+    "extensionDescription": {
+        "message": "விசைப்பலகையைப் பயன்படுத்தி செய்திகளை மற்ற கோப்புறைகளுக்கு விரைவாக நகர்த்தவும்"
+    },
+    "extensionShortName": {
+        "message": "விரைவான நகர்வு"
+    },
+    "commandMoveDescription": {
+        "message": "தேர்ந்தெடுக்கப்பட்ட செய்திகளை நகர்த்தவும்"
+    },
+    "commandCopyDescription": {
+        "message": "தேர்ந்தெடுக்கப்பட்ட செய்திகளை நகலெடுக்கவும்"
+    },
+    "commandGotoDescription": {
+        "message": "கோப்புறைக்குச் செல்லுங்கள்"
+    },
+    "commandTagDescription": {
+        "message": "குறிச்சொல்லைப் பயன்படுத்துங்கள்"
+    },
+    "windowWarning": {
+        "message": "முதன்மையான கருவிப்பட்டியில் விரைவான கோப்புறை நகர்வைச் சேர்க்க பரிந்துரைக்கப்படுகிறது. பொத்தானை இயக்க உங்கள் கருவிப்பட்டியைத் தனிப்பயனாக்கவும்."
+    },
+    "metaActionWarning": {
+        "message": "இப்போது செயல்களுக்கு இடையில் மாறுவதற்கு உரை பெட்டியில் வழிசெலுத்தல் மோதல்களைத் தவிர்க்க Ctrl/⌘+அம்புக்குறியைப் பயன்படுத்த வேண்டும்."
+    },
+    "tagsViewMissingWarning": {
+        "message": "குறிச்சொல் கோப்புறைகளுக்குச் செல்ல 'குறிச்சொற்கள்' கோப்புறை காட்சியை இயக்கவும்."
+    },
+    "actionMove": {
+        "message": "நகர்த்தவும்"
+    },
+    "actionCopy": {
+        "message": "நகலெடு"
+    },
+    "layout": {
+        "message": "பாப்அப் தளவமைப்பு"
+    },
+    "layoutAuto": {
+        "message": "தானியங்கி"
+    },
+    "layoutWide": {
+        "message": "எப்போதும் அகலமானது"
+    },
+    "layoutCompact": {
+        "message": "எப்போதும் சுருக்கமாக"
+    },
+    "markAsRead": {
+        "message": "நகரும் போது படித்தபடி செய்திகளைக் குறிக்கவும்"
+    },
+    "showFolderPath": {
+        "message": "தேடல் பெட்டியில் ஒவ்வொரு கோப்புறையின் முழு பாதையையும் காட்டுங்கள்"
+    },
+    "skipArchive": {
+        "message": "காப்பக கோப்புறைகளை ஒருபோதும் பொருத்த வேண்டாம்"
+    },
+    "maxRecentFolders": {
+        "message": "காட்ட அண்மைக் கால கோப்புறைகளின் எண்ணிக்கை"
+    },
+    "maxRecentFoldersTitle": {
+        "message": "தேடல் உரை எதுவும் உள்ளிடப்படாதபோது காட்டப்பட்ட அண்மைக் கால கோப்புறைகளின் எண்ணிக்கையை மாற்றுகிறது."
+    },
+    "recentStrategy": {
+        "message": "கோப்புறை உத்தி"
+    },
+    "recentStrategyModified": {
+        "message": "அண்மைக் காலத்தில் மாற்றியமைக்கப்பட்ட காட்சி"
+    },
+    "recentStrategyAccessed": {
+        "message": "அண்மைக் காலத்தில் அணுகப்பட்ட காட்டு"
+    },
+    "useLegacyShortcuts": {
+        "message": "மரபு குறுக்குவழிகளின் கட்டாய பயன்பாடு"
+    },
+    "useLegacyShortcutsTitle": {
+        "message": "நகரும் செய்திகளுக்கு குறுக்குவழியாக ⇧m ஐப் பயன்படுத்தவும்"
+    },
+    "showInstructions": {
+        "message": "வழிமுறைகளைக் காட்டு"
+    },
+    "translate": {
+        "message": "உங்கள் மொழியில் மொழிபெயர்க்கவும்"
+    },
+    "defaultFoldersTitle": {
+        "message": "இயல்புநிலை கோப்புறைகள்"
+    },
+    "defaultFoldersSpecific": {
+        "message": "குறிப்பிட்ட கோப்புறைகள்"
+    },
+    "defaultFoldersSearchPlaceholder": {
+        "message": "இயல்புநிலையாக சேர்க்க கோப்புறையைத் தேடுங்கள்"
+    },
+    "excludedFoldersTitle": {
+        "message": "விலக்கப்பட்ட கோப்புறைகள்"
+    },
+    "excludedFoldersSearchPlaceholder": {
+        "message": "விலக்க ஒரு கோப்புறையைத் தேடுங்கள்"
+    },
+    "partialMatchFullPath": {
+        "message": "முழு கோப்புறை பாதையிலும் முக்கிய வார்த்தைகளைத் தேடுங்கள்"
+    }
+}
