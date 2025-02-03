@@ -1,0 +1,116 @@
+{
+    "maxRecentFoldersTitle": {
+        "message": "検索テキストが入力されていないときに表示される最近のフォルダの数を変更します。"
+    },
+    "layoutWide": {
+        "message": "常に広い"
+    },
+    "extensionName": {
+        "message": "Quick Folder Move"
+    },
+    "extensionDescription": {
+        "message": "キーボードでメッセージをフォルダにすばやく移動"
+    },
+    "extensionShortName": {
+        "message": "Quick Move"
+    },
+    "commandMoveDescription": {
+        "message": "選択したメッセージを移動"
+    },
+    "commandCopyDescription": {
+        "message": "選択したメッセージをコピー"
+    },
+    "commandTagDescription": {
+        "message": "タグを付ける"
+    },
+    "metaActionWarning": {
+        "message": "テキストボックスでアクションを切り替えるには Ctrl/⌘+矢印 の操作が必要です。"
+    },
+    "tagsViewMissingWarning": {
+        "message": "タグフォルダへ行くにはフォルダビューの「タグ」を有効にしてください。"
+    },
+    "actionMove": {
+        "message": "移動"
+    },
+    "actionGoto": {
+        "message": "行く"
+    },
+    "actionTag": {
+        "message": "タグ"
+    },
+    "layoutAuto": {
+        "message": "自動"
+    },
+    "markAsRead": {
+        "message": "移動時、メッセージを既読にする"
+    },
+    "showFolderPath": {
+        "message": "検索ボックスのフォルダにフルパスを表示"
+    },
+    "skipArchive": {
+        "message": "アーカイブフォルダを検索結果に出さない"
+    },
+    "maxRecentFolders": {
+        "message": "最近のフォルダの表示数"
+    },
+    "recentStrategy": {
+        "message": "フォルダを表示"
+    },
+    "recentStrategyModified": {
+        "message": "最近変更した"
+    },
+    "recentStrategyAccessed": {
+        "message": "最近アクセスした"
+    },
+    "useLegacyShortcuts": {
+        "message": "旧ショートカットを強制使用する"
+    },
+    "useLegacyShortcutsTitle": {
+        "message": "⇧M をメッセージ移動のショートカットにする"
+    },
+    "showInstructions": {
+        "message": "説明を表示"
+    },
+    "translate": {
+        "message": "このアドオンを翻訳"
+    },
+    "defaultFoldersTitle": {
+        "message": "デフォルトのフォルダ"
+    },
+    "defaultFoldersRecent": {
+        "message": "最近のフォルダ"
+    },
+    "defaultFoldersAll": {
+        "message": "すべてのフォルダ"
+    },
+    "defaultFoldersSpecific": {
+        "message": "特定のフォルダ"
+    },
+    "defaultFoldersSearchPlaceholder": {
+        "message": "デフォルトに追加するフォルダを検索"
+    },
+    "excludedFoldersTitle": {
+        "message": "除外フォルダ"
+    },
+    "excludedFoldersSearchPlaceholder": {
+        "message": "除外するフォルダを検索"
+    },
+    "partialMatchFullPath": {
+        "message": "フォルダパス全体を対象にキーワード検索"
+    },
+    "commandGotoDescription": {
+        "message": "フォルダに行く"
+    },
+    "windowWarning": {
+        "message": "Quick Folder Moveのメインツールバーへの追加がおすすめです。ツールバーをカスタマイズしてボタンを有効にしてください。"
+    },
+    "layout": {
+        "message": "ポップアップレイアウト"
+    },
+    "actionCopy": {
+        "message": "コピー"
+    },
+    "layoutCompact": {
+        "message": "常に狭い"
+    }
+}
