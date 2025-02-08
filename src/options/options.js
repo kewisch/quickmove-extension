@@ -62,6 +62,16 @@ async function setupListeners() {
   document.getElementById("onboarding").addEventListener("click", () => {
     browser.tabs.create({ url: "/onboarding/onboarding.html" });
   });
+
+  if (browser.commands.openShortcutSettings) {
+    // TB136 COMPAT
+    document.getElementById("shortcuts").addEventListener("click", () => {
+      browser.commands.openShortcutSettings();
+    });
+  } else {
+    document.getElementById("shortcuts").style.display = "none";
+  }
+
   document.getElementById("translate").addEventListener("click", () => {
     browser.windows.openDefaultBrowser("https://hosted.weblate.org/engage/quick-folder-move/");
   });

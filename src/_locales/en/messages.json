@@ -86,6 +86,9 @@
     "showInstructions": {
         "message": "Show instructions"
     },
+    "showShortcuts": {
+        "message": "Change Shortcuts"
+    },
     "translate": {
         "message": "Translate into your language"
     },

@@ -11,6 +11,17 @@ async function load() {
     });
   }
 
+  let openShortcuts = document.getElementById("openShortcuts");
+  if (openShortcuts && browser.commands.openShortcutSettings) {
+    // TB136 COMPAT
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=1946978
+    // Don't forget to remove the link in the html files
+    openShortcuts.addEventListener("click", (event) => {
+      browser.commands.openShortcutSettings();
+      event.preventDefault();
+    });
+  }
+
   let openOptions = document.getElementById("openOptions");
   if (openOptions) {
     openOptions.addEventListener("click", (event) => {
