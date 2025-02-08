@@ -29,7 +29,8 @@ this.quickmove = class extends ExtensionAPI {
     return {
       quickmove: {
         // bug 1840039 - messenger.folders.query API
-        // Keeping this around as this verison allows us to switch between MRMTime and MRUTime
+        // bug 1945514 - allow differing between MRU/MRMTime
+        // TB136 COMPAT
         async query({ recent, limit, canFileMessages }) {
           function* allFolders(root) {
             if (

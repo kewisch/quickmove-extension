@@ -32,6 +32,9 @@ function switchList(action) {
 }
 
 async function load() {
+  let browserInfo = await browser.runtime.getBrowserInfo();
+  let majorVersion = parseInt(browserInfo.version.split(".")[0], 10);
+
   let fontSize = await messenger.quickmove.getUIFontSize();
   window.document.documentElement.style.setProperty("font-size", `${fontSize}px`);
 
@@ -129,7 +132,20 @@ async function load() {
   let defaultFolders;
 
   if (defaultFolderSetting == "recent") {
-    let folderList = await browser.quickmove.query({ recent: recentStrategy, limit: maxRecentFolders, canFileMessages: true });
+    let folderList;
+    if (majorVersion < 137) {
+      // TB136 COMPAT
+      folderList = await browser.quickmove.query({ recent: recentStrategy, limit: maxRecentFolders, canFileMessages: true });
+    } else {
+      let lastProperty = recentStrategy == "modified" ? "lastUsedAsDestination" : "lastUsed";
+      folderList = await browser.folders.query({
+        limit: browser.folder.DEFAULT_MOST_RECENT_LIMIT,
+        [lastProperty]: { recent: true },
+        sort: lastProperty,
+        canAddMessages: true
+      });
+    }
+
     defaultFolders = rootNode.fromList(folderList).folderNodes;
   } else if (defaultFolderSetting == "specific") {
     defaultFolders = await getValidatedFolders(rootNode, "defaultFolders");
