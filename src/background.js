@@ -62,19 +62,31 @@ async function processSelectedMessages(folder, operation="move", goToFolder=fals
     return;
   }
 
+  let browserInfo = await browser.runtime.getBrowserInfo();
+  let majorVersion = parseInt(browserInfo.version.split(".")[0], 10);
+
   for await (let messages of messagePages) {
     let ids = messages.map(message => message.id);
     let op = Promise.resolve();
     if (markAsRead) {
       op = op.then(() => Promise.all(ids.map(id => browser.messages.update(id, { read: true }))));
     }
-    op = op.then(() => browser.messages[operation](ids, folderId));
+
+    if (majorVersion < 137) {
+      // TB136 COMPAT
+      op = op.then(() => browser.messages[operation](ids, folderId));
+    } else {
+      op = op.then(() => browser.messages[operation](ids, folderId, { isUserAction: true }));
+    }
     ops.push(op);
   }
 
   await Promise.all(ops);
 
-  await browser.quickmove.setLastMoveCopyFolder(folder, operation == "move");
+  if (majorVersion < 137) {
+    // TB136 COMPAT
+    await browser.quickmove.setLastMoveCopyFolder(folder, operation == "move");
+  }
 
   if (goToFolder) {
     await browser.mailTabs.update(tab.id, { displayedFolder: folderId }).catch(() => {});

@@ -90,6 +90,7 @@ this.quickmove = class extends ExtensionAPI {
         },
 
         // bug 1849476 - messages.move/copy() doesn't set mail.last_msg_movecopy_target_uri
+        // TB136 COMPAT
         async setLastMoveCopyFolder({ accountId, path }, isMove) {
           /* eslint-disable */
           /* This is verbatim from ext-mail.js */
