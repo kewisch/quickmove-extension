@@ -1,0 +1,116 @@
+{
+    "skipArchive": {
+        "message": "Neniam inkluzivu arkivajn dosierujojn"
+    },
+    "extensionName": {
+        "message": "Quick Folder Move"
+    },
+    "extensionDescription": {
+        "message": "Rapide movi mesaĝojn al aliaj dosierujoj per la klavaro"
+    },
+    "extensionShortName": {
+        "message": "Quick Move"
+    },
+    "commandMoveDescription": {
+        "message": "Movi elektitajn mesaĝojn"
+    },
+    "commandCopyDescription": {
+        "message": "Kopii elektitajn mesaĝojn"
+    },
+    "commandGotoDescription": {
+        "message": "Iri al dosierujo"
+    },
+    "commandTagDescription": {
+        "message": "Apliki etikedon"
+    },
+    "windowWarning": {
+        "message": "Estas rekomendite aldoni Quick Folder Move al la ĉefa ilobreto. Bonvolu agordi vian ilobreton por aperigi la butonon."
+    },
+    "tagsViewMissingWarning": {
+        "message": "Bonvolu ebligi la vidigon de la dosieruja vido de \"Etikedoj\" por aliri etikedajn dosierujojn."
+    },
+    "actionMove": {
+        "message": "Movi"
+    },
+    "actionCopy": {
+        "message": "Kopii"
+    },
+    "actionGoto": {
+        "message": "Salti al"
+    },
+    "actionTag": {
+        "message": "Etikedi"
+    },
+    "layout": {
+        "message": "Ŝprucfenestra aranĝo"
+    },
+    "layoutAuto": {
+        "message": "Aŭtomata"
+    },
+    "layoutWide": {
+        "message": "Ĉiam vasta"
+    },
+    "layoutCompact": {
+        "message": "Ĉiam mallarĝa"
+    },
+    "markAsRead": {
+        "message": "Marku mesaĝojn kiel legitajn dum movado"
+    },
+    "showFolderPath": {
+        "message": "Montru la plenan vojon de ĉiu dosierujo en la serĉujo"
+    },
+    "maxRecentFolders": {
+        "message": "Nombro de lastatempaj dosierujoj por montri"
+    },
+    "recentStrategy": {
+        "message": "Dosierujon"
+    },
+    "recentStrategyModified": {
+        "message": "Montri lastatempe modifitan"
+    },
+    "recentStrategyAccessed": {
+        "message": "Montri lastatempe aliritan"
+    },
+    "useLegacyShortcuts": {
+        "message": "Devigi la uzon de malnovaj klavkombinoj"
+    },
+    "useLegacyShortcutsTitle": {
+        "message": "Uzi ⇧M kiel la klavkombinon por movi mesaĝojn"
+    },
+    "showInstructions": {
+        "message": "Montru instrukciojn"
+    },
+    "translate": {
+        "message": "Traduku en vian lingvon"
+    },
+    "defaultFoldersTitle": {
+        "message": "Defaŭlta dosierujo"
+    },
+    "defaultFoldersRecent": {
+        "message": "Lastatempaj dosierujoj"
+    },
+    "defaultFoldersAll": {
+        "message": "Ĉiuj dosierujoj"
+    },
+    "defaultFoldersSpecific": {
+        "message": "Specifaj dosierujoj"
+    },
+    "excludedFoldersTitle": {
+        "message": "Ekskluditaj dosierujoj"
+    },
+    "excludedFoldersSearchPlaceholder": {
+        "message": "Serĉi dosierujon por ekskludi"
+    },
+    "defaultFoldersSearchPlaceholder": {
+        "message": "Serĉi dosierujon por aldoni kiel defaŭltan"
+    },
+    "partialMatchFullPath": {
+        "message": "Serĉu ŝlosilvortojn ene de la tuta dosieruja vojo"
+    },
+    "metaActionWarning": {
+        "message": "Por ŝanĝi inter agoj, nun necesas uzi Ctrl/⌘ + Sago por eviti navigajn konfliktojn en la tekstujo."
+    },
+    "maxRecentFoldersTitle": {
+        "message": "Ŝanĝas la nombron de lastatempaj dosierujoj montrataj kiam neniu serĉoteksto estas enigita."
+    }
+}

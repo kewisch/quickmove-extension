@@ -109,5 +109,8 @@
     },
     "tagsViewMissingWarning": {
         "message": "Merci d'activer l'affichage du dossier « Étiquettes » pour pouvoir vous déplacer."
+    },
+    "partialMatchFullPath": {
+        "message": "Rechercher le mot clé à travers l'ensemble des dossiers"
     }
 }
