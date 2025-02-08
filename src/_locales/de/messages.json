@@ -109,5 +109,11 @@
     },
     "translate": {
         "message": "Übersetzung in deine Sprache"
+    },
+    "showShortcuts": {
+        "message": "Tastaturkürzel ändern"
+    },
+    "partialMatchFullPath": {
+        "message": "Im gesamten Ordnerpfad suchen"
     }
 }
