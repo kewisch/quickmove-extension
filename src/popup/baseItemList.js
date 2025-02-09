@@ -55,8 +55,13 @@ export default class BaseItemList extends HTMLElement {
       }
       :host([compact]) .item, :host([compact]) .header-item {
         padding: 0;
-        margin: 0;
         line-height: 1.3em;
+      }
+      :host([compact]) .header-item {
+        margin: 0;
+      }
+      :host([compact]) .item{
+        margin: 0 0 0 5px;
       }
 
       :host([compact]) .search-input:focus-visible {
@@ -126,7 +131,6 @@ export default class BaseItemList extends HTMLElement {
         outline: none;
       }
 
-
       .item, .header-item {
         cursor: default;
         align-items: center;
@@ -136,8 +140,13 @@ export default class BaseItemList extends HTMLElement {
         border: 1px solid transparent;
         border-radius: 3px;
         padding: 2px 10px;
-        margin: 1px 0;
         color: var(--item-list-color);
+      }
+      .header-item {
+        margin: 1px 0;
+      }
+      .item{
+        margin: 1px 0 1px 10px;
       }
       .item.selected {
         background-color: var(--item-list-focus, color-mix(in srgb, currentcolor 10%, transparent));
@@ -145,7 +154,6 @@ export default class BaseItemList extends HTMLElement {
 
       .header-item {
         background-color: color-mix(in srgb, currentcolor 6%, transparent);
-        border: 1px solid color-mix(in srgb, currentcolor 30%, transparent);
       }
 
       .item .icon, .header-item .icon {
