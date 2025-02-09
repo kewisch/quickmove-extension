@@ -115,5 +115,8 @@
     },
     "partialMatchFullPath": {
         "message": "Search for keywords within the entire folder path"
+    },
+    "searchAccountName": {
+        "message": "Search for keywords also within the account name"
     }
 }
