@@ -21,7 +21,8 @@
   },
 
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["background.js"],
+    "type": "module"
   },
 
 
@@ -32,7 +33,8 @@
     "messagesMove",
     "messagesTags",
     "messagesTagsList",
-    "messagesUpdate"
+    "messagesUpdate",
+    "notifications"
   ],
   "browser_action": {
     "default_icon": "images/addon.svg",
