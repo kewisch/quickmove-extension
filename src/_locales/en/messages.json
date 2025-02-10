@@ -115,5 +115,26 @@
     },
     "partialMatchFullPath": {
         "message": "Search for keywords within the entire folder path"
+    },
+    "operation_action_move": {
+        "message": "Moved"
+    },
+    "operation_action_copy": {
+        "message": "Copied"
+    },
+    "operation_action_tag": {
+        "message": "Tagged"
+    },
+    "operation_message_single": {
+        "message": "message"
+    },
+    "operation_message_plural": {
+        "message": "messages"
+    },
+    "notificationActive": {
+        "message": "Show a notification for each operation"
+    },
+    "notification_first_run": {
+        "message": "First operation done! You can activate notifications in the options."
     }
 }
