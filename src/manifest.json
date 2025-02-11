@@ -9,7 +9,7 @@
     "gecko": {
       "id": "quickmove@mozilla.kewis.ch",
       "strict_min_version": "128.0",
-      "strict_max_version": "136.*"
+      "strict_max_version": "137.*"
     }
   },
   "icons": {
