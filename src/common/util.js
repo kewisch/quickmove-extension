@@ -3,7 +3,6 @@ export const DEFAULT_PREFERENCES = {
   markAsRead: true,
   maxRecentFolders: 15,
   showFolderPath: true,
-  useLegacyShortcuts: false,
   skipArchive: true,
   defaultFolderSetting: "recent",
   migratedShiftArrow: false,

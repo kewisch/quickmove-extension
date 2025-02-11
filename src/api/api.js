@@ -63,33 +63,6 @@ this.quickmove = class extends ExtensionAPI {
           return folders;
         },
 
-        // This sets the legacy shortcuts, will only keep this until the other bugs are fixed.
-        setupLegacyShortcuts(enabled) {
-          if (enabled) {
-            context.extension.shortcuts.updateCommand({
-              name: "move",
-              shortcut: "Shift+M"
-            });
-            context.extension.shortcuts.updateCommand({
-              name: "copy",
-              shortcut: "Shift+Y"
-            });
-            context.extension.shortcuts.updateCommand({
-              name: "goto",
-              shortcut: "Shift+G"
-            });
-            context.extension.shortcuts.updateCommand({
-              name: "tag",
-              shortcut: "Shift+T"
-            });
-          } else {
-            context.extension.shortcuts.resetCommand("move");
-            context.extension.shortcuts.resetCommand("copy");
-            context.extension.shortcuts.resetCommand("goto");
-            context.extension.shortcuts.resetCommand("tag");
-          }
-        },
-
         // bug 1849476 - messages.move/copy() doesn't set mail.last_msg_movecopy_target_uri
         // TB136 COMPAT
         async setLastMoveCopyFolder({ accountId, path }, isMove) {

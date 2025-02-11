@@ -119,3 +119,7 @@ fieldset {
 #defaultFolderSetting label {
   margin-inline-end: 10px;
 }
+
+#legacyShortcutsWarning:not(.noinstall) {
+  display: none;
+}

@@ -45,14 +45,6 @@
         }
       ]
     },{
-      "name": "setupLegacyShortcuts",
-      "type": "function",
-      "async": true,
-      "parameters": [{
-        "name": "enabled",
-        "type": "boolean"
-      }]
-    },{
       "name": "focusThreadPane",
       "type": "function",
       "async": true,

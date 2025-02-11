@@ -6,6 +6,8 @@
 import { RootNode } from "../common/foldernode.js";
 import { DEFAULT_PREFERENCES, getValidatedFolders } from "../common/util.js";
 
+const LEGACY_SHORTCUTS_EXTID = "legacy-shortcut-manager@mozilla.kewis.ch";
+
 async function restoreOptions() {
   let prefs = await browser.storage.local.get(DEFAULT_PREFERENCES);
 
@@ -24,12 +26,24 @@ async function restoreOptions() {
       elem.value = prefs[key];
     }
   }
+
+  updateLegacyShortcuts();
+}
+
+async function updateLegacyShortcuts() {
+  let usingLegacy = await browser.runtime.sendMessage({ action: "usingLegacyShortcuts" });
+  document.getElementById("useLegacyShortcuts").checked = usingLegacy;
 }
 
 function changeOptions(event) {
   let node = event.target;
   let defaultPrefs = Object.keys(DEFAULT_PREFERENCES);
   let isPreference = defaultPrefs.includes(node.id) || defaultPrefs.includes(node.name);
+
+  if (node.id == "useLegacyShortcuts") {
+    browser.runtime.sendMessage({ action: "setupShortcuts", enable: node.checked });
+  }
+
   if (!node.id || (node.localName != "select" && node.localName != "input") || !isPreference) {
     return;
   }
@@ -42,10 +56,6 @@ function changeOptions(event) {
     browser.storage.local.set({ [node.id]: node.value });
   } else if (node.getAttribute("type") == "radio") {
     browser.storage.local.set({ [node.name]: node.value });
-  }
-
-  if (node.id == "useLegacyShortcuts") {
-    browser.runtime.sendMessage({ action: "setupShortcuts", enable: node.checked });
   }
 }
 
@@ -75,6 +85,8 @@ async function setupListeners() {
   document.getElementById("translate").addEventListener("click", () => {
     browser.windows.openDefaultBrowser("https://hosted.weblate.org/engage/quick-folder-move/");
   });
+
+  await setupLegacyShortcuts();
 
   await setupFolderChooser({
     rootNode,
@@ -118,6 +130,13 @@ function setupLocalization() {
     let l10nId = node.getAttribute("data-l10n-attr-title");
     node.setAttribute("title", browser.i18n.getMessage(l10nId));
   }
+}
+
+async function setupLegacyShortcuts() {
+  let installed = await browser.runtime.sendMessage(LEGACY_SHORTCUTS_EXTID, { action: "ping" }).then(() => true, () => false);
+
+  document.getElementById("legacyShortcutsWarning").classList.toggle("noinstall", !installed);
+  document.getElementById("useLegacyShortcuts").disabled = !installed;
 }
 
 async function setupFolderChooser({ rootNode, folderPickerId, folderListId, prefName }) {
@@ -165,3 +184,4 @@ async function setupFolderChooser({ rootNode, folderPickerId, folderListId, pref
 document.addEventListener("DOMContentLoaded", setupLocalization, { once: true });
 document.addEventListener("DOMContentLoaded", setupListeners, { once: true });
 document.addEventListener("DOMContentLoaded", restoreOptions, { once: true });
+window.addEventListener("focus", updateLegacyShortcuts);

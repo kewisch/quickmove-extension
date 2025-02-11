@@ -4,6 +4,7 @@
  * Portions Copyright (C) Philipp Kewisch */
 
 const DEFAULT_ACTION_URL = "/popup/popup.html?action=move&allowed=move,copy,goto,tag";
+const LEGACY_SHORTCUTS_EXTID = "legacy-shortcut-manager@mozilla.kewis.ch";
 
 // Manifest v3: this needs to go into state memory or be queried for
 let gLastWindowId = null;
@@ -173,6 +174,54 @@ browser.commands.onCommand.addListener(async (name) => {
   }
 });
 
+async function usingLegacyShortcuts() {
+  let commandMap = {
+    "move": "Shift+M",
+    "copy": "Shift+Y",
+    "goto": "Shift+G",
+    "tag": "Shift+T"
+  };
+
+  for (let command of await browser.commands.getAll()) {
+    if (commandMap[command.name] != command.shortcut) {
+      return false;
+    }
+  }
+  return true;
+}
+
+async function setupShortcuts(enable) {
+  console.log("hi", enable);
+  if (enable) {
+    let res = await browser.runtime.sendMessage(LEGACY_SHORTCUTS_EXTID, {
+      action: "updateCommands",
+      commands: [{
+        name: "move",
+        shortcut: "Shift+M"
+      }, {
+        name: "copy",
+        shortcut: "Shift+Y"
+      }, {
+        name: "goto",
+        shortcut: "Shift+G"
+      }, {
+        name: "tag",
+        shortcut: "Shift+T"
+      }]
+    }).then(() => true, () => false);
+
+    return res;
+  } else {
+    await Promise.allSettled([
+      browser.commands.reset("move"),
+      browser.commands.reset("copy"),
+      browser.commands.reset("goto"),
+      browser.commands.reset("tag")
+    ]);
+    return true;
+  }
+}
+
 browser.runtime.onMessage.addListener(async (message, sender) => {
   if (message.action == "focusThreadPane") {
     return browser.quickmove.focusThreadPane();
@@ -183,7 +232,9 @@ browser.runtime.onMessage.addListener(async (message, sender) => {
       spinWith(processSelectedMessages, message.folder, message.operation, message.goToFolder);
     }
   } else if (message.action == "setupShortcuts") {
-    browser.quickmove.setupLegacyShortcuts(message.enable);
+    return setupShortcuts(message.enable);
+  } else if (message.action == "usingLegacyShortcuts") {
+    return usingLegacyShortcuts();
   } else {
     console.error("Unexpected message", message);
   }

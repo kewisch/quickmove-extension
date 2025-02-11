@@ -83,6 +83,15 @@
     "useLegacyShortcutsTitle": {
         "message": "Use ⇧M as the shortcut for moving messages"
     },
+    "legacyShortcutsWarningPre": {
+        "message": "Setting legacy shortcuts now requires the"
+    },
+    "legacyShortcutsWarningExtension": {
+        "message": "Legacy Shortcuts Manager."
+    },
+    "legacyShortcutsWarningPost": {
+        "message": "extension. Previously set shortcuts remain unchanged."
+    },
     "showInstructions": {
         "message": "Show instructions"
     },
