@@ -183,7 +183,7 @@ async function load() {
   tagList.ignoreFocus = true;
   tagList.initItems(tags, null);
   tagList.addEventListener("item-selected", async (event) => {
-    await browser.runtime.sendMessage({ action: "processSelectedMessages", tag: event.detail.key, operation: "tag" });
+    await browser.runtime.sendMessage({ action: "processSelectedMessages", tag: event.detail.folder.key, operation: "tag" });
     window.close();
   });
 

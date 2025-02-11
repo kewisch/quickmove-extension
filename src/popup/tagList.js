@@ -17,8 +17,7 @@ class TBTagList extends BaseItemList {
     let item = this.shadowRoot.ownerDocument.importNode(template.content, true);
     item.querySelector(".icon").innerHTML = BaseItemList.tagIcon(tag.color);
     item.querySelector(".text").textContent = tag.tag;
-    item.querySelector(".item").itemNode = tag;
-
+    item.querySelector(".item").itemNode = { item: tag };
     body.appendChild(item);
     return body.lastElementChild;
   }
