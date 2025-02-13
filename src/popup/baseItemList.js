@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch */
 
-import { cmdOrCtrlKey } from "../common/util.js";
+import { randomId, cmdOrCtrlKey } from "../common/util.js";
 
 const DIACRITICS = /[\u0300-\u036f]/g;
 
@@ -182,7 +182,7 @@ export default class BaseItemList extends HTMLElement {
   static get headerItemTemplateContent() {
     return `
         <template class="header-item-template">
-          <div class="header-item" part="header-item">
+          <div class="header-item" part="header-item" role="heading" aria-readonly="true">
             <div class="icon"></div>
             <div class="text"></div>
           </div>
@@ -193,10 +193,10 @@ export default class BaseItemList extends HTMLElement {
   static get itemTemplateContent() {
     return `
       <template class="item-template">
-        <div class="item" part="item">
-          <div class="icon"></div>
-          <div class="text"></div>
-          <div class="text-shortcut"></div>
+        <div class="item" part="item" role="menuitem">
+          <div class="icon" role="presentation"></div>
+          <div class="text" aria-hidden="true"></div>
+          <div class="text-shortcut" aria-hidden="true"></div>
           <button class="delete">&times;</button>
         </div>
       </template>
@@ -211,14 +211,23 @@ export default class BaseItemList extends HTMLElement {
   }
 
   static get content() {
+    let ariaSearchInputLabel = browser.i18n.getMessage("ariaSearchInputLabel");
+    let ariaSearchResultsLabel = browser.i18n.getMessage("ariaSearchResultsLabel");
+
     return `
       ${this.itemTemplateContent}
       ${this.headerItemTemplateContent}
 
-      <div class="search-header" part="search-header">
-        <input type="text" class="search-input" autocomplete="off"/>
+      <div class="search-header" part="search-header" role="presentation">
+        <input type="text"
+               class="search-input"
+               autocomplete="off"
+               aria-label="${ariaSearchInputLabel}"
+               aria-autocomplete="list"
+               role="searchbox"
+               />
       </div>
-      <div class="list-body" tabindex="0">
+      <div class="list-body" role="menu" aria-label="${ariaSearchResultsLabel}" tabindex="0">
       </div>
     `;
   }
@@ -235,6 +244,10 @@ export default class BaseItemList extends HTMLElement {
     this.itemListKeyDown = this.itemListKeyDown.bind(this);
     this.itemListSelectLeave = this.itemListSelectLeave.bind(this);
     this.searchKeyDownCallback = this.searchKeyDownCallback.bind(this);
+
+    let listBody = this.shadowRoot.querySelector(".list-body");
+    listBody.id = randomId();
+    this.search.setAttribute("aria-controls", listBody.id);
   }
 
   connectedCallback() {
@@ -284,10 +297,12 @@ export default class BaseItemList extends HTMLElement {
     let selected = this.selected;
     if (selected) {
       selected.classList.remove("selected");
+      selected.removeAttribute("aria-selected");
     }
 
     if (item) {
       item.classList.add("selected");
+      item.setAttribute("aria-selected", "true");
       item.scrollIntoView({ block: "nearest", inline: "start" });
     }
   }

@@ -102,6 +102,8 @@ class TBFolderList extends BaseItemList {
 
     let compact = this.hasAttribute("compact");
 
+    let containerFolderString = prettyFolderPathComponents.slice(0, -1).join(" → ");
+
     if (compact) {
       if (this.#showFolderPath) {
         item.querySelector(".text").textContent = prettyFolderPathComponents.join("→");
@@ -111,13 +113,18 @@ class TBFolderList extends BaseItemList {
       }
     } else {
       if (this.#showFolderPath) {
-        item.querySelector(".text-shortcut").textContent = prettyFolderPathComponents.slice(0, -1).join(" → ");
+        item.querySelector(".text-shortcut").textContent = containerFolderString;
+      } else {
+        item.querySelector(".item").setAttribute("title", prettyFolderPathComponents.join(" → "));
       }
       item.querySelector(".text").textContent = folderNode.name;
-      item.querySelector(".item").setAttribute("title", prettyFolderPathComponents.join(" → "));
     }
 
     item.querySelector(".item").itemNode = folderNode;
+    item.querySelector(".item").setAttribute(
+      "aria-label",
+      browser.i18n.getMessage("ariaFolderItemlabel", [folderNode.name, containerFolderString])
+    );
 
     if (!body.lastElementChild || body.lastElementChild.itemNode.accountId != folderNode.accountId) {
       let accountTemplate = this.shadowRoot.querySelector(".header-item-template");
@@ -132,6 +139,10 @@ class TBFolderList extends BaseItemList {
           accountItem.querySelector(".icon").innerHTML = BaseItemList.tagIcon("#0a84ff");
         }
 
+        accountItem.querySelector(".header-item").setAttribute(
+          "aria-label",
+          browser.i18n.getMessage("ariaAccountNameLabel", [account.name])
+        );
         accountItem.querySelector(".header-item").account = account;
         body.appendChild(accountItem);
       }

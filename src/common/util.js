@@ -26,3 +26,7 @@ export function cmdOrCtrlKey(event) {
   const isMac = navigator.platform.toUpperCase().includes("MAC");
   return isMac ? event.metaKey : event.ctrlKey;
 }
+
+export function randomId(prefix) {
+  return (prefix || "") + Math.random().toString(36).substr(2);
+}

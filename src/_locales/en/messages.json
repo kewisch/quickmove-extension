@@ -41,6 +41,38 @@
     "actionTag": {
         "message": "Tag"
     },
+    "ariaSearchInputLabel": {
+        "message": "Search for a folder",
+        "description": "This string is used for assistive technology to describe what the search box does"
+    },
+    "ariaSearchResultsLabel": {
+        "message": "Select a target folder",
+        "description": "This string is used for assistive technology to describe what the folder results listing does"
+    },
+    "ariaFolderItemLabel": {
+        "message": "\"$FOLDER$\", within folder: $PARENT$",
+        "description": "Description of a folder item for assistive technology",
+        "placeholders": {
+            "FOLDER": {
+                "content": "$1",
+                "example": "New Folder"
+            },
+            "PARENT": {
+                "content": "$2",
+                "example": "Inbox → Empty Folders"
+            }
+        }
+    },
+    "ariaAccountNameLabel": {
+        "message": "Account $ACCOUNT$",
+        "description": "Heading with the account name for assistive technology",
+        "placeholders": {
+            "ACCOUNT": {
+                "content": "$1",
+                "example": "Local Folders"
+            }
+        }
+    },
     "layout": {
         "message": "Popup layout"
     },
