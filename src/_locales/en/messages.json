@@ -115,5 +115,24 @@
     },
     "partialMatchFullPath": {
         "message": "Search for keywords within the entire folder path"
+    },
+    "operation_action_move": {
+        "message": "Moved"
+    },
+    "operation_action_copy": {
+        "message": "Copied"
+    },
+    "operation_action_tag": {
+        "message": "Tagged"
+    },
+    "operation_message_pluralforms": {
+        "message": "message;messages",
+        "description": "List all plural forms for the word 'message', separated by ';', following your language's plural rules. The order must match the language's pluralization pattern: singular first, then all plural variations. Example: 'apple;apples' (English), 'pomme;pommes' (French), 'jabłko;jabłka;jabłek' (Polish), 'تفاح;تفاحة;تفاحتان;تفاحات;تفاحة;تفاح' (Arabic)."
+    },
+    "notificationActive": {
+        "message": "Show a notification for each operation"
+    },
+    "Folder": {
+        "message": "Folder"
     }
 }
