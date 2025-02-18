@@ -112,5 +112,11 @@
     },
     "partialMatchFullPath": {
         "message": "Ricerca le parole chiave all'interno dell'intero percorso della cartella"
+    },
+    "showShortcuts": {
+        "message": "Cambia Scorciatoie"
+    },
+    "searchAccountName": {
+        "message": "Cerca le parole chiave anche nel nome account"
     }
 }
