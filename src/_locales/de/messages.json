@@ -115,5 +115,8 @@
     },
     "partialMatchFullPath": {
         "message": "Im gesamten Ordnerpfad suchen"
+    },
+    "searchAccountName": {
+        "message": "Auch innerhalb des Kontonamens suchen"
     }
 }
