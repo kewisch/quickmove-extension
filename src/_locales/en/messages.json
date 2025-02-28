@@ -118,5 +118,44 @@
     },
     "searchAccountName": {
         "message": "Search for keywords also within the account name"
+    },
+    "operationAction.move": {
+        "message": "Moved $num_messages$ message to folder $destination$;Moved $num_messages$ messages to folder $destination$",
+        "description": "List all plural forms for this sentence, separated by ';', following your language's plural rules. The order must match the language's pluralization pattern: singular first, then all plural variations. Example: 'apple;apples' (English), 'pomme;pommes' (French), 'jabłko;jabłka;jabłek' (Polish), 'تفاح;تفاحة;تفاحتان;تفاحات;تفاحة;تفاح' (Arabic).",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.copy": {
+        "message": "Copied $num_messages$ message to folder $destination$;Copied $num_messages$ messages to folder $destination$",
+        "description": "List all plural forms for this sentence, separated by ';', following your language's plural rules. The order must match the language's pluralization pattern: singular first, then all plural variations. Example: 'apple;apples' (English), 'pomme;pommes' (French), 'jabłko;jabłka;jabłek' (Polish), 'تفاح;تفاحة;تفاحتان;تفاحات;تفاحة;تفاح' (Arabic).",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag": {
+        "message": "Tagged $num_messages$ message with tag $destination$;Tagged $num_messages$ messages with tag $destination$",
+        "description": "List all plural forms for this sentence, separated by ';', following your language's plural rules. The order must match the language's pluralization pattern: singular first, then all plural variations. Example: 'apple;apples' (English), 'pomme;pommes' (French), 'jabłko;jabłka;jabłek' (Polish), 'تفاح;تفاحة;تفاحتان;تفاحات;تفاحة;تفاح' (Arabic).",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "notificationActive": {
+        "message": "Show a notification for each operation"
     }
 }

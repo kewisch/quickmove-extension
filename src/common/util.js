@@ -1,3 +1,5 @@
+import PluralForm from "./pluralform.js";
+
 export const DEFAULT_PREFERENCES = {
   layout: "auto",
   markAsRead: true,
@@ -10,6 +12,8 @@ export const DEFAULT_PREFERENCES = {
   recentStrategy: "accessed",
   partialMatchFullPath: false,
   searchAccountName: false,
+  notificationActive: false,
+  operationCounters: { move: 0, copy: 0, tag: 0 },
 };
 
 export async function getValidatedFolders(rootNode, prefName) {
@@ -27,4 +31,30 @@ export async function getValidatedFolders(rootNode, prefName) {
 export function cmdOrCtrlKey(event) {
   const isMac = navigator.platform.toUpperCase().includes("MAC");
   return isMac ? event.metaKey : event.ctrlKey;
+}
+
+export async function showNotification(operation, numMessages, destination, dismissTime = 10000) {
+  let operationAction = browser.i18n.getMessage("operationAction." + operation, ["#num_messages#", "#destination#"]);
+  let notificationMessage = PluralForm.get(numMessages, operationAction);
+  let replacements = {
+    num_messages: numMessages,
+    destination: destination
+  };
+  notificationMessage = notificationMessage.replace(/#([^#]+)#/g, (match, key) => {
+    return replacements[key] || match;
+  });
+
+  let notificationID = await browser.notifications.create(null, {
+    type: "basic",
+    title: browser.i18n.getMessage("extensionName"),
+    // Some platforms don't do well with SVG images in notifications
+    iconUrl: browser.runtime.getURL("images/addon-atn.png"),
+    message: notificationMessage
+  });
+
+  if (dismissTime > 0) {
+    setTimeout(() => {
+      browser.notifications.clear(notificationID);
+    }, dismissTime);
+  }
 }
