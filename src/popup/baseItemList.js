@@ -521,9 +521,6 @@ export default class BaseItemList extends HTMLElement {
   }
 
   repopulate() {
-    let selectedFolderId = this.selected?.itemNode.id;
-    let selectNode = null;
-
     let lowerSearchTerm = this.searchValue.toLowerCase();
     let hasAccent = !!lowerSearchTerm.normalize("NFD").match(DIACRITICS);
 
@@ -552,10 +549,7 @@ export default class BaseItemList extends HTMLElement {
           let canIncludeItem = this.#navigateOnly || item.canFileMessages;
 
           if (match && canIncludeItem) {
-            let node = this._addItem(item, BaseItemList.MODE_SEARCH);
-            if (selectedFolderId && item.id == selectedFolderId) {
-              selectNode = node;
-            }
+            this._addItem(item, BaseItemList.MODE_SEARCH);
           }
         }
       } else {
@@ -577,40 +571,25 @@ export default class BaseItemList extends HTMLElement {
           let canIncludeItem = this.#navigateOnly || item.canFileMessages;
 
           if (!mismatch && canIncludeItem) {
-            let node = this._addItem(item, BaseItemList.MODE_SEARCH);
-            if (selectedFolderId && item.id == selectedFolderId) {
-              selectNode = node;
-            }
+            this._addItem(item, BaseItemList.MODE_SEARCH);
           }
         }
       }
     } else if (this.defaultItems) {
       for (let item of this.defaultItems) {
         if (this.#navigateOnly || item.canFileMessages) {
-          let node = this._addItem(item, BaseItemList.MODE_DEFAULT);
-          if (selectedFolderId && item.id == selectedFolderId) {
-            selectNode = node;
-          }
+          this._addItem(item, BaseItemList.MODE_DEFAULT);
         }
       }
     } else {
       for (let item of this.allItems) {
         if (this.#navigateOnly || item.canFileMessages) {
-          let node = this._addItem(item, BaseItemList.MODE_ALL);
-          if (selectedFolderId && item.id == selectedFolderId) {
-            selectNode = node;
-          }
+          this._addItem(item, BaseItemList.MODE_ALL);
         }
       }
     }
 
-    if (selectNode) {
-      this.selected = selectNode;
-    }
-
-    if (!this.selected) {
-      this.selected = this.nthItem(1);
-    }
+    this.selected = this.nthItem(1);
   }
 }
 
