@@ -118,5 +118,41 @@
     },
     "searchAccountName": {
         "message": "Cerca le parole chiave anche nel nome account"
+    },
+    "operationAction.move": {
+        "message": "Hai spostato $num_messages$ messaggio nella cartella $destination$;Hai spostato $num_messages$ messaggi nella cartella $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.copy": {
+        "message": "Hai copiato $num_messages$ messaggio nella cartella $destination$;Hai copiato $num_messages$ messaggi nella cartella $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag": {
+        "message": "Hai assegnato a $num_messages$ messaggio l'etichetta $destination$;Hai assegnato a $num_messages$ messaggi l'etichetta $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "notificationActive": {
+        "message": "Mostra una notifica per ogni operazione eseguita"
     }
 }
