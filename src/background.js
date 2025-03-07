@@ -103,7 +103,7 @@ async function processSelectedMessages(folder, operation="move", goToFolder=fals
     showNotification(operation, numMessages, folderId);
   }
 }
-async function applyTags(tag) {
+async function applyTags(tag, name) {
   let { markAsRead, notificationActive, operationCounters } = await browser.storage.local.get({ markAsRead: DEFAULT_PREFERENCES.markAsRead, notificationActive: DEFAULT_PREFERENCES.notificationActive, operationCounters: DEFAULT_PREFERENCES.operationCounters });
   let ops = [];
   let numMessages = 0;
@@ -128,7 +128,7 @@ async function applyTags(tag) {
         data.read = true;
       }
       if (notificationActive) {
-        showNotification("tag", numMessages, tag);
+        showNotification("tag", numMessages, name);
       }
 
       return browser.messages.update(id, data);
@@ -196,7 +196,7 @@ browser.runtime.onMessage.addListener(async (message, sender) => {
     return browser.quickmove.focusThreadPane();
   } else if (message.action == "processSelectedMessages") {
     if (message.operation == "tag") {
-      spinWith(applyTags, message.tag);
+      spinWith(applyTags, message.tag, message.tagName);
     } else {
       spinWith(processSelectedMessages, message.folder, message.operation, message.goToFolder);
     }
