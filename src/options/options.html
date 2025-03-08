@@ -56,6 +56,31 @@
         <button id="translate" data-l10n-id="translate"></button>
       </div>
     </div>
+    <fieldset class="operationMenuItemsFieldset">
+      <legend data-l10n-id="operationMenuItemsTitle"></legend>
+      <div>
+        <div class="menuItemActionDivText" data-l10n-id="menuItemActionInfo"></div>
+        <div class="menuItemActionDivText" data-l10n-id="menuItemActionWarning"></div>
+        <div class="menuItemActionDivGroup">
+          <div class="preference menuItemActionDiv">
+            <input type="checkbox" id="operationMenuItemsMove" class="menuItemAction">
+            <label for="operationMenuItemsMove" data-l10n-id="actionMove"></label>
+          </div>
+          <div class="preference menuItemActionDiv">
+            <input type="checkbox" id="operationMenuItemsCopy" class="menuItemAction">
+            <label for="operationMenuItemsCopy" data-l10n-id="actionCopy"></label>
+          </div>
+          <div class="preference menuItemActionDiv">
+            <input type="checkbox" id="operationMenuItemsGoto" class="menuItemAction">
+            <label for="operationMenuItemsGoto" data-l10n-id="actionGoto"></label>
+          </div>
+          <div class="preference menuItemActionDiv">
+            <input type="checkbox" id="operationMenuItemsTag" class="menuItemAction">
+            <label for="operationMenuItemsTag" data-l10n-id="actionTag"></label>
+          </div>
+        </div>
+      </div>
+    </fieldset>
     <fieldset>
       <legend data-l10n-id="defaultFoldersTitle"></legend>
       <div id="defaultFolderSetting" data-type="radio">
@@ -91,5 +116,6 @@
         <folder-list id="excluded-folder-picker" search="true" data-l10n-attr-placeholder="excludedFoldersSearchPlaceholder" popup="true"></folder-list>
       </div>
       <folder-list id="excluded-folders" readonly="true" delete="true"></folder-list>
+    </fieldset>
   </body>
 </html>

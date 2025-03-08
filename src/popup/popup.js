@@ -52,6 +52,31 @@ async function load() {
 
   setup_localization();
 
+  // hide action buttons
+  let { operationMenuItemsMove, operationMenuItemsCopy, operationMenuItemsGoto, operationMenuItemsTag } = await browser.storage.local.get({
+    operationMenuItemsMove: DEFAULT_PREFERENCES.operationMenuItemsMove,
+    operationMenuItemsCopy: DEFAULT_PREFERENCES.operationMenuItemsCopy,
+    operationMenuItemsGoto: DEFAULT_PREFERENCES.operationMenuItemsGoto,
+    operationMenuItemsTag: DEFAULT_PREFERENCES.operationMenuItemsTag
+  });
+
+  if (!operationMenuItemsMove) {
+    document.querySelector("label[for='action-move']").style.display = "none";
+    document.querySelector("#action-move").style.display = "none";
+  }
+  if (!operationMenuItemsCopy) {
+    document.querySelector("label[for='action-copy']").style.display = "none";
+    document.querySelector("#action-copy").style.display = "none";
+  }
+  if (!operationMenuItemsGoto) {
+    document.querySelector("label[for='action-goto']").style.display = "none";
+    document.querySelector("#action-goto").style.display = "none";
+  }
+  if (!operationMenuItemsTag) {
+    document.querySelector("label[for='action-tag']").style.display = "none";
+    document.querySelector("#action-tag").style.display = "none";
+  }
+
   let params = new URLSearchParams(window.location.search);
 
   let action = params.get("action") || "move";
