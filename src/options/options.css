@@ -86,6 +86,27 @@ fieldset {
   min-height: 25em;
   grid-column: span 2;
   padding: 10px;
+  border-color: light-dark(#fff, #5f5f5f);
+}
+
+.menuItemActionDiv {
+  display: inline-block;
+  margin-left: 35px;
+}
+
+.menuItemActionDivGroup {
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.menuItemActionDivText {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.operationMenuItemsFieldset {
+  min-height: fit-content;
 }
 
 .overflow {

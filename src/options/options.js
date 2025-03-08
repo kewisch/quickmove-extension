@@ -44,6 +44,12 @@ function changeOptions(event) {
     browser.storage.local.set({ [node.name]: node.value });
   }
 
+  if (node.className === "menuItemAction") {
+    if (!checkMenuItemVisibility()) {
+      node.checked = true;
+    }
+  }
+
   if (node.id == "useLegacyShortcuts") {
     browser.runtime.sendMessage({ action: "setupShortcuts", enable: node.checked });
   }
@@ -112,6 +118,10 @@ async function setupListeners() {
       }
     }
   });
+}
+
+function checkMenuItemVisibility() {
+  return ["operationMenuItemsMove", "operationMenuItemsCopy", "operationMenuItemsGoto", "operationMenuItemsTag"].some(id => document.getElementById(id).checked);
 }
 
 function setupLocalization() {
