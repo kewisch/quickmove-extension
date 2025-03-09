@@ -155,6 +155,18 @@
             }
         }
     },
+    "operationAction.tag.remove": {
+        "message": "Removed tag $destination$ from $num_messages$ message;Removed tag $destination$ from $num_messages$ messages",
+        "description": "List all plural forms for this sentence, separated by ';', following your language's plural rules. The order must match the language's pluralization pattern: singular first, then all plural variations. Example: 'apple;apples' (English), 'pomme;pommes' (French), 'jabłko;jabłka;jabłek' (Polish), 'تفاح;تفاحة;تفاحتان;تفاحات;تفاحة;تفاح' (Arabic).",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
     "notificationActive": {
         "message": "Show a notification for each operation"
     },
