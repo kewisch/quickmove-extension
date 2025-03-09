@@ -118,5 +118,50 @@
     },
     "searchAccountName": {
         "message": "Auch innerhalb des Kontonamens suchen"
+    },
+    "notificationActive": {
+        "message": "Zeige eine Benachrichtigung für jeden Vorgang"
+    },
+    "operationMenuItemsTitle": {
+        "message": "Angezeigte Vorgänge"
+    },
+    "menuItemActionWarning": {
+        "message": "Es muss mindestens ein Vorgang gewählt werden."
+    },
+    "operationAction.move": {
+        "message": "$num_messages$ Nachricht wurde in den Ordner $destination$ verschoben;$num_messages$ Nachrichten wurden in den Ordner $destination$ verschoben",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.copy": {
+        "message": "$num_messages$ Nachricht wurde in den Ordner $destination$ kopiert;$num_messages$ Nachrichten wurden in den Ordner $destination$ kopiert",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "menuItemActionInfo": {
+        "message": "Wähle welche Vorgänge im Menü verfügbar sein sollen."
+    },
+    "operationAction.tag": {
+        "message": "$num_messages$ Nachricht wurde mit dem Schlagwort $destination$ versehen;$num_messages$ Nachrichten wurden mit dem Schlagwort $destination$ versehen",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
     }
 }
