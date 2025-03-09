@@ -141,7 +141,7 @@ class TBFolderList extends BaseItemList {
     return body.lastElementChild;
   }
 
-  initItems(allItems, defaultItems, showFolderPath=false, excludeSet=null, partialMatchFullPath=false, searchAccountName=false) {
+  initItems(allItems, defaultItems, showFolderPath = false, excludeSet = null, partialMatchFullPath = false, searchAccountName = false) {
     this._allItems = allItems;
     this._defaultItems = defaultItems;
     this.#showFolderPath = showFolderPath;

@@ -16,7 +16,7 @@ class BaseNode {
     return this.item.name;
   }
 
-  child(x, create=true, item=null) {
+  child(x, create = true, item = null) {
     if (!x) {
       return this;
     }
@@ -51,7 +51,7 @@ class BaseNode {
     }
   }
 
-  * walk(includeSelf=true, yieldNodes=true) {
+  * walk(includeSelf = true, yieldNodes = true) {
     if (includeSelf) {
       yield (yieldNodes ? this : this.item);
     }
@@ -160,7 +160,7 @@ export class VirtualAccountNode extends AccountNode {
 export class RootNode extends BaseNode {
   _childClass = AccountNode;
 
-  constructor({ accounts, skipArchive=false, tagFolders=null, unifiedFolders=null }) {
+  constructor({ accounts, skipArchive = false, tagFolders = null, unifiedFolders = null }) {
     super(null, null);
     this.skipArchive = skipArchive;
     this.folderMap = new Map();

@@ -44,7 +44,7 @@ async function spinWith(func, ...args) {
   return rv;
 }
 
-async function processSelectedMessages(folder, operation="move", goToFolder=false) {
+async function processSelectedMessages(folder, operation = "move", goToFolder = false) {
   let { markAsRead, notificationActive, operationCounters } = await browser.storage.local.get({ markAsRead: DEFAULT_PREFERENCES.markAsRead, notificationActive: DEFAULT_PREFERENCES.notificationActive, operationCounters: DEFAULT_PREFERENCES.operationCounters });
 
   let ops = [];
@@ -166,7 +166,7 @@ browser.runtime.onInstalled.addListener(({ reason, previousVersion }) => {
 
 browser.commands.onCommand.addListener(async (name) => {
   let popupOrder = [browser.messageDisplayAction, browser.browserAction];
-  let popupUrl =`/popup/popup.html?action=${name}&allowed=move,copy,goto,tag`;
+  let popupUrl = `/popup/popup.html?action=${name}&allowed=move,copy,goto,tag`;
   if (name == "goto") {
     popupOrder = popupOrder.reverse();
   }

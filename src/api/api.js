@@ -3,6 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch */
 
+/* global MailServices, BasePopup, FolderUtils, UIFontSize */
 ChromeUtils.defineESModuleGetters(this, {
   MailServices: "resource:///modules/MailServices.sys.mjs",
   BasePopup: "resource:///modules/ExtensionPopups.sys.mjs",
