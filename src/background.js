@@ -115,9 +115,11 @@ async function applyTags(tag, name) {
     ops.push(Promise.all(ids.map(async (id) => {
       let msg = await browser.messages.get(id);
       let tagset = new Set(msg.tags);
+      let operation = "tag";
 
       if (tagset.has(tag)) {
         tagset.delete(tag);
+        operation = "tag.remove";
       } else {
         tagset.add(tag);
       }
@@ -128,7 +130,7 @@ async function applyTags(tag, name) {
         data.read = true;
       }
       if (notificationActive) {
-        showNotification("tag", numMessages, name);
+        showNotification(operation, numMessages, name);
       }
 
       return browser.messages.update(id, data);
