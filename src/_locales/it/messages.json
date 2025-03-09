@@ -142,7 +142,7 @@
         }
     },
     "operationAction.tag": {
-        "message": "Hai assegnato a $num_messages$ messaggio l'etichetta $destination$;Hai assegnato a $num_messages$ messaggi l'etichetta $destination$",
+        "message": "Hai assegnato l'etichetta $destination$ a $num_messages$ messaggio;Hai assegnato l'etichetta $destination$ a $num_messages$ messaggi",
         "placeholders": {
             "num_messages": {
                 "content": "$1"
@@ -154,5 +154,25 @@
     },
     "notificationActive": {
         "message": "Mostra una notifica per ogni operazione eseguita"
+    },
+    "menuItemActionInfo": {
+        "message": "Scegli quali azioni devono essere mostrate nel menu del popup."
+    },
+    "operationMenuItemsTitle": {
+        "message": "Elementi del menu operazioni"
+    },
+    "menuItemActionWarning": {
+        "message": "Deve essere selezionato almeno un elemento."
+    },
+    "operationAction.tag.remove": {
+        "message": "Hai rimosso l'etichetta $destination$ da $num_messages$ messaggio;Hai rimosso l'etichetta $destination$ da $num_messages$ messaggi",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
     }
 }

@@ -163,5 +163,16 @@
                 "content": "$2"
             }
         }
+    },
+    "operationAction.tag.remove": {
+        "message": "Bei $num_messages$ Nachricht wurde das Schlagwort $destination$ entfernt;Bei $num_messages$ Nachrichten wurde das Schlagwort $destination$ entfernt",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
     }
 }
