@@ -6,6 +6,12 @@ class TBFolderList extends BaseItemList {
 
   static get style() {
     return super.style + `
+      :host([compact]) .item > .text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-wrap: nowrap;
+      }
+
       .item > .icon {
         background: url("../images/folder/folder.svg") no-repeat 0 0;
       }
@@ -104,7 +110,7 @@ class TBFolderList extends BaseItemList {
 
     if (compact) {
       if (this.#showFolderPath) {
-        item.querySelector(".text").textContent = prettyFolderPathComponents.join("→");
+        item.querySelector(".text").textContent = prettyFolderPathComponents.reverse().join("←");
       } else {
         item.querySelector(".text").textContent = folderNode.name;
         item.querySelector(".item").setAttribute("title", prettyFolderPathComponents.join(" → "));
