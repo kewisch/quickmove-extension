@@ -63,6 +63,9 @@ export default class BaseItemList extends HTMLElement {
       :host([compact]) .item{
         margin: 0 0 0 5px;
       }
+      :host([compact]) .item > .text {
+        text-indent: 1em hanging;
+      }
 
       :host([compact]) .search-input:focus-visible {
         outline: none !important;
@@ -133,7 +136,6 @@ export default class BaseItemList extends HTMLElement {
 
       .item, .header-item {
         cursor: default;
-        align-items: center;
         display: flex;
         flex-direction: row;
         line-height: 1.5em;
@@ -145,7 +147,7 @@ export default class BaseItemList extends HTMLElement {
       .header-item {
         margin: 1px 0;
       }
-      .item{
+      .item {
         margin: 1px 0 1px 10px;
       }
       .item.selected {
@@ -159,6 +161,7 @@ export default class BaseItemList extends HTMLElement {
       .item .icon, .header-item .icon {
         flex-grow: 0;
         flex-shrink: 0;
+        margin-top: calc((1lh - 16px) / 2);
       }
 
       .item > .text, .header-item > .text {
