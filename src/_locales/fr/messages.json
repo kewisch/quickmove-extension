@@ -1,6 +1,6 @@
 {
     "extensionName": {
-        "message": "Quick Folder Move"
+        "message": "Déplacement rapide de dossier"
     },
     "extensionDescription": {
         "message": "Déplace rapidement vos messages dans d'auters dossiers en utilisant le clavier"
@@ -112,5 +112,67 @@
     },
     "partialMatchFullPath": {
         "message": "Rechercher le mot clé à travers l'ensemble des dossiers"
+    },
+    "notificationActive": {
+        "message": "Afficher une notification pour chaque opération"
+    },
+    "operationAction.move": {
+        "message": "Déplacement du message $num_messages$ dans le dossier $destination$;Déplacement des messages $num_messages$ dans les dossiers $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "menuItemActionInfo": {
+        "message": "Choisissez les actions qui doivent être disponibles dans le menu contextuel."
+    },
+    "menuItemActionWarning": {
+        "message": "Au moins un élément doit être sélectionné."
+    },
+    "operationMenuItemsTitle": {
+        "message": "Éléments du menu d'opération"
+    },
+    "operationAction.copy": {
+        "message": "Copie de $num_messages$ messages dans le dossier $destination$;Copie des $num_messages$ messages dans le dossier $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag": {
+        "message": "Message étiqueté avec l'étiquette $destination$;Messages étiquetés $num_messages$ avec l'étiquette $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag.remove": {
+        "message": "Suppression de l'étiquette $destination$ du message $num_messages$;Suppression de l'étiquette $destination$ des messages $num_messages$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "showShortcuts": {
+        "message": "Modifier les raccourcis"
+    },
+    "searchAccountName": {
+        "message": "Recherche de mots-clés dans le nom du compte"
     }
 }
