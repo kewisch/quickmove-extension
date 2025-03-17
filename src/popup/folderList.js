@@ -104,7 +104,8 @@ class TBFolderList extends BaseItemList {
 
     if (compact) {
       if (this.#showFolderPath) {
-        item.querySelector(".text").textContent = prettyFolderPathComponents.join("→");
+        // Zero width space to allow wrapping while saving space
+        item.querySelector(".text").textContent = prettyFolderPathComponents.reverse().join("\u200B←");
       } else {
         item.querySelector(".text").textContent = folderNode.name;
         item.querySelector(".item").setAttribute("title", prettyFolderPathComponents.join(" → "));
