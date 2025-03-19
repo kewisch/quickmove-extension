@@ -164,7 +164,7 @@ async function load() {
     } else {
       let lastProperty = recentStrategy == "modified" ? "lastUsedAsDestination" : "lastUsed";
       folderList = await browser.folders.query({
-        limit: browser.folder.DEFAULT_MOST_RECENT_LIMIT,
+        limit: browser.folders.DEFAULT_MOST_RECENT_LIMIT,
         [lastProperty]: { recent: true },
         sort: lastProperty,
         canAddMessages: true
