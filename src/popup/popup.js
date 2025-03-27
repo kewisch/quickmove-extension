@@ -8,6 +8,13 @@ import { DEFAULT_PREFERENCES, getValidatedFolders, cmdOrCtrlKey } from "../commo
 
 const ALL_ACTIONS = ["move", "copy", "goto", "tag"];
 
+let enabledActions = {
+  move: true,
+  copy: true,
+  goto: true,
+  tag: true
+};
+
 function setup_localization() {
   for (let node of document.querySelectorAll("[data-l10n-id]")) {
     let l10nid = node.getAttribute("data-l10n-id");
@@ -53,26 +60,30 @@ async function load() {
   setup_localization();
 
   // hide action buttons
-  let { operationMenuItemsMove, operationMenuItemsCopy, operationMenuItemsGoto, operationMenuItemsTag } = await browser.storage.local.get({
+  let operationPrefs = await browser.storage.local.get({
     operationMenuItemsMove: DEFAULT_PREFERENCES.operationMenuItemsMove,
     operationMenuItemsCopy: DEFAULT_PREFERENCES.operationMenuItemsCopy,
     operationMenuItemsGoto: DEFAULT_PREFERENCES.operationMenuItemsGoto,
     operationMenuItemsTag: DEFAULT_PREFERENCES.operationMenuItemsTag
   });
+  enabledActions.move = operationPrefs.operationMenuItemsMove;
+  enabledActions.copy = operationPrefs.operationMenuItemsCopy;
+  enabledActions.goto = operationPrefs.operationMenuItemsGoto;
+  enabledActions.tag = operationPrefs.operationMenuItemsTag;
 
-  if (!operationMenuItemsMove) {
+  if (!enabledActions.move) {
     document.querySelector("label[for='action-move']").style.display = "none";
     document.querySelector("#action-move").style.display = "none";
   }
-  if (!operationMenuItemsCopy) {
+  if (!enabledActions.copy) {
     document.querySelector("label[for='action-copy']").style.display = "none";
     document.querySelector("#action-copy").style.display = "none";
   }
-  if (!operationMenuItemsGoto) {
+  if (!enabledActions.goto) {
     document.querySelector("label[for='action-goto']").style.display = "none";
     document.querySelector("#action-goto").style.display = "none";
   }
-  if (!operationMenuItemsTag) {
+  if (!enabledActions.tag) {
     document.querySelector("label[for='action-tag']").style.display = "none";
     document.querySelector("#action-tag").style.display = "none";
   }
@@ -256,7 +267,8 @@ function keydown(event) {
     event.stopPropagation();
 
     let params = new URLSearchParams(window.location.search);
-    let sequence = (params.get("allowed") || "move,copy").split(",");
+    let allowedActions = (params.get("allowed") || "move,copy").split(",");
+    let sequence = allowedActions.filter(action => enabledActions[action]);
     if (getComputedStyle(document.documentElement).direction == "rtl") {
       direction *= -1;
     }
