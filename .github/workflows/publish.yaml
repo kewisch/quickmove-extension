@@ -45,5 +45,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          jq -r '"Initial compatibility with Thunderbird " + .applications.gecko.strict_min_version + "–" + .applications.gecko.strict_max_version' src/manifest.json > CHANGELOG.md
+          npx conventional-changelog -p angular -r 2 | tail -n +7 >> CHANGELOG.md
+
+          gh release edit $TAG_NAME --notes-file CHANGELOG.md
           gh release upload ${{ github.event.release.tag_name }} \
             web-ext-artifacts/*.zip

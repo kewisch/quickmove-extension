@@ -1,7 +1,6 @@
 {
   "name": "quickmove",
   "description": "Quick Folder Move",
-  "version": "3.1.0",
   "private": true,
   "author": "Philipp Kewisch <mozilla@kewis.ch>",
   "license": "MPL-2.0",
@@ -23,8 +22,10 @@
     "@commitlint/cli": "^19.8.0",
     "@commitlint/config-conventional": "^19.8.0",
     "@stylistic/eslint-plugin": "^4.2.0",
-    "eslint": "^9.22.0",
+    "conventional-changelog": "^6.0.0",
+    "conventional-changelog-angular": "^8.0.0",
     "conventional-changelog-cli": "^5.0.0",
+    "eslint": "^9.22.0",
     "stylelint": "^16.15.0",
     "stylelint-prettier": "^5.0.3",
     "web-ext": "^8.4.0"
