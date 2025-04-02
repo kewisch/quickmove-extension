@@ -18,7 +18,7 @@ the selected messages.
 2. In the popup, you can use the following to navigate:
     * **⌘/Ctrl + Arrow Keys**: Switch between 'move', 'copy' and other modes.
     * **Search box**: Use this to search for part of the folder name. You might only need 1-2 letters!
-    * **Down/Up Arrow**: Move between the search box and the folder items.
+    * **Down/Up Arrow**: Move through the folder items.
 3. When you've picked the folder you'd like:
     * **Enter**: Move the message.
     * **⌘+Enter**: Move the message, and directly go to the folder you moved the message to.
