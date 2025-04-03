@@ -8,10 +8,10 @@
   "homepage": "https://github.com/kewisch/quickmove#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kewisch/quickmove.git"
+    "url": "git+https://github.com/kewisch/quickmove-extension.git"
   },
   "bugs": {
-    "url": "https://github.com/kewisch/quickmove/issues"
+    "url": "https://github.com/kewisch/quickmove-extension/issues"
   },
   "scripts": {
     "build": "web-ext build -s src -o",
