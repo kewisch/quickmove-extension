@@ -62,3 +62,24 @@ export async function showNotification(operation, numMessages, destination, dism
     }, dismissTime);
   }
 }
+
+export async function prettyDestination(folderId, doReverse = false) {
+  // Split the folderId into accountId and path
+  const [accountId, path] = folderId.split("://");
+
+  const folders = path.split("/");
+  const account = await browser.accounts.get(accountId);
+  const accountName = account ? account.name : accountId;
+
+  let fullPath = [];
+  let divider = "";
+  if (doReverse) {
+    fullPath = [...folders.reverse(), accountName];
+    divider = "\u200B←";
+  } else {
+    fullPath = [accountName, ...folders];
+    divider = "→\u200B";
+  }
+
+  return fullPath.join(divider);
+}

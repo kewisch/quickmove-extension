@@ -3,8 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch */
 
-import { showNotification } from "../common/util.js";
-import { DEFAULT_PREFERENCES } from "./common/util.js";
+import { DEFAULT_PREFERENCES, showNotification, prettyDestination } from "./common/util.js";
 
 const DEFAULT_ACTION_URL = "/popup/popup.html?action=move&allowed=move,copy,goto,tag";
 
@@ -100,7 +99,7 @@ async function processSelectedMessages(folder, operation = "move", goToFolder = 
   }
 
   if (operation != "goto" && notificationActive) {
-    showNotification(operation, numMessages, folderId);
+    showNotification(operation, numMessages, await prettyDestination(folderId));
   }
 }
 async function applyTags(tag, name) {
