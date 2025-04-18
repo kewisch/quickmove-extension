@@ -1,0 +1,62 @@
+{
+    "metaActionWarning": {
+        "message": "Przełączanie między aktywnościami teraz wymaga użycia Ctrl/⌘+Strzałka, aby uniknąć konfliktów nawigacji w oknie tekstowym."
+    },
+    "extensionName": {
+        "message": "Szybkie Przenoszenie Folderów"
+    },
+    "layoutAuto": {
+        "message": "Automatyczny"
+    },
+    "layoutWide": {
+        "message": "Zawsze szeroki"
+    },
+    "commandCopyDescription": {
+        "message": "Kopiuj wybrane wiadomości"
+    },
+    "extensionDescription": {
+        "message": "Szybko przenoś wiadomości do innych folderów za pomocą klawiatury"
+    },
+    "extensionShortName": {
+        "message": "Szybko przenieś"
+    },
+    "commandMoveDescription": {
+        "message": "Przenieś wybrane wiadomości"
+    },
+    "commandGotoDescription": {
+        "message": "Przejdź do folderu"
+    },
+    "commandTagDescription": {
+        "message": "Dodaj tag"
+    },
+    "tagsViewMissingWarning": {
+        "message": "Prosimy włączyć widok folderu 'Tagi' aby przejść do folderów tagów."
+    },
+    "actionMove": {
+        "message": "Przenieś"
+    },
+    "actionCopy": {
+        "message": "Kopiuj"
+    },
+    "actionGoto": {
+        "message": "Przejdź"
+    },
+    "actionTag": {
+        "message": "Tag"
+    },
+    "markAsRead": {
+        "message": "Oznacz wiadomości jako przeczytane kiedy się przemieszczasz"
+    },
+    "showFolderPath": {
+        "message": "Pokaż pełną ścieżkę każdego folderu w oknie wyszukiwania"
+    },
+    "maxRecentFolders": {
+        "message": "Liczba wyświetlanych ostatnich folderów"
+    },
+    "windowWarning": {
+        "message": "Zalecamy dodać Szybie Przenoszenie Folderów do paska narzędzi. Zmodyfikuj swój pasek narzędzi aby dodać przycisk."
+    },
+    "layoutCompact": {
+        "message": "Zawsze kompaktowy"
+    }
+}
