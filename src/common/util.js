@@ -48,6 +48,12 @@ export async function showNotification(operation, numMessages, destination, dism
     return replacements[key] || match;
   });
 
+  if (!browser.notifications) {
+    // We lost the permission somehow, disable the pref
+    await browser.storage.local.set({ notificationActive: false });
+    return;
+  }
+
   let notificationID = await browser.notifications.create(null, {
     type: "basic",
     title: browser.i18n.getMessage("extensionName"),
