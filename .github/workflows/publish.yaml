@@ -46,7 +46,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG_NAME: ${{ github.event.release.tag_name }}
         run: |
-          jq -r '"Initial compatibility with Thunderbird " + .applications.gecko.strict_min_version + "–" + .applications.gecko.strict_max_version' src/manifest.json > CHANGELOG.md
+          jq -r '"Initial compatibility with Thunderbird " + .browser_specific_settings.gecko.strict_min_version + "–" + .browser_specific_settings.gecko.strict_max_version' src/manifest.json > CHANGELOG.md
           npx conventional-changelog -p angular -r 2 | tail -n +7 >> CHANGELOG.md
 
           gh release edit $TAG_NAME --notes-file CHANGELOG.md
