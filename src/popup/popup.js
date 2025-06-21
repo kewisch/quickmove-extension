@@ -4,7 +4,7 @@
  * Portions Copyright (C) Philipp Kewisch */
 
 import { RootNode } from "../common/foldernode.js";
-import { DEFAULT_PREFERENCES, getValidatedFolders, cmdOrCtrlKey } from "../common/util.js";
+import { DEFAULT_PREFERENCES, getValidatedFolders, isAltMode } from "../common/util.js";
 
 const ALL_ACTIONS = ["move", "copy", "goto", "tag"];
 
@@ -202,17 +202,27 @@ async function load() {
     let operation = document.querySelector("input[name='action']:checked").value;
 
     if (operation == "move" || operation == "copy") {
-      await browser.runtime.sendMessage({ action: "processSelectedMessages", folder: folder, operation: operation, goToFolder: altMode });
+      await browser.runtime.sendMessage({
+        action: "processSelectedMessages",
+        folder: folder,
+        operation: operation,
+        goToFolder: altMode
+      });
     } else if (operation == "goto") {
       let [tab] = await browser.tabs.query({ currentWindow: true, active: true });
 
       try {
-        await browser.mailTabs.update(tab.id, { displayedFolder: folder.id });
+        if (altMode) {
+          await browser.mailTabs.create({ displayedFolder: folder.id });
+        } else {
+          await browser.mailTabs.update(tab.id, { displayedFolder: folder.id });
+        }
       } catch (e) {
         if (e.message == "Requested folder is not viewable in any of the enabled folder modes") {
           document.getElementById("tags-view-missing-warning").classList.remove("hidden");
           return;
         }
+        console.error(e);
       }
     }
     window.close();
@@ -258,7 +268,7 @@ function keydown(event) {
     window.close();
   } else if (event.key == "ArrowLeft" || event.key == "ArrowRight") {
     let direction = event.key == "ArrowLeft" ? -1 : 1;
-    if (!cmdOrCtrlKey(event)) {
+    if (!isAltMode(event)) {
       let metaActionWarning = document.getElementById("meta-action-warning");
       if (!event.shiftKey && !metaActionWarning.classList.contains("migrated")) {
         metaActionWarning.classList.remove("hidden");

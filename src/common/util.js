@@ -32,9 +32,12 @@ export async function getValidatedFolders(rootNode, prefName) {
   return folderNodes;
 }
 
-export function cmdOrCtrlKey(event) {
+export function isAltMode(event) {
   const isMac = navigator.platform.toUpperCase().includes("MAC");
-  return isMac ? event.metaKey : event.ctrlKey;
+  const keyAltMode = isMac ? event.metaKey : event.ctrlKey;
+  const mouseAltMode = event instanceof MouseEvent ? event.button == 1 : false;
+
+  return keyAltMode || mouseAltMode;
 }
 
 export async function showNotification(operation, numMessages, destination, dismissTime = 10000) {

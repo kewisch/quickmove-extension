@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch */
 
-import { cmdOrCtrlKey } from "../common/util.js";
+import { isAltMode } from "../common/util.js";
 
 const DIACRITICS = /[\u0300-\u036f]/g;
 
@@ -381,7 +381,7 @@ export default class BaseItemList extends HTMLElement {
       }
       event.preventDefault();
     } else if (event.key == "Enter" && !event.repeat) {
-      this.dispatchSelect(this.selected, cmdOrCtrlKey(event));
+      this.dispatchSelect(this.selected, isAltMode(event));
     }
   }
 
@@ -391,7 +391,7 @@ export default class BaseItemList extends HTMLElement {
       let customEvent = new CustomEvent("item-deleted", { detail: listItem.itemNode.item });
       this.dispatchEvent(customEvent);
     } else if (!this.getAttribute("readonly")) {
-      this.dispatchSelect(event.target.closest(".item"), cmdOrCtrlKey(event));
+      this.dispatchSelect(event.target.closest(".item"), isAltMode(event));
     }
   }
 
@@ -434,7 +434,7 @@ export default class BaseItemList extends HTMLElement {
       this.selected = this.nthItem(-1);
       event.preventDefault();
     } else if (event.key == "Enter" && !event.repeat) {
-      await this.enterSelect(cmdOrCtrlKey(event));
+      await this.enterSelect(isAltMode(event));
     }
   }
 

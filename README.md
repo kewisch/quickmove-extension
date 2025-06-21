@@ -27,7 +27,9 @@ the selected messages.
 A few more tips and tricks:
 * If you want to move to the first folder in the search results, you can press Enter directly. No need to move down to select the folder.
 * You can also assign keyboard shortcuts to copy, go to a folder, or apply tags
-via Thunderbird's [shortcut manager](https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox).
+  via Thunderbird's [shortcut manager](https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox).
+* When going to a folder, ⌘+Enter will open the folder in a new window.
+* Instead of ⌘+Enter you can also use the middle mouse button if you prefer to use the mouse.
 
 <img title="Shortcut Options" width="600" src="src/onboarding/images/shortcuts.png">
 
