@@ -169,18 +169,22 @@ async function load() {
 
   if (defaultFolderSetting == "recent") {
     let folderList;
-    if (majorVersion < 137) {
-      // TB136 COMPAT
-      folderList = await browser.quickmove.query({ recent: recentStrategy, limit: maxRecentFolders, canFileMessages: true });
-    } else {
-      let lastProperty = recentStrategy == "modified" ? "lastUsedAsDestination" : "lastUsed";
-      folderList = await browser.folders.query({
-        limit: browser.folders.DEFAULT_MOST_RECENT_LIMIT,
-        [lastProperty]: { recent: true },
-        sort: lastProperty,
-        canAddMessages: true
-      });
-    }
+    // Unfortuantely the built-in API has some performance issues with large folder lists. Revert
+    // back to the experiment for now.
+    // if (majorVersion < 137) {
+    // TB136 COMPAT
+
+    folderList = await browser.quickmove.query({ recent: recentStrategy, limit: maxRecentFolders, canFileMessages: true });
+
+    // } else {
+    //   let lastProperty = recentStrategy == "modified" ? "lastUsedAsDestination" : "lastUsed";
+    //   folderList = await browser.folders.query({
+    //     limit: browser.folders.DEFAULT_MOST_RECENT_LIMIT,
+    //     [lastProperty]: { recent: true },
+    //     sort: lastProperty,
+    //     canAddMessages: true
+    //   });
+    // }
 
     defaultFolders = rootNode.fromList(folderList).folderNodes;
   } else if (defaultFolderSetting == "specific") {
