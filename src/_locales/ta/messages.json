@@ -112,5 +112,67 @@
     },
     "partialMatchFullPath": {
         "message": "முழு கோப்புறை பாதையிலும் முக்கிய வார்த்தைகளைத் தேடுங்கள்"
+    },
+    "showShortcuts": {
+        "message": "குறுக்குவழிகளை மாற்றவும்"
+    },
+    "searchAccountName": {
+        "message": "கணக்கு பெயருக்குள் முக்கிய வார்த்தைகளைத் தேடுங்கள்"
+    },
+    "operationAction.move": {
+        "message": "நகர்த்தப்பட்ட $num_messages$ கோப்புறைக்கு செய்தி $destination$; நகர்த்தப்பட்டது $num_messages$ செய்திகள் கோப்புறைக்கு $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.copy": {
+        "message": "நகலெடுத்த $num_messages$ கோப்புறைக்கு செய்தி $destination$; நகலெடுக்கப்பட்ட $num_messages$ கோப்புறைக்கு செய்திகள் $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag": {
+        "message": "குறித்துள்ளார் $num_messages$ குறிச்சொல் $destination$; குறிச்சொல் $num_messages$ குறிச்சொல் உடன் செய்திகள் $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag.remove": {
+        "message": "அகற்றப்பட்ட குறிச்சொல் $destination$ $num_messages$ செய்தி; அகற்றப்பட்ட குறிச்சொல் $destination$ $num_messages$ செய்திகள்",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "notificationActive": {
+        "message": "ஒவ்வொரு செயல்பாட்டிற்கும் ஒரு அறிவிப்பைக் காட்டுங்கள்"
+    },
+    "operationMenuItemsTitle": {
+        "message": "செயல்பாட்டு பட்டியல் உருப்படிகள்"
+    },
+    "menuItemActionInfo": {
+        "message": "பாப்அப் மெனுவில் எந்த நடவடிக்கைகள் கிடைக்க வேண்டும் என்பதைத் தேர்வுசெய்க."
+    },
+    "menuItemActionWarning": {
+        "message": "குறைந்தது ஒரு உருப்படி தேர்ந்தெடுக்கப்பட வேண்டும்."
     }
 }
