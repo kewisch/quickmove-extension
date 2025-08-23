@@ -1,0 +1,178 @@
+{
+    "extensionName": {
+        "message": "Быстрое перемещение папок"
+    },
+    "extensionDescription": {
+        "message": "Быстро перемещайте сообщения в другие папки с помощью клавиатуры"
+    },
+    "extensionShortName": {
+        "message": "Быстрое перемещение"
+    },
+    "commandMoveDescription": {
+        "message": "Переместить выбранные сообщения"
+    },
+    "commandCopyDescription": {
+        "message": "Копировать выбранные сообщения"
+    },
+    "commandGotoDescription": {
+        "message": "Перейти в папку"
+    },
+    "commandTagDescription": {
+        "message": "Присвоить метку"
+    },
+    "windowWarning": {
+        "message": "Рекомендуется добавить Быстрое перемещение вкладок на панель инструментов. Настройте панель инструментов, чтобы включить это кнопку."
+    },
+    "metaActionWarning": {
+        "message": "Переключение между действиями теперь требует использования Ctrl/⌘+Стрелка, чтобы избежать конфликтов с навигацией в текстовом поле."
+    },
+    "tagsViewMissingWarning": {
+        "message": "Пожалуйста, включите режим папок \"Метки\", чтобы перейти к папкам с метками."
+    },
+    "actionMove": {
+        "message": "Переместить"
+    },
+    "actionCopy": {
+        "message": "Копировать"
+    },
+    "actionGoto": {
+        "message": "Перейти в"
+    },
+    "layout": {
+        "message": "Шаблон всплывающего окна"
+    },
+    "layoutAuto": {
+        "message": "Автоматический"
+    },
+    "layoutWide": {
+        "message": "Всегда широкий"
+    },
+    "layoutCompact": {
+        "message": "Всегда компактный"
+    },
+    "markAsRead": {
+        "message": "Отмечать сообщения как прочитанные при перемещении"
+    },
+    "showFolderPath": {
+        "message": "Показывать полный путь каждой папке в поле поиска"
+    },
+    "skipArchive": {
+        "message": "Никогда не включать архивированные папки"
+    },
+    "maxRecentFolders": {
+        "message": "Количество отображаемых последних папок"
+    },
+    "maxRecentFoldersTitle": {
+        "message": "Изменяет количество отображаемых последних папок, если текст поиска не введен."
+    },
+    "recentStrategy": {
+        "message": "Стратегия папок"
+    },
+    "recentStrategyModified": {
+        "message": "Показывать недавно изменённые"
+    },
+    "recentStrategyAccessed": {
+        "message": "Показывать недавно просмотренные"
+    },
+    "useLegacyShortcuts": {
+        "message": "Принудительно использовать устаревшие сочетания клавиш"
+    },
+    "useLegacyShortcutsTitle": {
+        "message": "Используйте ⇧M как клавишу для перемещения сообщений"
+    },
+    "showInstructions": {
+        "message": "Показать инструкции"
+    },
+    "showShortcuts": {
+        "message": "Изменить сочетания клавиш"
+    },
+    "translate": {
+        "message": "Перевести в ваш язык"
+    },
+    "defaultFoldersTitle": {
+        "message": "Папки по умолчанию"
+    },
+    "defaultFoldersRecent": {
+        "message": "Последние папки"
+    },
+    "defaultFoldersAll": {
+        "message": "Все папки"
+    },
+    "defaultFoldersSpecific": {
+        "message": "Определённые папки"
+    },
+    "defaultFoldersSearchPlaceholder": {
+        "message": "Искать папки для добавления по умолчанию"
+    },
+    "excludedFoldersTitle": {
+        "message": "Исключённые папки"
+    },
+    "excludedFoldersSearchPlaceholder": {
+        "message": "Искать папку для исключения"
+    },
+    "partialMatchFullPath": {
+        "message": "Искать ключевые слова по всему пути папке"
+    },
+    "searchAccountName": {
+        "message": "Искать ключевые слова также в имени учётной записи"
+    },
+    "operationAction.move": {
+        "message": "Перемещено $num_messages$ сообщение в папку $destination$;Перемещено $num_messages$ сообщения в папку $destination$;Перемещено $num_messages$ сообщений в папку $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.copy": {
+        "message": "Копировано $num_messages$ сообщение в папку $destination$;Копировано $num_messages$ сообщения в папку $destination$;Копировано $num_messages$ сообщений в папку $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag": {
+        "message": "Присвоена метка $destination$ $num_messages$ сообщению;Присвоена метка $destination$ $num_messages$ сообщениям",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag.remove": {
+        "message": "Удалена метка $destination$ у $num_messages$ сообщения;Удалена метка $destination$ у $num_messages$ сообщений",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "notificationActive": {
+        "message": "Показывать уведомление для каждой операции"
+    },
+    "operationMenuItemsTitle": {
+        "message": "Элементы меню операций"
+    },
+    "menuItemActionInfo": {
+        "message": "Выберите какие действия должны быть доступны во всплывающем меню."
+    },
+    "menuItemActionWarning": {
+        "message": "Хотя бы один элемент должен быть выбран."
+    },
+    "actionTag": {
+        "message": "Метка"
+    }
+}
