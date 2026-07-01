@@ -27,6 +27,7 @@
 
   "permissions": [
     "storage",
+    "menus",
     "accountsRead",
     "messagesRead",
     "messagesMove",
