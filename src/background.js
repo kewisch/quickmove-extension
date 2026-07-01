@@ -221,3 +221,25 @@ browser.runtime.onInstalled.addListener(({ reason, previousVersion }) => {
     browser.tabs.create({ url: "/onboarding/onboarding.html" });
   }
 });
+
+
+// Combined onInstalled-listener for onboarding, shortcuts, and the context menu
+browser.runtime.onInstalled.addListener(async (details) => {
+  // 1. Create a context menu item for the message list
+  browser.menus.create({
+    id: "quickmove-context-item",
+    title: "Quickmove Aktion ausführen",
+    contexts: ["message_list"],
+    onclick: async (info, tab) => {
+      // When clicked, the default popup opens using the keyboard shortcut logic
+      browser.commands.onCommand.addListener;
+      // Triggers the default pop-up behavior (as with the ‘move’ hotkey)
+      let popupUrl = `/popup/popup.html?action=move&allowed=move,copy,goto,tag`;
+      if (gLastWindowId) {
+        await browser.windows.remove(gLastWindowId).catch(() => {});
+        gLastWindowId = null;
+      }
+      let wnd = await browser.windows.create({ allowScriptsToClose: true, type: "popup", url: popupUrl + "&window=true" });
+      gLastWindowId = wnd.id;
+    }
+  });
