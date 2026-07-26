@@ -105,12 +105,74 @@
         "message": "Serĉi dosierujon por aldoni kiel defaŭltan"
     },
     "partialMatchFullPath": {
-        "message": "Serĉu ŝlosilvortojn ene de la tuta dosieruja vojo"
+        "message": "Serĉi ŝlosilvortojn ene de la tuta dosieruja vojo"
     },
     "metaActionWarning": {
         "message": "Por ŝanĝi inter agoj, nun necesas uzi Ctrl/⌘ + Sago por eviti navigajn konfliktojn en la tekstujo."
     },
     "maxRecentFoldersTitle": {
         "message": "Ŝanĝas la nombron de lastatempaj dosierujoj montrataj kiam neniu serĉoteksto estas enigita."
+    },
+    "showShortcuts": {
+        "message": "Ŝanĝi klavkombinojn"
+    },
+    "notificationActive": {
+        "message": "Montri sciigon pri ĉiu operacio"
+    },
+    "menuItemActionWarning": {
+        "message": "Vi elektu almenaŭ unu menueron."
+    },
+    "operationMenuItemsTitle": {
+        "message": "Menueroj pri operacioj"
+    },
+    "menuItemActionInfo": {
+        "message": "Elektu tiujn agojn, kiuj estos disponeblaj per la ŝprucmenuo."
+    },
+    "searchAccountName": {
+        "message": "Serĉi ŝlosilvortojn ankaŭ en la nomo de la konto"
+    },
+    "operationAction.move": {
+        "message": "Movis $num_messages$ mesaĝon en dosierujon $destination$;Movis $num_messages$ mesaĝojn en dosierujon $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.copy": {
+        "message": "Kopiis $num_messages$ mesaĝon en dosierujon $destination$;Kopiis $num_messages$ mesaĝojn en dosierujon $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag": {
+        "message": "Fiksis sur $num_messages$ mesaĝon la etikedon $destination$;Fiksis sur $num_messages$ mesaĝojn la etikedon $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag.remove": {
+        "message": "Malfiksis la etikedon $destination$ el $num_messages$ mesaĝo;Malfiksis la etikedon $destination$ el $num_messages$ mesaĝoj",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
     }
 }

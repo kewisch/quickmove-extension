@@ -1,0 +1,178 @@
+{
+    "extensionDescription": {
+        "message": "Mover rápidamente los mensajes a otras carpetas usando el teclado"
+    },
+    "commandMoveDescription": {
+        "message": "Mover los mensajes seleccionados"
+    },
+    "commandCopyDescription": {
+        "message": "Copiar los mensajes seleccionados"
+    },
+    "commandGotoDescription": {
+        "message": "Ir a la carpeta"
+    },
+    "commandTagDescription": {
+        "message": "Asignar una etiqueta"
+    },
+    "metaActionWarning": {
+        "message": "Cambiar entre acciones ahora requiere usar Ctrl/⌘ + flecha para evitar conflictos de navegación en el cuadro de texto."
+    },
+    "actionMove": {
+        "message": "Mover"
+    },
+    "actionCopy": {
+        "message": "Copiar"
+    },
+    "actionGoto": {
+        "message": "Ir a"
+    },
+    "actionTag": {
+        "message": "Etiquetar"
+    },
+    "layoutAuto": {
+        "message": "Automático"
+    },
+    "layoutWide": {
+        "message": "Siempre ancho"
+    },
+    "layoutCompact": {
+        "message": "Siempre compacto"
+    },
+    "markAsRead": {
+        "message": "Marcar los mensajes como leídos al moverlos"
+    },
+    "showFolderPath": {
+        "message": "Mostrar la ruta completa de cada carpeta en el cuadro de búsqueda"
+    },
+    "skipArchive": {
+        "message": "Nunca incluir carpetas archivadas"
+    },
+    "maxRecentFolders": {
+        "message": "Número de carpetas recientes a mostrar"
+    },
+    "maxRecentFoldersTitle": {
+        "message": "Cambia el número de carpetas recientes mostradas cuando no se introduce ningún texto de búsqueda."
+    },
+    "recentStrategy": {
+        "message": "Estrategia de carpetas"
+    },
+    "recentStrategyModified": {
+        "message": "Mostrar las modificadas recientemente"
+    },
+    "recentStrategyAccessed": {
+        "message": "Mostrar las accedidas recientemente"
+    },
+    "useLegacyShortcuts": {
+        "message": "Forzar el uso de atajos antiguos"
+    },
+    "useLegacyShortcutsTitle": {
+        "message": "Usar ⇧M como atajo para mover mensajes"
+    },
+    "showInstructions": {
+        "message": "Mostrar instrucciones"
+    },
+    "showShortcuts": {
+        "message": "Cambiar combinaciones de teclas"
+    },
+    "translate": {
+        "message": "Traducir a tu idioma"
+    },
+    "defaultFoldersTitle": {
+        "message": "Carpetas predeterminadas"
+    },
+    "defaultFoldersRecent": {
+        "message": "Carpetas vistas recientemente"
+    },
+    "defaultFoldersAll": {
+        "message": "Todas las carpetas"
+    },
+    "defaultFoldersSpecific": {
+        "message": "Carpetas específicas"
+    },
+    "defaultFoldersSearchPlaceholder": {
+        "message": "Buscar una carpeta para establecer como predeterminada"
+    },
+    "excludedFoldersTitle": {
+        "message": "Carpetas excluidas"
+    },
+    "excludedFoldersSearchPlaceholder": {
+        "message": "Buscar carpeta para excluir"
+    },
+    "partialMatchFullPath": {
+        "message": "Buscar palabras clave dentro de toda la ruta de la carpeta"
+    },
+    "searchAccountName": {
+        "message": "Buscar palabras clave también en el nombre de la cuenta"
+    },
+    "operationAction.move": {
+        "message": "Se movió $num_messages$ mensaje a la carpeta $destination$;Se movieron $num_messages$ mensajes a la carpeta $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.copy": {
+        "message": "Se copió $num_messages$ mensaje a la carpeta $destination$;Se copiaron $num_messages$ mensajes a la carpeta $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag": {
+        "message": "Se etiquetó $num_messages$ mensaje con la etiqueta $destination$;Se etiquetaron $num_messages$ mensajes con la etiqueta $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag.remove": {
+        "message": "Se eliminó la etiqueta $destination$ de $num_messages$ mensaje;Se eliminó la etiqueta $destination$ de $num_messages$ mensajes",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "notificationActive": {
+        "message": "Mostrar una notificación por cada operación"
+    },
+    "operationMenuItemsTitle": {
+        "message": "Elementos del menú de operaciones"
+    },
+    "menuItemActionInfo": {
+        "message": "Elige qué acciones estarán disponibles en el menú emergente."
+    },
+    "menuItemActionWarning": {
+        "message": "Debe seleccionarse al menos un elemento."
+    },
+    "extensionName": {
+        "message": "Movimiento rápido a carpetas"
+    },
+    "extensionShortName": {
+        "message": "Mov. rápido"
+    },
+    "windowWarning": {
+        "message": "Se recomienda añadir 'Movimiento rápido a carpetas' a la barra de herramientas principal. Personaliza la barra de herramientas para habilitar el botón."
+    },
+    "tagsViewMissingWarning": {
+        "message": "Activa la vista de carpeta ‘Etiquetas’ para acceder a las carpetas de etiquetas."
+    },
+    "layout": {
+        "message": "Diseño del menú emergente"
+    }
+}

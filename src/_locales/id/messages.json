@@ -1,0 +1,178 @@
+{
+    "extensionName": {
+        "message": "Quick Folder Move"
+    },
+    "extensionDescription": {
+        "message": "Pindahkan pesan dengan cepat ke folder lain menggunakan keyboard"
+    },
+    "extensionShortName": {
+        "message": "Pindah Cepat"
+    },
+    "commandMoveDescription": {
+        "message": "Pindahkan pesan yang dipilih"
+    },
+    "commandCopyDescription": {
+        "message": "Salin pesan yang dipilih"
+    },
+    "commandGotoDescription": {
+        "message": "Buka folder"
+    },
+    "commandTagDescription": {
+        "message": "Terapkan tag"
+    },
+    "windowWarning": {
+        "message": "Disarankan untuk menambahkan Quick Folder Move ke toolbar utama. Harap sesuaikan toolbar Anda untuk mengaktifkan tombol."
+    },
+    "metaActionWarning": {
+        "message": "Beralih antara tindakan sekarang memerlukan penggunaan Ctrl/⌘+Panah untuk menghindari konflik navigasi di kotak teks."
+    },
+    "tagsViewMissingWarning": {
+        "message": "Harap aktifkan tampilan folder 'Tag' untuk membuka folder tag."
+    },
+    "actionMove": {
+        "message": "Pindah"
+    },
+    "actionCopy": {
+        "message": "Salin"
+    },
+    "actionGoto": {
+        "message": "Buka"
+    },
+    "actionTag": {
+        "message": "Tag"
+    },
+    "layout": {
+        "message": "Tata letak popup"
+    },
+    "layoutAuto": {
+        "message": "Otomatis"
+    },
+    "layoutWide": {
+        "message": "Selalu lebar"
+    },
+    "layoutCompact": {
+        "message": "Selalu kompak"
+    },
+    "markAsRead": {
+        "message": "Tandai pesan sebagai dibaca saat memindahkan"
+    },
+    "showFolderPath": {
+        "message": "Tampilkan jalur lengkap setiap folder di kotak pencarian"
+    },
+    "skipArchive": {
+        "message": "Jangan pernah mencocokkan folder arsip"
+    },
+    "maxRecentFolders": {
+        "message": "Jumlah folder terbaru yang ditampilkan"
+    },
+    "maxRecentFoldersTitle": {
+        "message": "Mengubah jumlah folder terbaru yang ditampilkan saat tidak ada teks pencarian yang dimasukkan."
+    },
+    "recentStrategy": {
+        "message": "Strategi Folder"
+    },
+    "recentStrategyModified": {
+        "message": "Tampilkan yang terakhir diubah"
+    },
+    "recentStrategyAccessed": {
+        "message": "Tampilkan yang terakhir diakses"
+    },
+    "useLegacyShortcuts": {
+        "message": "Paksa penggunaan pintasan lama"
+    },
+    "useLegacyShortcutsTitle": {
+        "message": "Gunakan ⇧M sebagai pintasan untuk memindahkan pesan"
+    },
+    "showInstructions": {
+        "message": "Tampilkan instruksi"
+    },
+    "showShortcuts": {
+        "message": "Ubah Pintasan"
+    },
+    "translate": {
+        "message": "Terjemahkan ke bahasa Anda"
+    },
+    "defaultFoldersTitle": {
+        "message": "Folder Bawaan"
+    },
+    "defaultFoldersRecent": {
+        "message": "Folder terbaru"
+    },
+    "defaultFoldersAll": {
+        "message": "Semua Folder"
+    },
+    "defaultFoldersSpecific": {
+        "message": "Folder tertentu"
+    },
+    "defaultFoldersSearchPlaceholder": {
+        "message": "Cari folder untuk ditambahkan sebagai bawaan"
+    },
+    "excludedFoldersTitle": {
+        "message": "Folder yang Dikecualikan"
+    },
+    "excludedFoldersSearchPlaceholder": {
+        "message": "Cari folder untuk dikecualikan"
+    },
+    "partialMatchFullPath": {
+        "message": "Cari kata kunci dalam seluruh jalur folder"
+    },
+    "searchAccountName": {
+        "message": "Cari kata kunci juga dalam nama akun"
+    },
+    "operationAction.move": {
+        "message": "Memindahkan $num_messages$ pesan ke folder $destination$;Memindahkan $num_messages$ pesan ke folder $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.copy": {
+        "message": "Menyalin $num_messages$ pesan ke folder $destination$;Menyalin $num_messages$ pesan ke folder $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag": {
+        "message": "Menandai $num_messages$ pesan dengan tag $destination$;Menandai $num_messages$ pesan dengan tag $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag.remove": {
+        "message": "Menghapus tag $destination$ dari $num_messages$ pesan;Menghapus tag $destination$ dari $num_messages$ pesan",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "notificationActive": {
+        "message": "Tampilkan notifikasi untuk setiap operasi"
+    },
+    "operationMenuItemsTitle": {
+        "message": "Item Menu Operasi"
+    },
+    "menuItemActionInfo": {
+        "message": "Pilih tindakan mana yang harus tersedia di menu popup."
+    },
+    "menuItemActionWarning": {
+        "message": "Setidaknya satu item harus dipilih."
+    }
+}

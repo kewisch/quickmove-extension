@@ -1,0 +1,178 @@
+{
+    "extensionName": {
+        "message": "Quick Folder Move"
+    },
+    "extensionDescription": {
+        "message": "Verplaats berichten met toetsenbord"
+    },
+    "extensionShortName": {
+        "message": "Quick Move"
+    },
+    "commandMoveDescription": {
+        "message": "verplaatst geselecteerde berichten"
+    },
+    "commandCopyDescription": {
+        "message": "kopieer geselecteerde berichten"
+    },
+    "commandGotoDescription": {
+        "message": "Ga naar map"
+    },
+    "commandTagDescription": {
+        "message": "label toevoegen"
+    },
+    "windowWarning": {
+        "message": "Voeg 'Snel mappen verplaatsen' aan werkbalk. Pas uw werkbalk aan om de knop te activeren."
+    },
+    "metaActionWarning": {
+        "message": "Voor schakelen tussen acties gebruik Ctrl/⌘+pijl om navigatieconflicten in tekstvak te voorkomen."
+    },
+    "tagsViewMissingWarning": {
+        "message": "Vink \"label\" weergave aan om labels weer te geven."
+    },
+    "actionCopy": {
+        "message": "Kopieer"
+    },
+    "actionGoto": {
+        "message": "Ga naar"
+    },
+    "actionTag": {
+        "message": "Label"
+    },
+    "layout": {
+        "message": "Pop-up lay-out"
+    },
+    "layoutAuto": {
+        "message": "Automatisch"
+    },
+    "layoutWide": {
+        "message": "Altijd volle breedte"
+    },
+    "layoutCompact": {
+        "message": "Altijd compact"
+    },
+    "markAsRead": {
+        "message": "Markeer als gelezen na verplaatsing"
+    },
+    "showFolderPath": {
+        "message": "Toon volledige pad van elke map in zoekvak"
+    },
+    "skipArchive": {
+        "message": "Nooit archiefmappen matchen"
+    },
+    "maxRecentFolders": {
+        "message": "Aantal recente mappen weer geven"
+    },
+    "maxRecentFoldersTitle": {
+        "message": "Wijzigt weergave aantal recente mappen wanneer geen zoektekst ingevoerd."
+    },
+    "recentStrategy": {
+        "message": "Mapstrategie"
+    },
+    "recentStrategyModified": {
+        "message": "Toon recent gewijzigd"
+    },
+    "recentStrategyAccessed": {
+        "message": "Toon recent geopende items"
+    },
+    "useLegacyShortcuts": {
+        "message": "Forceer gebruik van oude snelkoppelingen"
+    },
+    "useLegacyShortcutsTitle": {
+        "message": "Gebruik ⇧M als sneltoets voor verplaatsen van berichten"
+    },
+    "showInstructions": {
+        "message": "Instructies weergeven"
+    },
+    "showShortcuts": {
+        "message": "Snelkoppelingen wijzigen"
+    },
+    "translate": {
+        "message": "Vertaal naar Nederlands"
+    },
+    "defaultFoldersTitle": {
+        "message": "Standaardmappen"
+    },
+    "defaultFoldersRecent": {
+        "message": "Recente mappen"
+    },
+    "defaultFoldersAll": {
+        "message": "Alle mappen"
+    },
+    "defaultFoldersSpecific": {
+        "message": "Specifieke mappen"
+    },
+    "defaultFoldersSearchPlaceholder": {
+        "message": "Zoek naar map als standaard toe te voegen"
+    },
+    "excludedFoldersTitle": {
+        "message": "Uitgesloten mappen"
+    },
+    "excludedFoldersSearchPlaceholder": {
+        "message": "Zoek naar map om uit te sluiten"
+    },
+    "partialMatchFullPath": {
+        "message": "Zoek naar trefwoorden in volledige pad"
+    },
+    "searchAccountName": {
+        "message": "Zoek ook naar trefwoorden binnen accountnaam"
+    },
+    "operationAction.move": {
+        "message": "$num_messages$ bericht verplaatst naar map $destination$; $num_messages$ berichten verplaatst naar map $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.copy": {
+        "message": "$num_messages$ bericht gekopieerd naar map $destination$; $num_messages$ berichten gekopieerd naar map $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag": {
+        "message": "Gelabeld $num_messages$ bericht met tag $destination$;Gelabelde $num_messages$ berichten met tag $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag.remove": {
+        "message": "Tag $destination$ verwijderd uit $num_messages$ bericht;Tag $destination$ verwijderd uit $num_messages$ berichten",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "notificationActive": {
+        "message": "Toon melding voor elke bewerking"
+    },
+    "operationMenuItemsTitle": {
+        "message": "Menu-items voor bediening"
+    },
+    "menuItemActionInfo": {
+        "message": "Kies welke acties zichtbaar zijn in pop-upmenu."
+    },
+    "menuItemActionWarning": {
+        "message": "Minimaal één item selecteren."
+    },
+    "actionMove": {
+        "message": "Verplaatsen"
+    }
+}

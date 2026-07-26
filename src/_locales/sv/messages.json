@@ -1,0 +1,178 @@
+{
+    "extensionDescription": {
+        "message": "Flytta snabbt meddelanden till andra mappar med hjälp av tangentbordet"
+    },
+    "commandMoveDescription": {
+        "message": "Flytta valda meddelanden"
+    },
+    "commandCopyDescription": {
+        "message": "Kopiera valda meddelanden"
+    },
+    "commandGotoDescription": {
+        "message": "Gå till mapp"
+    },
+    "actionMove": {
+        "message": "Flytta"
+    },
+    "actionCopy": {
+        "message": "Kopiera"
+    },
+    "actionGoto": {
+        "message": "Gå till"
+    },
+    "actionTag": {
+        "message": "Tagg"
+    },
+    "layout": {
+        "message": "Popup-layout"
+    },
+    "layoutAuto": {
+        "message": "Automatisk"
+    },
+    "showInstructions": {
+        "message": "Visa instruktioner"
+    },
+    "showShortcuts": {
+        "message": "Ändra genvägar"
+    },
+    "translate": {
+        "message": "Översätt till ditt språk"
+    },
+    "defaultFoldersTitle": {
+        "message": "Standardmappar"
+    },
+    "defaultFoldersRecent": {
+        "message": "Senaste mappar"
+    },
+    "defaultFoldersAll": {
+        "message": "Alla mappar"
+    },
+    "defaultFoldersSpecific": {
+        "message": "Specifika mappar"
+    },
+    "defaultFoldersSearchPlaceholder": {
+        "message": "Sök efter en mapp att lägga till som standard"
+    },
+    "excludedFoldersTitle": {
+        "message": "Undantagna mappar"
+    },
+    "excludedFoldersSearchPlaceholder": {
+        "message": "Sök efter en mapp att undanta"
+    },
+    "partialMatchFullPath": {
+        "message": "Sök efter nyckelord i hela mappens sökväg"
+    },
+    "searchAccountName": {
+        "message": "Sök efter nyckelord även inom kontonamnet"
+    },
+    "notificationActive": {
+        "message": "Visa ett meddelande för varje åtgärd"
+    },
+    "menuItemActionInfo": {
+        "message": "Välj vilka åtgärder som ska vara tillgängliga i popup-menyn."
+    },
+    "menuItemActionWarning": {
+        "message": "Minst ett objekt måste väljas."
+    },
+    "extensionName": {
+        "message": "Quick Folder Move"
+    },
+    "extensionShortName": {
+        "message": "Quick Move"
+    },
+    "commandTagDescription": {
+        "message": "Lägg till en tagg"
+    },
+    "windowWarning": {
+        "message": "Det rekommenderas att lägga till Quick Folder Move i huvudverktygsfältet. Anpassa verktygsfältet för att aktivera knappen."
+    },
+    "metaActionWarning": {
+        "message": "Växling mellan åtgärder kräver nu att man använder Ctrl/⌘+pil för att undvika navigeringskonflikter i textrutan."
+    },
+    "tagsViewMissingWarning": {
+        "message": "Aktivera mappvyn 'Taggar' för att gå till tagga mappar."
+    },
+    "layoutWide": {
+        "message": "Alltid bred"
+    },
+    "layoutCompact": {
+        "message": "Alltid kompakt"
+    },
+    "markAsRead": {
+        "message": "Markera meddelanden som lästa vid flyttning"
+    },
+    "showFolderPath": {
+        "message": "Visa hela sökvägen till varje mapp i sökrutan"
+    },
+    "skipArchive": {
+        "message": "Matcha aldrig arkivmappar"
+    },
+    "maxRecentFolders": {
+        "message": "Antal senaste mappar att visa"
+    },
+    "maxRecentFoldersTitle": {
+        "message": "Ändrar antalet senaste mappar som visas när ingen söktext anges."
+    },
+    "recentStrategy": {
+        "message": "Mappstrategi"
+    },
+    "recentStrategyModified": {
+        "message": "Visa nyligen ändrade"
+    },
+    "recentStrategyAccessed": {
+        "message": "Visa nyligen besökta"
+    },
+    "useLegacyShortcuts": {
+        "message": "Tvinga fram användning av äldre genvägar"
+    },
+    "useLegacyShortcutsTitle": {
+        "message": "Använd ⇧M som genväg för att flytta meddelanden"
+    },
+    "operationAction.move": {
+        "message": "Flyttade $num_messages$ meddelande till mapp $destination$;Flyttade $num_messages$ meddelanden till mapp $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.copy": {
+        "message": "Kopierade $num_messages$ meddelande till mapp $destination$;Kopierade $num_messages$ meddelanden till mapp $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag": {
+        "message": "Taggade $num_messages$ meddelande med tagg $destination$;Taggade $num_messages$ meddelanden med tagg $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag.remove": {
+        "message": "Tog bort tagg $destination$ från $num_messages$ meddelande;Tog bort tagg $destination$ från $num_messages$ meddelanden",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationMenuItemsTitle": {
+        "message": "Funktionsmenyalternativ"
+    }
+}
