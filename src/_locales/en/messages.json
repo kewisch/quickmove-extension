@@ -178,5 +178,34 @@
     },
     "menuItemActionWarning": {
         "message": "At least one item must be selected."
+    },
+    "searchLabel.move": {
+        "message": "Move to folder",
+        "description": "Accessible name of the search field in the popup in move mode. Read by screen readers, not shown visually."
+    },
+    "searchLabel.copy": {
+        "message": "Copy to folder",
+        "description": "Accessible name of the search field in the popup in copy mode. Read by screen readers, not shown visually."
+    },
+    "searchLabel.goto": {
+        "message": "Go to folder",
+        "description": "Accessible name of the search field in the popup in go to folder mode. Read by screen readers, not shown visually."
+    },
+    "searchLabel.tag": {
+        "message": "Tag messages",
+        "description": "Accessible name of the search field in the popup in tag mode. Read by screen readers, not shown visually."
+    },
+    "searchResultCount": {
+        "message": "$count$ result;$count$ results",
+        "description": "Announced by screen readers after typing in the search field. List all plural forms for this sentence, separated by ';', following your language's plural rules (see operationAction.move).",
+        "placeholders": {
+            "count": {
+                "content": "$1"
+            }
+        }
+    },
+    "searchNoResults": {
+        "message": "No results",
+        "description": "Announced by screen readers when the search term matches nothing."
     }
 }

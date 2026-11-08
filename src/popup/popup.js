@@ -26,6 +26,11 @@ function switchList(action) {
   let folderList = document.getElementById("folder-list");
   let tagList = document.getElementById("tag-list");
 
+  // Accessible name of the search field, so screen readers announce what will happen.
+  let searchLabel = browser.i18n.getMessage("searchLabel." + action);
+  folderList.setAttribute("search-label", searchLabel);
+  tagList.setAttribute("search-label", searchLabel);
+
   if (action == "tag") {
     tagList.style.display = "revert-layer";
     folderList.style.display = "none";

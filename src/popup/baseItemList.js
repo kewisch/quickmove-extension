@@ -4,14 +4,23 @@
  * Portions Copyright (C) Philipp Kewisch */
 
 import { isAltMode } from "../common/util.js";
+import PluralForm from "../common/pluralform.js";
 
 const DIACRITICS = /[\u0300-\u036f]/g;
+
+let nextItemId = 0;
 
 export default class BaseItemList extends HTMLElement {
   #pendingSearch;
   #pendingSearchTimeout;
   #enterPending;
   #navigateOnly = true;
+
+  // True once the user has navigated the results (arrow keys, mouse), so that the
+  // selected item is exposed to assistive technology via aria-activedescendant.
+  // While typing, the first match is only selected visually, so that the first
+  // arrow down press announces it instead of skipping to the second match.
+  #activeDescendantShown = false;
 
   _defaultItems;
   _allItems = [];
@@ -20,7 +29,7 @@ export default class BaseItemList extends HTMLElement {
   partialMatchFullPath = false;
   searchAccountName = false;
 
-  static observedAttributes = ["placeholder"];
+  static observedAttributes = ["placeholder", "search-label"];
 
   static get style() {
     /*
@@ -189,12 +198,24 @@ export default class BaseItemList extends HTMLElement {
       .item > .delete {
         margin: 0 5px;
       }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+      }
     `;
   }
   static get headerItemTemplateContent() {
     return `
         <template class="header-item-template">
-          <div class="header-item" part="header-item">
+          <div class="header-item" part="header-item" role="none" aria-hidden="true">
             <div class="icon"></div>
             <div class="text"></div>
           </div>
@@ -205,11 +226,11 @@ export default class BaseItemList extends HTMLElement {
   static get itemTemplateContent() {
     return `
       <template class="item-template">
-        <div class="item" part="item">
-          <div class="icon"></div>
+        <div class="item" part="item" role="option">
+          <div class="icon" aria-hidden="true"></div>
           <div class="text"></div>
           <div class="text-shortcut"></div>
-          <button class="delete">&times;</button>
+          <button class="delete" tabindex="-1" aria-hidden="true">&times;</button>
         </div>
       </template>
     `;
@@ -228,10 +249,12 @@ export default class BaseItemList extends HTMLElement {
       ${this.headerItemTemplateContent}
 
       <div class="search-header" part="search-header">
-        <input type="text" class="search-input" autocomplete="off"/>
+        <input type="text" class="search-input" autocomplete="off"
+               role="combobox" aria-autocomplete="list" aria-expanded="false"
+               aria-controls="list-body"/>
       </div>
-      <div class="list-body" tabindex="0">
-      </div>
+      <div class="list-body" id="list-body" role="listbox" tabindex="0"></div>
+      <div class="search-status visually-hidden" role="status" aria-live="polite"></div>
     `;
   }
 
@@ -254,6 +277,7 @@ export default class BaseItemList extends HTMLElement {
     let listBody = this.shadowRoot.querySelector(".list-body");
 
     searchInput.placeholder = this.getAttribute("placeholder") || "";
+    this.#updateAccessibleName();
 
     searchInput.addEventListener("input", this.searchInputCallbackRaw);
     listBody.addEventListener("click", this.itemListClick);
@@ -283,6 +307,15 @@ export default class BaseItemList extends HTMLElement {
     if (name == "placeholder") {
       this.search.placeholder = newValue;
     }
+    this.#updateAccessibleName();
+  }
+
+  #updateAccessibleName() {
+    let label = this.getAttribute("search-label") || this.getAttribute("placeholder");
+    if (label) {
+      this.search.setAttribute("aria-label", label);
+      this.shadowRoot.querySelector(".list-body").setAttribute("aria-label", label);
+    }
   }
 
   get search() {
@@ -296,12 +329,67 @@ export default class BaseItemList extends HTMLElement {
     let selected = this.selected;
     if (selected) {
       selected.classList.remove("selected");
+      selected.removeAttribute("aria-selected");
     }
 
     if (item) {
       item.classList.add("selected");
       item.scrollIntoView({ block: "nearest", inline: "start" });
     }
+    this.#updateActiveDescendant();
+  }
+
+  /**
+   * Expose the selected item to assistive technology. The selected item is
+   * referenced from both the search input (combobox) and the list (listbox),
+   * since either of them can hold the focus.
+   */
+  #updateActiveDescendant() {
+    let searchInput = this.search;
+    let listBody = this.shadowRoot.querySelector(".list-body");
+    let item = this.selected;
+
+    searchInput.setAttribute("aria-expanded", listBody.querySelector(".item") ? "true" : "false");
+
+    if (item && this.#activeDescendantShown) {
+      if (!item.id) {
+        item.id = "item-" + (nextItemId++);
+      }
+      item.setAttribute("aria-selected", "true");
+      searchInput.setAttribute("aria-activedescendant", item.id);
+      listBody.setAttribute("aria-activedescendant", item.id);
+    } else {
+      searchInput.removeAttribute("aria-activedescendant");
+      listBody.removeAttribute("aria-activedescendant");
+    }
+  }
+
+  #showActiveDescendant() {
+    this.#activeDescendantShown = true;
+    this.#updateActiveDescendant();
+  }
+
+  /**
+   * Announce the number of results through the polite live region. Only called
+   * when the user changes the search term, never on initial population.
+   */
+  #announceResultCount() {
+    let status = this.shadowRoot.querySelector(".search-status");
+    let count = this.shadowRoot.querySelectorAll(".list-body .item").length;
+    let message;
+
+    if (count == 0) {
+      message = browser.i18n.getMessage("searchNoResults");
+    } else {
+      message = PluralForm.get(count, browser.i18n.getMessage("searchResultCount", ["#count#"]))
+        .replace("#count#", count);
+    }
+
+    // Clear first so that the same message (e.g. "No results" twice) is announced again.
+    status.textContent = "";
+    setTimeout(() => {
+      status.textContent = message;
+    }, 50);
   }
 
   nthItem(n) {
@@ -347,6 +435,7 @@ export default class BaseItemList extends HTMLElement {
       return;
     }
 
+    this.#activeDescendantShown = true;
     this.selected = item;
     this.shadowRoot.querySelector(".list-body").focus();
   }
@@ -374,6 +463,7 @@ export default class BaseItemList extends HTMLElement {
       let listItem = this.selected;
       let target = this.#ensureListItem(listItem && listItem[direction], direction);
       if (target) {
+        this.#activeDescendantShown = true;
         this.selected = target;
         this.shadowRoot.querySelector(".list-body").focus();
       } else {
@@ -428,9 +518,16 @@ export default class BaseItemList extends HTMLElement {
     }
 
     if (event.key == "ArrowDown" || (event.key == "Tab" && !event.shiftKey)) {
-      this.selected = this.nthItem(1);
+      if (!this.#activeDescendantShown && this.selected) {
+        // The first match is already selected visually, announce it instead of skipping it.
+        this.#showActiveDescendant();
+      } else {
+        this.#activeDescendantShown = true;
+        this.selected = this.nthItem(1);
+      }
       event.preventDefault();
     } else if (event.key == "ArrowUp" || (event.key == "Tab" && event.shiftKey)) {
+      this.#activeDescendantShown = true;
       this.selected = this.nthItem(-1);
       event.preventDefault();
     } else if (event.key == "Enter" && !event.repeat) {
@@ -455,6 +552,7 @@ export default class BaseItemList extends HTMLElement {
 
   searchInputCallback() {
     this.repopulate();
+    this.#announceResultCount();
   }
 
   #clearItems() {
@@ -527,6 +625,7 @@ export default class BaseItemList extends HTMLElement {
     let lowerSearchTerm = this.searchValue.toLowerCase();
     let hasAccent = !!lowerSearchTerm.normalize("NFD").match(DIACRITICS);
 
+    this.#activeDescendantShown = false;
     this.#clearItems();
 
     if (lowerSearchTerm) {
