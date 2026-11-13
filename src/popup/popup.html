@@ -16,13 +16,13 @@
   <body style="display: none !important">
     <div id="window-warning" class="warning hidden" data-l10n-id="windowWarning"></div>
     <div class="action-buttons">
-      <input type="radio" name="action" value="move" id="action-move" checked>
+      <input type="radio" name="action" value="move" id="action-move" aria-keyshortcuts="Alt+1" checked>
       <label for="action-move" data-l10n-id="actionMove"></label>
-      <input type="radio" name="action" value="copy" id="action-copy">
+      <input type="radio" name="action" value="copy" id="action-copy" aria-keyshortcuts="Alt+2">
       <label for="action-copy" data-l10n-id="actionCopy"></label>
-      <input type="radio" name="action" value="goto" id="action-goto">
+      <input type="radio" name="action" value="goto" id="action-goto" aria-keyshortcuts="Alt+3">
       <label for="action-goto" data-l10n-id="actionGoto"></label>
-      <input type="radio" name="action" value="tag" id="action-tag">
+      <input type="radio" name="action" value="tag" id="action-tag" aria-keyshortcuts="Alt+4">
       <label for="action-tag" data-l10n-id="actionTag"></label>
     </div>
     <div id="meta-action-warning" class="warning hidden">
@@ -35,5 +35,6 @@
     <folder-list id="folder-list" class="item-list" search="true" compact="true"></folder-list>
     <tag-list id="tag-list"  class="item-list" search="true" compact="true"></tag-list>
     <pre id="debug"></pre>
+    <div id="popup-status" class="visually-hidden" role="status" aria-live="polite"></div>
   </body>
 </html>

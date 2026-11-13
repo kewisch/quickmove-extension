@@ -207,5 +207,9 @@
     "searchNoResults": {
         "message": "No results",
         "description": "Announced by screen readers when the search term matches nothing."
+    },
+    "folderNotViewableWarning": {
+        "message": "This folder is not shown in any of the enabled folder modes (for example, only Favorite Folders is enabled). Enable the 'All Folders' mode, or the 'Tags' mode for tag folders.",
+        "description": "Shown and announced when going to a folder fails because the folder pane does not show it in any enabled folder mode."
     }
 }

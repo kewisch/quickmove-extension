@@ -22,6 +22,53 @@ function setup_localization() {
   }
 }
 
+// Alt+1 to Alt+4 switch directly to an action. Matched by physical key (event.code),
+// so it works on keyboard layouts where the number row does not type digits.
+const ACTION_SHORTCUT_CODES = {
+  Digit1: "move",
+  Digit2: "copy",
+  Digit3: "goto",
+  Digit4: "tag"
+};
+
+/**
+ * Announce a message through the popup's polite live region. Only called after a
+ * user action, never while the popup is loading.
+ */
+function announce(message) {
+  let status = document.getElementById("popup-status");
+  // Clear first so that the same message is announced again when it repeats.
+  status.textContent = "";
+  setTimeout(() => {
+    status.textContent = message;
+  }, 50);
+}
+
+function isActionAvailable(action) {
+  return enabledActions[action] && !!document.querySelector(`.action-buttons input[value="${action}"]`);
+}
+
+/**
+ * Switch to the given action from the keyboard: check its radio button, show the
+ * matching list, move focus to its search field and announce the new action.
+ */
+function selectAction(action) {
+  let radio = document.querySelector(`.action-buttons input[value="${action}"]`);
+  radio.checked = true;
+  switchList(action).focusSearch();
+  announce(document.querySelector(`label[for='${radio.id}']`).textContent);
+}
+
+function showWarning(id, message) {
+  let warning = document.getElementById(id);
+  let text = warning.querySelector("span") || warning;
+  if (message) {
+    text.textContent = message;
+  }
+  warning.classList.remove("hidden");
+  announce(text.textContent);
+}
+
 function switchList(action) {
   let folderList = document.getElementById("folder-list");
   let tagList = document.getElementById("tag-list");
@@ -224,7 +271,9 @@ async function load() {
         }
       } catch (e) {
         if (e.message == "Requested folder is not viewable in any of the enabled folder modes") {
-          document.getElementById("tags-view-missing-warning").classList.remove("hidden");
+          // Happens for tag folders without the Tags mode, but also for any folder that is
+          // not shown in the enabled folder modes (e.g. only Favorite Folders enabled).
+          showWarning("tags-view-missing-warning", browser.i18n.getMessage("folderNotViewableWarning"));
           return;
         }
         console.error(e);
@@ -270,7 +319,20 @@ async function load() {
 
 function keydown(event) {
   if (event.key == "Escape") {
+    // The first Escape closes the suggestions of the search field, the second one the popup.
+    if (event.target.collapse?.()) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
     window.close();
+  } else if (event.altKey && !event.ctrlKey && !event.metaKey && ACTION_SHORTCUT_CODES[event.code]) {
+    let action = ACTION_SHORTCUT_CODES[event.code];
+    event.preventDefault();
+    event.stopPropagation();
+    if (isActionAvailable(action)) {
+      selectAction(action);
+    }
   } else if (event.key == "ArrowLeft" || event.key == "ArrowRight") {
     let direction = event.key == "ArrowLeft" ? -1 : 1;
     if (!isAltMode(event)) {
@@ -295,10 +357,16 @@ function keydown(event) {
     let checked = document.querySelector(".action-buttons input:checked");
     let nextIdx = sequence.indexOf(checked.value) + direction;
     let action = sequence[Math.max(0, Math.min(nextIdx, sequence.length - 1))];
-    document.querySelector(`.action-buttons input[value="${action}"]`).checked = true;
+    let radio = document.querySelector(`.action-buttons input[value="${action}"]`);
+    let changed = !radio.checked;
+    radio.checked = true;
 
     let currentList = event.target;
     let targetList = switchList(action);
+    if (changed) {
+      // Focus may stay in the same search field, so the new label alone is not announced.
+      announce(document.querySelector(`label[for='${radio.id}']`).textContent);
+    }
 
     if (currentList != targetList || event.originalTarget == currentList.search) {
       targetList.focusSearch();

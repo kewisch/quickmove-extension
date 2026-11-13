@@ -22,6 +22,10 @@ export default class BaseItemList extends HTMLElement {
   // arrow down press announces it instead of skipping to the second match.
   #activeDescendantShown = false;
 
+  // True after Escape has closed the suggestions. The results stay visible, but the
+  // combobox reports itself as collapsed until the user navigates or types again.
+  #collapsed = false;
+
   _defaultItems;
   _allItems = [];
 
@@ -253,7 +257,7 @@ export default class BaseItemList extends HTMLElement {
                role="combobox" aria-autocomplete="list" aria-expanded="false"
                aria-controls="list-body"/>
       </div>
-      <div class="list-body" id="list-body" role="listbox" tabindex="0"></div>
+      <div class="list-body" id="list-body" role="listbox" tabindex="-1"></div>
       <div class="search-status visually-hidden" role="status" aria-live="polite"></div>
     `;
   }
@@ -349,9 +353,10 @@ export default class BaseItemList extends HTMLElement {
     let listBody = this.shadowRoot.querySelector(".list-body");
     let item = this.selected;
 
-    searchInput.setAttribute("aria-expanded", listBody.querySelector(".item") ? "true" : "false");
+    let expanded = !!listBody.querySelector(".item") && !this.#collapsed;
+    searchInput.setAttribute("aria-expanded", expanded ? "true" : "false");
 
-    if (item && this.#activeDescendantShown) {
+    if (item && this.#activeDescendantShown && !this.#collapsed) {
       if (!item.id) {
         item.id = "item-" + (nextItemId++);
       }
@@ -366,7 +371,29 @@ export default class BaseItemList extends HTMLElement {
 
   #showActiveDescendant() {
     this.#activeDescendantShown = true;
+    this.#collapsed = false;
     this.#updateActiveDescendant();
+  }
+
+  /**
+   * Close the suggestions, as Escape does in a combobox. Returns true if there was
+   * something to close, so that the caller only closes the popup on a second Escape.
+   */
+  collapse() {
+    let listBody = this.shadowRoot.querySelector(".list-body");
+    let hasItems = !!listBody.querySelector(".item");
+    let open = !this.#collapsed && hasItems && (this.#activeDescendantShown || this.searchValue != "");
+    if (!open) {
+      return false;
+    }
+
+    this.#activeDescendantShown = false;
+    this.#collapsed = true;
+    this.#updateActiveDescendant();
+    if (this.shadowRoot.activeElement == listBody) {
+      this.focusSearch();
+    }
+    return true;
   }
 
   /**
@@ -436,6 +463,7 @@ export default class BaseItemList extends HTMLElement {
     }
 
     this.#activeDescendantShown = true;
+    this.#collapsed = false;
     this.selected = item;
     this.shadowRoot.querySelector(".list-body").focus();
   }
@@ -452,18 +480,15 @@ export default class BaseItemList extends HTMLElement {
     if (event.isComposing) {
       return;
     }
-    if (event.key == "ArrowDown" || event.key == "ArrowUp" || event.key == "Tab") {
-      let direction;
-      if (event.key == "ArrowDown" || (event.key == "Tab" && !event.shiftKey)) {
-        direction = "nextElementSibling";
-      } else {
-        direction = "previousElementSibling";
-      }
+    // Tab and Shift+Tab are left to the browser, so they move focus out of the list.
+    if (event.key == "ArrowDown" || event.key == "ArrowUp") {
+      let direction = event.key == "ArrowDown" ? "nextElementSibling" : "previousElementSibling";
 
       let listItem = this.selected;
       let target = this.#ensureListItem(listItem && listItem[direction], direction);
       if (target) {
         this.#activeDescendantShown = true;
+        this.#collapsed = false;
         this.selected = target;
         this.shadowRoot.querySelector(".list-body").focus();
       } else {
@@ -517,17 +542,21 @@ export default class BaseItemList extends HTMLElement {
       return;
     }
 
-    if (event.key == "ArrowDown" || (event.key == "Tab" && !event.shiftKey)) {
+    // Only the arrow keys move through the results. Tab and Shift+Tab are left to
+    // the browser, so they move focus to the other controls, as in a combobox.
+    if (event.key == "ArrowDown") {
       if (!this.#activeDescendantShown && this.selected) {
         // The first match is already selected visually, announce it instead of skipping it.
         this.#showActiveDescendant();
       } else {
         this.#activeDescendantShown = true;
+        this.#collapsed = false;
         this.selected = this.nthItem(1);
       }
       event.preventDefault();
-    } else if (event.key == "ArrowUp" || (event.key == "Tab" && event.shiftKey)) {
+    } else if (event.key == "ArrowUp") {
       this.#activeDescendantShown = true;
+      this.#collapsed = false;
       this.selected = this.nthItem(-1);
       event.preventDefault();
     } else if (event.key == "Enter" && !event.repeat) {
@@ -626,6 +655,7 @@ export default class BaseItemList extends HTMLElement {
     let hasAccent = !!lowerSearchTerm.normalize("NFD").match(DIACRITICS);
 
     this.#activeDescendantShown = false;
+    this.#collapsed = false;
     this.#clearItems();
 
     if (lowerSearchTerm) {
