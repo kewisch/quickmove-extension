@@ -1,0 +1,204 @@
+{
+    "extensionName": {
+        "message": "Quick Folder Move"
+    },
+    "extensionDescription": {
+        "message": "Rychlé přesouvání zpráv do jiných složek pomocí klávesnice"
+    },
+    "extensionShortName": {
+        "message": "Quick Move"
+    },
+    "commandMoveDescription": {
+        "message": "Přesunout vybrané zprávy"
+    },
+    "commandCopyDescription": {
+        "message": "Kopírovat vybrané zprávy"
+    },
+    "commandGotoDescription": {
+        "message": "Přejít do složky"
+    },
+    "commandTagDescription": {
+        "message": "Přidat štítek"
+    },
+    "windowWarning": {
+        "message": "Doporučujeme přidat Quick Folder Move na hlavní panel nástrojů. Tlačítko přidáte přizpůsobením panelu nástrojů."
+    },
+    "metaActionWarning": {
+        "message": "Mezi akcemi se nyní přepíná klávesami Ctrl/⌘+šipka, aby nedocházelo ke střetu s pohybem v textovém poli."
+    },
+    "tagsViewMissingWarning": {
+        "message": "Pro přechod do složek štítků zapněte v panelu složek režim Štítky."
+    },
+    "actionMove": {
+        "message": "Přesunout"
+    },
+    "actionCopy": {
+        "message": "Kopírovat"
+    },
+    "actionGoto": {
+        "message": "Přejít"
+    },
+    "actionTag": {
+        "message": "Štítek"
+    },
+    "layout": {
+        "message": "Rozložení vyskakovacího okna"
+    },
+    "layoutAuto": {
+        "message": "Automaticky"
+    },
+    "layoutWide": {
+        "message": "Vždy široké"
+    },
+    "layoutCompact": {
+        "message": "Vždy kompaktní"
+    },
+    "markAsRead": {
+        "message": "Při přesunu označit zprávy jako přečtené"
+    },
+    "showFolderPath": {
+        "message": "Ve vyhledávání zobrazit celou cestu ke složce"
+    },
+    "skipArchive": {
+        "message": "Nikdy nenabízet archivní složky"
+    },
+    "maxRecentFolders": {
+        "message": "Počet zobrazených nedávných složek"
+    },
+    "maxRecentFoldersTitle": {
+        "message": "Mění počet nedávných složek zobrazených, když není zadaný hledaný text."
+    },
+    "recentStrategy": {
+        "message": "Které složky nabízet"
+    },
+    "recentStrategyModified": {
+        "message": "Naposledy změněné"
+    },
+    "recentStrategyAccessed": {
+        "message": "Naposledy otevřené"
+    },
+    "useLegacyShortcuts": {
+        "message": "Vynutit staré klávesové zkratky"
+    },
+    "useLegacyShortcutsTitle": {
+        "message": "Pro přesun zpráv použít zkratku ⇧M"
+    },
+    "showInstructions": {
+        "message": "Zobrazit návod"
+    },
+    "showShortcuts": {
+        "message": "Změnit klávesové zkratky"
+    },
+    "translate": {
+        "message": "Přeložit do vašeho jazyka"
+    },
+    "defaultFoldersTitle": {
+        "message": "Výchozí složky"
+    },
+    "defaultFoldersRecent": {
+        "message": "Nedávné složky"
+    },
+    "defaultFoldersAll": {
+        "message": "Všechny složky"
+    },
+    "defaultFoldersSpecific": {
+        "message": "Vybrané složky"
+    },
+    "defaultFoldersSearchPlaceholder": {
+        "message": "Vyhledejte složku, kterou chcete přidat mezi výchozí"
+    },
+    "excludedFoldersTitle": {
+        "message": "Vyloučené složky"
+    },
+    "excludedFoldersSearchPlaceholder": {
+        "message": "Vyhledejte složku, kterou chcete vyloučit"
+    },
+    "partialMatchFullPath": {
+        "message": "Hledat slova v celé cestě ke složce"
+    },
+    "searchAccountName": {
+        "message": "Hledat slova i v názvu účtu"
+    },
+    "operationAction.move": {
+        "message": "$num_messages$ zpráva přesunuta do složky $destination$;$num_messages$ zprávy přesunuty do složky $destination$;$num_messages$ zpráv přesunuto do složky $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.copy": {
+        "message": "$num_messages$ zpráva zkopírována do složky $destination$;$num_messages$ zprávy zkopírovány do složky $destination$;$num_messages$ zpráv zkopírováno do složky $destination$",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag": {
+        "message": "Štítek $destination$ přidán k $num_messages$ zprávě;Štítek $destination$ přidán k $num_messages$ zprávám;Štítek $destination$ přidán k $num_messages$ zprávám",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "operationAction.tag.remove": {
+        "message": "Štítek $destination$ odebrán z $num_messages$ zprávy;Štítek $destination$ odebrán z $num_messages$ zpráv;Štítek $destination$ odebrán z $num_messages$ zpráv",
+        "placeholders": {
+            "num_messages": {
+                "content": "$1"
+            },
+            "destination": {
+                "content": "$2"
+            }
+        }
+    },
+    "notificationActive": {
+        "message": "Po každé akci zobrazit oznámení"
+    },
+    "operationMenuItemsTitle": {
+        "message": "Akce v nabídce"
+    },
+    "menuItemActionInfo": {
+        "message": "Vyberte, které akce mají být dostupné ve vyskakovacím okně."
+    },
+    "menuItemActionWarning": {
+        "message": "Musí být vybraná alespoň jedna položka."
+    },
+    "searchLabel.move": {
+        "message": "Přesunout do složky"
+    },
+    "searchLabel.copy": {
+        "message": "Kopírovat do složky"
+    },
+    "searchLabel.goto": {
+        "message": "Přejít do složky"
+    },
+    "searchLabel.tag": {
+        "message": "Označit zprávy štítkem"
+    },
+    "searchResultCount": {
+        "message": "$count$ výsledek;$count$ výsledky;$count$ výsledků",
+        "placeholders": {
+            "count": {
+                "content": "$1"
+            }
+        }
+    },
+    "searchNoResults": {
+        "message": "Žádné výsledky"
+    },
+    "folderNotViewableWarning": {
+        "message": "Tato složka není zobrazená v žádném ze zapnutých režimů panelu složek (například je zapnutý jen režim Oblíbené složky). Zapněte režim Všechny složky, u štítků režim Štítky."
+    }
+}
