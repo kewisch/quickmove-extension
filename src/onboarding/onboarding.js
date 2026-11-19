@@ -3,11 +3,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Portions Copyright (C) Philipp Kewisch */
 
+// Keep in sync with sendBackgroundMessage() in common/util.js, this is not a module.
+async function sendBackgroundMessage(message) {
+  let backgroundPage = await browser.runtime.getBackgroundPage().catch(() => null);
+  if (backgroundPage?.handleQuickmoveMessage) {
+    return backgroundPage.handleQuickmoveMessage(message);
+  }
+  return browser.runtime.sendMessage(message);
+}
+
 async function load() {
   let legacyShortcutsForm = document.getElementById("legacy-shortcuts-form");
   if (legacyShortcutsForm) {
     legacyShortcutsForm.addEventListener("change", (event) => {
-      browser.runtime.sendMessage({ action: "setupShortcuts", enable: (event.target.value == "legacy") });
+      sendBackgroundMessage({ action: "setupShortcuts", enable: (event.target.value == "legacy") });
     });
   }
 
