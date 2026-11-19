@@ -192,7 +192,7 @@ browser.commands.onCommand.addListener(async (name) => {
   }
 });
 
-browser.runtime.onMessage.addListener(async (message, sender) => {
+async function handleMessage(message) {
   if (message.action == "focusThreadPane") {
     return browser.quickmove.focusThreadPane();
   } else if (message.action == "processSelectedMessages") {
@@ -207,7 +207,13 @@ browser.runtime.onMessage.addListener(async (message, sender) => {
     console.error("Unexpected message", message);
   }
   return null;
-});
+}
+
+// Called directly from extension pages, see sendBackgroundMessage(). The message is cloned so it
+// does not become a dead object when the calling popup closes.
+window.handleQuickmoveMessage = message => handleMessage(structuredClone(message));
+
+browser.runtime.onMessage.addListener(message => handleMessage(message));
 
 
 browser.runtime.onInstalled.addListener(({ reason, previousVersion }) => {

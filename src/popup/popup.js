@@ -4,7 +4,7 @@
  * Portions Copyright (C) Philipp Kewisch */
 
 import { RootNode } from "../common/foldernode.js";
-import { DEFAULT_PREFERENCES, getValidatedFolders, isAltMode } from "../common/util.js";
+import { DEFAULT_PREFERENCES, getValidatedFolders, isAltMode, sendBackgroundMessage } from "../common/util.js";
 
 const ALL_ACTIONS = ["move", "copy", "goto", "tag"];
 
@@ -202,7 +202,7 @@ async function load() {
     let operation = document.querySelector("input[name='action']:checked").value;
 
     if (operation == "move" || operation == "copy") {
-      await browser.runtime.sendMessage({
+      await sendBackgroundMessage({
         action: "processSelectedMessages",
         folder: folder,
         operation: operation,
@@ -233,7 +233,7 @@ async function load() {
   tagList.ignoreFocus = true;
   tagList.initItems(tags, null);
   tagList.addEventListener("item-selected", async (event) => {
-    await browser.runtime.sendMessage({ action: "processSelectedMessages", tag: event.detail.folder.key, tagName: event.detail.folder.tag, operation: "tag" });
+    await sendBackgroundMessage({ action: "processSelectedMessages", tag: event.detail.folder.key, tagName: event.detail.folder.tag, operation: "tag" });
     window.close();
   });
 

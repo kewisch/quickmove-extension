@@ -92,3 +92,14 @@ export async function prettyDestination(folderId, doReverse = false) {
 
   return fullPath.join(divider);
 }
+
+// TB153 on FIPS systems fails runtime.sendMessage() from extension pages, because NSS refuses to
+// import the documentId key (nsIKeyedUUIDMapper.init). Call into the background page directly
+// instead, falling back to runtime messaging if it is not available.
+export async function sendBackgroundMessage(message) {
+  let backgroundPage = await browser.runtime.getBackgroundPage().catch(() => null);
+  if (backgroundPage?.handleQuickmoveMessage) {
+    return backgroundPage.handleQuickmoveMessage(message);
+  }
+  return browser.runtime.sendMessage(message);
+}

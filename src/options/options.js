@@ -4,7 +4,7 @@
  * Portions Copyright (C) Philipp Kewisch */
 
 import { RootNode } from "../common/foldernode.js";
-import { DEFAULT_PREFERENCES, getValidatedFolders } from "../common/util.js";
+import { DEFAULT_PREFERENCES, getValidatedFolders, sendBackgroundMessage } from "../common/util.js";
 
 async function restoreOptions() {
   let prefs = await browser.storage.local.get(DEFAULT_PREFERENCES);
@@ -51,7 +51,7 @@ function changeOptions(event) {
   }
 
   if (node.id == "useLegacyShortcuts") {
-    browser.runtime.sendMessage({ action: "setupShortcuts", enable: node.checked });
+    sendBackgroundMessage({ action: "setupShortcuts", enable: node.checked });
   }
 }
 
